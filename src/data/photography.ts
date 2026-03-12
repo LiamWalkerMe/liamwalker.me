@@ -9,7 +9,7 @@ export const photoSections = [
       '/assets/Photography/Italy/Italy5.jpg',
       '/assets/Photography/Italy/Italy6.jpg',
       '/assets/Photography/Italy/Italy7.jpg',
-      '/assets/Photography/Italy/Italy8.jpg',
+      '/assets/Photography/Italy/Italy8.jpeg',
       '/assets/Photography/Italy/Italy9.jpg',
       '/assets/Photography/Italy/Italy10.jpg',
       '/assets/Photography/Italy/Italy11.jpg',
