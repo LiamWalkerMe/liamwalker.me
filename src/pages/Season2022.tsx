@@ -52,7 +52,7 @@ export default function Season2022() {
         </div>
         <div className="container wide">
           <img
-            src="/assets/2024/04/C1A590C9-E5B0-4BE4-925C-4CAC336D8119_1_201_a.jpeg"
+            src="/assets/Robotics/2022/Robot.jpeg"
             alt="2022-23 Robot"
             className="season-hero-image"
           />

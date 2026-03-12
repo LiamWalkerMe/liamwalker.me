@@ -22,7 +22,7 @@ export default function Website() {
                 user-friendly, and offers a wide range of plugins for effortless, beautiful website creation. To run the
                 local instance, I used a program called \"Local\".
               </p>
-              <img src="/assets/2025/09/LocalHost-scaled.png" alt="Local WP" />
+              <img src="/assets/Website/LocalHost.png" alt="Local WP" />
             </div>
             <div className="step-card">
               <h3>2. WordPress to Static Webpage</h3>
@@ -30,7 +30,7 @@ export default function Website() {
                 I use the \"Simply Static\" plugin to convert my web pages into static HTML. The plugin offers a variety of
                 options and allows me to export the static files directly to a local folder on my computer.
               </p>
-              <img src="/assets/2025/09/VSCode-scaled.png" alt="VS Code" />
+              <img src="/assets/Website/VSCode.png" alt="VS Code" />
             </div>
             <div className="step-card">
               <h3>3. Github Pages</h3>
@@ -38,7 +38,7 @@ export default function Website() {
                 The static HTML pages are exported to a GitHub Pages repository, where I review the changes and push them
                 to GitHub. Within minutes, the updates are live on the website!
               </p>
-              <img src="/assets/2025/09/GitHub-scaled.png" alt="GitHub" />
+              <img src="/assets/Website/GitHub.png" alt="GitHub" />
             </div>
           </div>
         </div>

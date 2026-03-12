@@ -14,7 +14,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="hero-portrait fade-in">
-            <img src="/assets/2025/03/Pro-Background-Removed-e1759050563344.png" alt="Liam Walker" />
+            <img src="/assets/Hero/profile.png" alt="Liam Walker" />
           </div>
         </div>
       </section>
@@ -44,21 +44,21 @@ export default function Home() {
           backgroundImage: 'url(/assets/StoveSolutions/teamphoto.jpg)',
         }}
       >
-        <div className="container" style={{ textAlign: 'center' }}>
+        <div className="container" style={{ textAlign: 'center', margin: '70px auto 70px' }}>
           <img
             src="/assets/StoveSolutions/banner.png"
             alt="Stove Solutions"
-            style={{maxWidth: 1000, margin: '0 auto 20px' }}
+            style={{maxWidth: 1000, margin: '0 auto 0' }}
           />
-          <p style={{ marginBottom: 20 }}>An Engineering Design and Development Course Project</p>
-          <Link className="button accent" to="/stovesolutions">
+          <p style={{ marginBottom: 40, fontSize: '20px' }}>An Engineering Design and Development Course Project</p>
+          <Link className="button accent" to="/stovesolutions"> 
             Learn More
           </Link>
         </div>
       </section>
 
       <SplitSection
-        imageSrc="/assets/2024/03/IMG_6060.jpeg"
+        imageSrc="/assets/Robotics/banner.jpeg"
         imageAlt="Liam Walker Robotics"
         textClassName="gradient-panel no-radius"
         textStyle={{ textAlign: 'center' }}
@@ -73,7 +73,7 @@ export default function Home() {
       </SplitSection>
 
       <SplitSection
-        imageSrc="/assets/2025/09/FrontPage-scaled.png"
+        imageSrc="/assets/Website/FrontPage.png"
         imageAlt="Website preview"
         sectionStyle={{ background: '#f1f1f1' }}
         reverse={true}

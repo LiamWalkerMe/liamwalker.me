@@ -946,9 +946,9 @@ img {
 }
 
 .zora-hero-logo {
-  width: min(1000px, 90vw);
+  width: min(1000px, 80vw);
   height: auto;
-  margin: 0 auto 24px;
+  margin: 0 auto 0px;
   display: block;
   object-fit: cover;
 }
@@ -957,11 +957,11 @@ img {
   color: #e8be8c;
   font-size: clamp(16px, 1.6vw, 20px);
   max-width: 900px;
-  margin: 0 auto 24px;
+  margin: 50px auto;
 }
 
 .zora-hero-image {
-  width: min(800px, 90vw);
+  width: min(800px, 80vw);
   height: auto;
   margin: 0 auto;
   display: block;

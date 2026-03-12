@@ -18,7 +18,7 @@ export default function FtcRobotics() {
       </section>
 
       <SplitSection
-        imageSrc="/assets/2024/03/IMG_6149-2.jpeg"
+        imageSrc="/assets/Robotics/2023/banner.jpeg"
         imageAlt="Crow Force 2023-24"
         textClassName="gradient-panel no-radius"
         textStyle={{ textAlign: 'center' }}
@@ -33,7 +33,7 @@ export default function FtcRobotics() {
       </SplitSection>
 
       <SplitSection
-        imageSrc="/assets/2024/03/PXL_20230212_011144394-2.jpg"
+        imageSrc="/assets/Robotics/2022/banner.jpg"
         imageAlt="Crow Force 2022-23"
         sectionStyle={{
           background: 'linear-gradient(315deg, rgb(25,0,0) 0%, rgb(220,0,0) 100%)',

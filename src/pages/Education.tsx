@@ -30,7 +30,7 @@ export default function Education() {
       </section>
 
       <SplitSection
-        imageSrc="/assets/2024/03/IMG_6060.jpeg"
+        imageSrc="/assets/Robotics/banner.jpeg"
         imageAlt="FIRST Robotics"
         textClassName="gradient-panel no-radius"
         textStyle={{ textAlign: 'center' }}
@@ -45,7 +45,7 @@ export default function Education() {
       </SplitSection>
 
       <SplitSection
-        imageSrc="/assets/2025/09/FrontPage-scaled.png"
+        imageSrc="/assets/Website/FrontPage.png"
         imageAlt="Website preview"
         sectionStyle={{ background: '#f1f1f1' }}
         reverse={true}
