@@ -2,39 +2,39 @@ import Gallery from '../components/Gallery'
 import VerticalTabs, { type VerticalTab } from '../components/VerticalTabs'
 
 const robotPhotos = [
-  '/assets/2024/03/IMG_9505-2.jpeg',
-  '/assets/2024/03/IMG_9520.jpeg',
-  '/assets/2024/03/IMG_9528.jpeg',
-  '/assets/2024/03/IMG_9538.jpeg',
-  '/assets/2024/03/IMG_9517.jpeg',
-  '/assets/2024/03/IMG_9529.jpeg',
-  '/assets/2024/03/IMG_9508-2.jpeg',
-  '/assets/2024/03/IMG_9510-2.jpeg',
-  '/assets/2024/03/IMG_9511-2.jpeg',
+  '/assets/Robotics/2023/Robot/FTC1.jpeg',
+  '/assets/Robotics/2023/Robot/FTC2.jpeg',
+  '/assets/Robotics/2023/Robot/FTC3.jpeg',
+  '/assets/Robotics/2023/Robot/FTC4.jpeg',
+  '/assets/Robotics/2023/Robot/FTC5.jpeg',
+  '/assets/Robotics/2023/Robot/FTC6.jpeg',
+  '/assets/Robotics/2023/Robot/FTC7.jpeg',
+  '/assets/Robotics/2023/Robot/FTC8.jpeg',
+  '/assets/Robotics/2023/Robot/FTC9.jpeg',
 ]
 
 const interleaguePhotos = [
-  '/assets/2024/03/IMG_6191.jpeg',
-  '/assets/2024/03/IMG_6139.jpeg',
-  '/assets/2024/03/IMG_6137.jpeg',
-  '/assets/2024/03/IMG_6109.jpeg',
-  '/assets/2024/03/IMG_6064.jpeg',
-  '/assets/2024/03/IMG_6094.jpeg',
-  '/assets/2024/03/IMG_6061.jpeg',
-  '/assets/2024/03/IMG_6060.jpeg',
-  '/assets/2024/03/IMG_6130.jpeg',
+  '/assets/Robotics/2023/InterleagueB/FTC1.jpeg',
+  '/assets/Robotics/2023/InterleagueB/FTC2.jpeg',
+  '/assets/Robotics/2023/InterleagueB/FTC3.jpeg',
+  '/assets/Robotics/2023/InterleagueB/FTC4.jpeg',
+  '/assets/Robotics/2023/InterleagueB/FTC5.jpeg',
+  '/assets/Robotics/2023/InterleagueB/FTC6.jpeg',
+  '/assets/Robotics/2023/InterleagueB/FTC7.jpeg',
+  '/assets/Robotics/2023/InterleagueB/FTC8.jpeg',
+  '/assets/Robotics/2023/InterleagueB/FTC9.jpeg',
 ]
 
 const regionalPhotos = [
-  '/assets/2024/03/PXL_20240310_222350969.MP_.jpg',
-  '/assets/2024/03/IMG_1302.jpeg',
-  '/assets/2024/03/IMG_1310.jpeg',
-  '/assets/2024/03/PXL_20240311_011110086.jpg',
-  '/assets/2024/03/PXL_20240311_000224871.jpg',
-  '/assets/2024/03/PXL_20240310_175025929.jpg',
-  '/assets/2024/03/PXL_20240310_181809312.jpg',
-  '/assets/2024/03/PXL_20240311_002731859.jpg',
-  '/assets/2024/03/IMG_0695.jpeg',
+  '/assets/Robotics/2023/Regionals/FTC1.jpeg',
+  '/assets/Robotics/2023/Regionals/FTC2.jpg',
+  '/assets/Robotics/2023/Regionals/FTC3.jpeg',
+  '/assets/Robotics/2023/Regionals/FTC4.jpg',
+  '/assets/Robotics/2023/Regionals/FTC5.jpg',
+  '/assets/Robotics/2023/Regionals/FTC6.jpg',
+  '/assets/Robotics/2023/Regionals/FTC7.jpg',
+  '/assets/Robotics/2023/Regionals/FTC8.jpg',
+  '/assets/Robotics/2023/Regionals/FTC9.jpeg',
 ]
 
 const modularTabs: VerticalTab[] = [
@@ -42,7 +42,7 @@ const modularTabs: VerticalTab[] = [
     label: 'Chassis',
     content: (
       <div className="vertical-tabs__content">
-        <img src="/assets/2024/04/Chassis.jpeg" alt="Chassis module" loading="lazy" />
+        <img src="/assets/Robotics/2023/Modular/Chassis.jpeg" alt="Chassis module" loading="lazy" />
         <p>
           <strong>Description:</strong>
           <br />
@@ -62,7 +62,7 @@ const modularTabs: VerticalTab[] = [
     content: (
       <div className="vertical-tabs__content">
         <img
-          src="/assets/2024/04/C1A590C9-E5B0-4BE4-925C-4CAC336D8119_1_201_a.jpeg"
+          src="/assets/Robotics/2023/Modular/Arm.jpeg"
           alt="Arm module"
           loading="lazy"
         />
@@ -80,7 +80,7 @@ const modularTabs: VerticalTab[] = [
     content: (
       <div className="vertical-tabs__content">
         <img
-          src="/assets/2024/04/Screenshot-2024-04-04-at-3.56.48ΓÇ»AM.jpeg"
+          src= "/assets/Robotics/2023/Modular/Intake.jpeg"
           alt="Intake module"
           loading="lazy"
         />
@@ -98,7 +98,7 @@ const modularTabs: VerticalTab[] = [
     label: 'Claw',
     content: (
       <div className="vertical-tabs__content">
-        <img src="/assets/2024/04/Claw.jpeg" alt="Claw module" loading="lazy" />
+        <img src="/assets/Robotics/2023/Modular/Claw.jpeg" alt="Claw module" loading="lazy" />
         <p>
           <strong>Description:</strong>
           <br />
@@ -113,7 +113,7 @@ const modularTabs: VerticalTab[] = [
     label: 'Drone Launcher',
     content: (
       <div className="vertical-tabs__content">
-        <img src="/assets/2024/04/DroneLauncher.jpeg" alt="Drone launcher module" loading="lazy" />
+        <img src="/assets/Robotics/2023/Modular/DroneLauncher.jpeg" alt="Drone launcher module" loading="lazy" />
         <p>
           <strong>Description:</strong>
           <br />
@@ -329,7 +329,7 @@ export default function Season2023() {
       <section className="section">
         <div className="container">
           <h2 className="section-title">Modular Systems</h2>
-          <VerticalTabs idPrefix="modular" tabs={modularTabs} autoRotate />
+          <VerticalTabs idPrefix="modular" tabs={modularTabs} />
         </div>
       </section>
 
@@ -366,7 +366,7 @@ export default function Season2023() {
       <section className="section">
         <div className="container">
           <h2 className="section-title">Awards Won</h2>
-          <VerticalTabs idPrefix="interleague-awards" tabs={interleagueAwards} autoRotate />
+          <VerticalTabs idPrefix="interleague-awards" tabs={interleagueAwards} />
         </div>
       </section>
 
@@ -410,7 +410,7 @@ export default function Season2023() {
       <section className="section">
         <div className="container">
           <h2 className="section-title">Awards Won</h2>
-          <VerticalTabs idPrefix="regional-awards" tabs={regionalAwards} autoRotate />
+          <VerticalTabs idPrefix="regional-awards" tabs={regionalAwards} />
         </div>
       </section>
 

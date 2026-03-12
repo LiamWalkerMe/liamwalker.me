@@ -13,14 +13,14 @@ export default function Education() {
       <section
         className="cover bg-accent fixed"
         style={{
-          backgroundImage: 'url(/assets/2024/03/IMG_0661.jpg)',
+          backgroundImage: 'url(/assets/StoveSolutions/teamphoto.jpg)',
         }}
       >
         <div className="container" style={{ textAlign: 'center' }}>
           <img
-            src="/assets/2023/09/whiteArtboard-1@2x.png"
+            src="/assets/StoveSolutions/banner.png"
             alt="Stove Solutions"
-            style={{ maxWidth: 640, margin: '0 auto 20px' }}
+            style={{maxWidth: 1000, margin: '0 auto 20px' }}
           />
           <p>An Engineering Design and Development Course Project</p>
           <Link className="button accent" to="/stovesolutions">
@@ -59,6 +59,6 @@ export default function Education() {
           </Link>
         </div>
       </SplitSection>
-    </div>
+    </div>                                                                                                                                                                                           
   )
 }

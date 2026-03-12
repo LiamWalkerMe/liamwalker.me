@@ -30,13 +30,13 @@ export const designSpecs = [
 ]
 
 export const timelineImages = [
-  '/assets/2024/03/ProofOfConcept.jpeg',
-  '/assets/2024/03/Stove.jpeg',
-  '/assets/2024/03/Modifications.jpeg',
-  '/assets/2024/03/GearRatio.jpeg',
-  '/assets/2024/03/Welding.jpeg',
-  '/assets/2024/03/TempuratureSensor.jpeg',
-  '/assets/2024/03/Wiring.jpeg',
-  '/assets/2024/03/STOVE-SOLUTIONS-FINAL-PRESENTATION-1.png',
-  '/assets/2024/03/Testing.jpeg',
+  '/assets/StoveSolutions/ProofOfConcept.jpeg',
+  '/assets/StoveSolutions/Stove.jpeg',
+  '/assets/StoveSolutions/Modifications.jpeg',
+  '/assets/StoveSolutions/GearRatio.jpeg',
+  '/assets/StoveSolutions/Welding.jpeg',
+  '/assets/StoveSolutions/TempuratureSensor.jpeg',
+  '/assets/StoveSolutions/Wiring.jpeg',
+  '/assets/StoveSolutions/Flowchart.png',
+  '/assets/StoveSolutions/Testing.jpeg',
 ]

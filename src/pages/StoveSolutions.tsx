@@ -5,20 +5,20 @@ const introSections = [
   {
     title: 'Engineering',
     text: 'This project helped us learn how to use the engineering design process to create a project.',
-    image: '/assets/2023/12/IMG_5636-Large.jpeg',
+    image: '/assets/StoveSolutions/Intro/Molly.jpeg',
   },
   {
     title: 'Electronics',
     text:
       'Our project required the use of electronic components, which can be hard to work with. We learned how to combine an Arduino, motor controller, motor, ac/dc converter, and a bluetooth module to create our product.',
-    image: '/assets/2023/12/IMG_5686-Large.jpeg',
+    image: '/assets/StoveSolutions/Intro/Liam.jpeg',
     reverse: true,
   },
   {
     title: 'Design',
     text:
       'The design of our product had to work with existing stove designs, we did many measurements and tests to ensure that our product could fit into 5 other stoves.',
-    image: '/assets/2023/12/IMG_5674-Large.jpeg',
+    image: '/assets/StoveSolutions/Intro/KaylaLilly.jpeg',
   },
 ]
 
@@ -58,55 +58,55 @@ const designSpecs = [
 const conceptSlides = [
   {
     title: 'Proof of Concept',
-    image: '/assets/2024/03/ProofOfConcept.jpeg',
+    image: '/assets/StoveSolutions/Carousel/ProofOfConcept.jpeg',
     text:
       'Our first step was to create our proof of concept. We originally thought that a motor system to shut off the knob could work with a gas flow meter. After talking with our mentor, we realized that we didn’t need a flow meter to show us gas was flowing because we could assume that it was when the knob turned. We decided to take our project in a new direction and work with heat rather than gas flow.',
   },
   {
     title: 'Our Stove',
-    image: '/assets/2024/03/Stove.jpeg',
+    image: '/assets/StoveSolutions/Carousel/Stove.jpeg',
     text:
       'After lots of calling around and trips to recycling yards, we found our beloved stove. With the help of Rob from Appliance Recycler, we were able to get our stove for free!',
   },
   {
     title: 'Modifications',
-    image: '/assets/2024/03/Modifications.jpeg',
+    image: '/assets/StoveSolutions/Carousel/Modifications.jpeg',
     text:
       'As you all can see, it has faced a few modifications from its original state, to how it is today. All of these modifications were done to improve aesthetics, increase ease in transportation, and figure out how the whole thing works.',
   },
   {
     title: 'Gears',
-    image: '/assets/2024/03/GearRatio.jpeg',
+    image: '/assets/StoveSolutions/Carousel/GearRatio.jpeg',
     text:
       'In order to make our system work with a motor, we needed some gears. We designed gears to fit around the motor and the burner valve, which connects to the knob. We originally started with a 24 tooth gear around the burner valve and 36 tooth gear around the motor, however, this created a gear ratio that was too low and required too much torque from the motor. We fixed this issue by switching the 36 tooth gear to the burner valve so less effort was required from the motor.',
   },
   {
     title: 'L - Bracket',
-    image: '/assets/2024/03/Welding.jpeg',
+    image: '/assets/StoveSolutions/Carousel/Welding.jpeg',
     text:
       'The next issue we confronted was how to attach the motor next to the burner valve. We started with 3D designing a mount. Our first design was zip-tied around the gas line, however it allowed the motor to move out of place. This proved to be too fragile and easily detached. We needed a different solution that was more sturdy than 3D filament. Using the screw holes built into the motor, we realized we could attach the motor to an L-bracket and attach the bracket to the gas line with some welding. Which as you can see it didn’t turn out quite as well as we had hoped, but it still does the job!',
   },
   {
     title: 'Thermocouple',
-    image: '/assets/2024/03/TempuratureSensor.jpeg',
+    image: '/assets/StoveSolutions/Carousel/TempuratureSensor.jpeg',
     text:
       'Paired with the motors, the thermocouple was added by the gas nozzle so that it will be able to detect heat without exceeding the maximum temperature restriction.',
   },
   {
     title: 'Electronics',
-    image: '/assets/2024/03/Wiring.jpeg',
+    image: '/assets/StoveSolutions/Carousel/Wiring.jpeg',
     text:
       'Learning electronics proved to be difficult, however we were able to connect a motor controller, power supply, bluetooth module, and LED light to our Arduino. Here is everything put together, as you can see, it looks great!',
   },
   {
     title: 'Logic',
-    image: '/assets/2024/03/STOVE-SOLUTIONS-FINAL-PRESENTATION-1.png',
+    image: '/assets/StoveSolutions/Carousel/Flowchart.png',
     text:
       'When the Arduino detects the knob has been turned the Arduino grabs the current temperature, waits 10 seconds, then grabs the temperature again. If the temperature change is less than .5 degrees fahrenheit then it shuts off. If not then it stays on. With all of the parts put together, here is a video of our product working, with a heat gun to simulate fire, and compressed air to simulate gas flow:',
   },
   {
     title: 'Testing',
-    image: '/assets/2024/03/Testing.jpeg',
+    image: '/assets/StoveSolutions/Carousel/Testing.jpeg',
     text:
       'We tested gas leakage by sealing a balloon over the valve post-shutdown; no inflation indicated no leaks. For specs 2, 4, 6, and 7, 5 individuals operated the stove without heat, checking for shutdown, app updates, and LED activation controlled via the app. Test 3 involved 5 users mimicking accidental knob contact to ensure immediate shutdown. For spec 5, we compared measurements with 4 other stoves, confirming compatibility with minor adjustments pre-production.',
   },
@@ -169,7 +169,7 @@ export default function StoveSolutions() {
           <video
             ref={logoVideoRef}
             className="logo-video"
-            src="/assets/2024/10/LogoAnimation1.mp4"
+            src="/assets/StoveSolutions/banner.mp4"
             autoPlay
             muted
             playsInline
@@ -280,10 +280,10 @@ export default function StoveSolutions() {
         <div className="container" style={{ textAlign: 'center', color: '#fff' }}>
           <h2 className="section-title">Our Mentor</h2>
           <div className="image-frame mentor-frame">
-            <img src="/assets/2024/03/ThankYouMentor.png" alt="Our mentor" className="mentor-image stove-image" />
+            <img src="/assets/StoveSolutions/Mentor/ThankYouMentor.png" alt="Our mentor" className="mentor-image stove-image" />
             <button
               className="lightbox-trigger"
-              onClick={() => setLightboxSrc('/assets/2024/03/ThankYouMentor.png')}
+              onClick={() => setLightboxSrc('/assets/StoveSolutions/Mentor/ThankYouMentor.png')}
               aria-label="View full screen"
             >
               <Maximize2 size={16} />
@@ -318,10 +318,10 @@ export default function StoveSolutions() {
             </p>
           </div>
           <div className="about-image image-frame fill">
-            <img src="/assets/2024/03/IMG_0661.jpg" alt="Stove Solutions team" className="stove-image" />
+            <img src="/assets/StoveSolutions/teamphoto.jpg" alt="Stove Solutions team" className="stove-image" />
             <button
               className="lightbox-trigger"
-              onClick={() => setLightboxSrc('/assets/2024/03/IMG_0661.jpg')}
+              onClick={() => setLightboxSrc('/assets/StoveSolutions/teamphoto.jpg')}
               aria-label="View full screen"
             >
               <Maximize2 size={16} />

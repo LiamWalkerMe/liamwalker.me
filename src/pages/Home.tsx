@@ -22,7 +22,7 @@ export default function Home() {
       <section
         className="cover"
         style={{
-          backgroundImage: 'url(/assets/2025/03/IMG_5457-2-scaled.jpg)',
+          backgroundImage: 'url(/assets/Photography/Banner.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: '67% 58%',
         }}
@@ -41,14 +41,14 @@ export default function Home() {
       <section
         className="cover bg-accent fixed"
         style={{
-          backgroundImage: 'url(/assets/2024/03/IMG_0661.jpg)',
+          backgroundImage: 'url(/assets/StoveSolutions/teamphoto.jpg)',
         }}
       >
         <div className="container" style={{ textAlign: 'center' }}>
           <img
-            src="/assets/2023/09/whiteArtboard-1@2x.png"
+            src="/assets/StoveSolutions/banner.png"
             alt="Stove Solutions"
-            style={{ maxWidth: 640, margin: '0 auto 20px' }}
+            style={{maxWidth: 1000, margin: '0 auto 20px' }}
           />
           <p style={{ marginBottom: 20 }}>An Engineering Design and Development Course Project</p>
           <Link className="button accent" to="/stovesolutions">
