@@ -8,6 +8,9 @@ interface SplitSectionProps {
   sectionStyle?: CSSProperties
   textClassName?: string
   textStyle?: CSSProperties
+  imageFit?: CSSProperties['objectFit']
+  imageWrapperStyle?: CSSProperties
+  imageStyle?: CSSProperties
 }
 
 export default function SplitSection({
@@ -18,7 +21,23 @@ export default function SplitSection({
   sectionStyle,
   textClassName = '',
   textStyle,
+  imageFit = 'cover',
+  imageWrapperStyle,
+  imageStyle,
 }: SplitSectionProps) {
+  const imageNode = (
+    <div className="split-edge__media" style={imageWrapperStyle}>
+      <img
+        src={imageSrc}
+        alt={imageAlt}
+        style={{
+          objectFit: imageFit,
+          ...imageStyle,
+        }}
+      />
+    </div>
+  )
+
   return (
     <section className="section" style={sectionStyle}>
       <div className="split-edge">
@@ -27,11 +46,11 @@ export default function SplitSection({
             <div className={`text-block ${textClassName}`.trim()} style={textStyle}>
               {children}
             </div>
-            <img src={imageSrc} alt={imageAlt} />
+            {imageNode}
           </>
         ) : (
           <>
-            <img src={imageSrc} alt={imageAlt} />
+            {imageNode}
             <div className={`text-block ${textClassName}`.trim()} style={textStyle}>
               {children}
             </div>

@@ -14,11 +14,11 @@ export default function Footer() {
         <div>
           <strong>Liam&apos;s Digital Portfolio</strong>
         </div>
-        <div className="nav-socials">
+        <div className="footer-socials">
           {socials.map((social) => (
             <a
               key={social.href}
-              className="social-icon social-icon--gray"
+              className="footer-social-icon"
               href={social.href}
               target="_blank"
               rel="noreferrer"

@@ -19,39 +19,63 @@ export default function Home() {
         </div>
       </section>
 
+
       <section
-        className="cover"
+        className="cover home-photography-cover"
         style={{
           backgroundImage: 'url(/assets/Photography/Banner.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: '67% 58%',
         }}
       >
-        <div className="container">
+        <div className="container home-photography-cover__content">
           <h2 className="cover-title">Photography</h2>
-          <p className="cover-subtitle" style={{ textAlign: 'left', marginLeft: 0, marginRight: 'auto' }}>
-            My Creative Outlet
-          </p>
+          <p className="cover-subtitle home-photography-cover__subtitle">My Creative Outlet</p>
           <Link className="button light" to="/photography">
             Learn More
           </Link>
         </div>
       </section>
 
+      <SplitSection
+        imageSrc="/assets/Website/FrontPage.png"
+        imageAlt="Website preview"
+        sectionStyle={{ background: '#f1f1f1' }}
+        imageFit="contain"
+        imageWrapperStyle={{
+          padding: 'clamp(24px, 6vw, 40px) clamp(20px, 5vw, 36px)',
+        }}
+        imageStyle={{
+          objectPosition: 'center',
+          filter: 'drop-shadow(0 20px 32px rgba(15, 17, 21, 0.16))',
+        }}
+        reverse={true}
+        textStyle={{ textAlign: 'center' }}
+      >
+        <div className="split-feature-copy" style={{ maxWidth: 520, margin: '0 auto' }}>
+          <h2 className="title-xl">This Website!</h2>
+          <p>Learn More About the Creation of This Website!</p>
+          <Link className="button" to="/website">
+            Learn More
+          </Link>
+        </div>
+      </SplitSection> 
+
       <section
-        className="cover bg-accent fixed"
+        className="cover bg-accent fixed home-stove-cover"
         style={{
           backgroundImage: 'url(/assets/StoveSolutions/teamphoto.jpg)',
+          backgroundPosition: 'center',
         }}
       >
-        <div className="container" style={{ textAlign: 'center', margin: '70px auto 70px' }}>
+        <div className="container home-stove-cover__content">
           <img
             src="/assets/StoveSolutions/banner.png"
             alt="Stove Solutions"
-            style={{maxWidth: 1000, margin: '0 auto 0' }}
+            className="home-stove-cover__banner"
           />
-          <p style={{ marginBottom: 40, fontSize: '20px' }}>An Engineering Design and Development Course Project</p>
-          <Link className="button accent" to="/stovesolutions"> 
+          <p className="home-stove-cover__description">An Engineering Design and Development Course Project</p>
+          <Link className="button accent" to="/stovesolutions">
             Learn More
           </Link>
         </div>
@@ -63,30 +87,16 @@ export default function Home() {
         textClassName="gradient-panel no-radius"
         textStyle={{ textAlign: 'center' }}
       >
-        <div style={{ maxWidth: 520, margin: '0 auto' }}>
+        <div className="split-feature-copy home-robotics-copy" style={{ maxWidth: 520, margin: '0 auto' }}>
           <h2 className="title-xl">FIRST Robotics</h2>
           <p>My experience on Team #10809 Crow Force</p>
-          <Link className="button light" to="/ftc-robotics">
+          <Link className="button light" to="/2023-24-season">
             Learn More
           </Link>
         </div>
       </SplitSection>
 
-      <SplitSection
-        imageSrc="/assets/Website/FrontPage.png"
-        imageAlt="Website preview"
-        sectionStyle={{ background: '#f1f1f1' }}
-        reverse={true}
-        textStyle={{ textAlign: 'center' }}
-      >
-        <div style={{ maxWidth: 520, margin: '0 auto' }}>
-          <h2 className="title-xl">This Website!</h2>
-          <p>Learn More About the Creation of This Website!</p>
-          <Link className="button" to="/website">
-            Learn More
-          </Link>
-        </div>
-      </SplitSection>
+      
     </div>
   )
 }

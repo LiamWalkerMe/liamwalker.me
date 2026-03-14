@@ -38,7 +38,7 @@ export default function Education() {
         <div style={{ maxWidth: 520, margin: '0 auto' }}>
           <h2 className="title-xl">FIRST Robotics</h2>
           <p>My experience on Team #10809 Crow Force</p>
-          <Link className="button light" to="/ftc-robotics">
+          <Link className="button light" to="/2023-24-season">
             Learn More
           </Link>
         </div>
@@ -48,6 +48,14 @@ export default function Education() {
         imageSrc="/assets/Website/FrontPage.png"
         imageAlt="Website preview"
         sectionStyle={{ background: '#f1f1f1' }}
+        imageFit="contain"
+        imageWrapperStyle={{
+          padding: 'clamp(24px, 6vw, 40px) clamp(20px, 5vw, 36px)',
+        }}
+        imageStyle={{
+          objectPosition: 'center',
+          filter: 'drop-shadow(0 20px 32px rgba(15, 17, 21, 0.16))',
+        }}
         reverse={true}
         textStyle={{ textAlign: 'center' }}
       >
