@@ -3,7 +3,7 @@ import SplitSection from '../components/SplitSection'
 
 export default function Home() {
   return (
-    <div>
+    <div className="page-stack page-stack--home">
       <section className="hero">
         <div className="container hero split">
           <div className="hero-card fade-in">
@@ -37,32 +37,29 @@ export default function Home() {
         </div>
       </section>
 
-      <SplitSection
-        imageSrc="/assets/Website/FrontPage.png"
-        imageAlt="Website preview"
-        sectionStyle={{ background: '#f1f1f1' }}
-        imageFit="contain"
-        imageWrapperStyle={{
-          padding: 'clamp(24px, 6vw, 40px) clamp(20px, 5vw, 36px)',
-        }}
-        imageStyle={{
-          objectPosition: 'center',
-          filter: 'drop-shadow(0 20px 32px rgba(15, 17, 21, 0.16))',
-        }}
-        reverse={true}
-        textStyle={{ textAlign: 'center' }}
-      >
-        <div className="split-feature-copy" style={{ maxWidth: 520, margin: '0 auto' }}>
-          <h2 className="title-xl">This Website!</h2>
-          <p>Learn More About the Creation of This Website!</p>
-          <Link className="button" to="/website">
-            Learn More
-          </Link>
+      <section className="home-website-showcase page-stack-gap-before">
+        <div className="container home-website-showcase__inner">
+          <div className="home-website-showcase__copy fade-in">
+            <h2 className="home-website-showcase__title">This Website</h2>
+            <Link className="button home-website-showcase__button" to="/website">
+              Learn More
+            </Link>
+          </div>
+
+          <div className="home-website-showcase__preview fade-in">
+            <div className="home-website-showcase__frame">
+              <div
+                className="home-website-showcase__image"
+                role="img"
+                aria-label="Current website homepage preview"
+              />
+            </div>
+          </div>
         </div>
-      </SplitSection> 
+      </section>
 
       <section
-        className="cover bg-accent fixed home-stove-cover"
+        className="cover bg-accent fixed home-stove-cover page-stack-gap-before"
         style={{
           backgroundImage: 'url(/assets/StoveSolutions/teamphoto.jpg)',
           backgroundPosition: 'center',
@@ -84,6 +81,7 @@ export default function Home() {
       <SplitSection
         imageSrc="/assets/Robotics/banner.jpeg"
         imageAlt="Liam Walker Robotics"
+        sectionStyle={{ paddingBottom: 0 }}
         textClassName="gradient-panel no-radius"
         textStyle={{ textAlign: 'center' }}
       >

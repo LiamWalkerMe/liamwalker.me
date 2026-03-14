@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { GraduationCap } from "lucide-react";
 
 import { C, StoryCard, StoryEyebrow, StorySection } from "./shared";
 
@@ -39,13 +40,7 @@ export interface DegreeSectionProps {
 }
 
 function DefaultDegreeSeal({ color }: { color: string }) {
-  return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-      <circle cx="14" cy="10" r="5" stroke={color} strokeWidth="1.5" />
-      <path d="M6 24c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M10 18l-2 4M18 18l2 4" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
+  return <GraduationCap size={28} strokeWidth={1.8} color={color} />;
 }
 
 export function DegreeSection({

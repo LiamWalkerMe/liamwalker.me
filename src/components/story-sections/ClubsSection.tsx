@@ -66,10 +66,19 @@ function ClubCard({ icon, name, role, color, bg, desc, delay = 0, cardStyle }: C
           justifyContent: "center",
         }}
       >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <circle cx="10" cy="10" r="9" stroke={color} strokeWidth="1.5" />
+        <div
+          aria-hidden="true"
+          style={{
+            width: 20,
+            height: 20,
+            color,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           {icon}
-        </svg>
+        </div>
       </div>
       <div>
         <div

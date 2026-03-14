@@ -1,3 +1,5 @@
+import { Binary, Film, Gamepad2, Monitor } from "lucide-react";
+
 import {
   C,
   ClubsSection,
@@ -101,15 +103,14 @@ const supportCard: MemoriesSupportCard = {
   body: "To my friends who joined me in late-night study sessions, . I am extremely grateful for the investment my family makes in education.",
 };
 
+const clubIconProps = {
+  size: 18,
+  strokeWidth: 1.8,
+};
+
 const clubs: ClubItem[] = [
   {
-    icon: (
-      <>
-        <rect x="5" y="6" width="10" height="8" rx="1" fill={C.blue} fillOpacity={0.7} />
-        <line x1="10" y1="14" x2="10" y2="16" stroke={C.blue} strokeWidth="1.2" />
-        <line x1="7" y1="16" x2="13" y2="16" stroke={C.blue} strokeWidth="1.2" />
-      </>
-    ),
+    icon: <Film {...clubIconProps} />,
     name: "Film Club",
     role: "Member",
     color: C.blue,
@@ -118,12 +119,7 @@ const clubs: ClubItem[] = [
     delay: 0,
   },
   {
-    icon: (
-      <>
-        <rect x="4" y="5" width="12" height="10" rx="1.5" fill={C.teal} fillOpacity={0.6} />
-        <path d="M7 9l2 2 4-3" stroke={C.white} strokeWidth="1.2" strokeLinecap="round" />
-      </>
-    ),
+    icon: <Monitor {...clubIconProps} />,
     name: "CS for the Common Good",
     role: "Member",
     color: C.teal,
@@ -132,12 +128,7 @@ const clubs: ClubItem[] = [
     delay: 80,
   },
   {
-    icon: (
-      <>
-        <circle cx="10" cy="8" r="3" fill="#9b6b9b" fillOpacity={0.7} />
-        <path d="M4 16c0-3 2.7-5 6-5s6 2 6 5" fill="#9b6b9b" fillOpacity={0.4} />
-      </>
-    ),
+    icon: <Binary {...clubIconProps} />,
     name: "LeetCode Club",
     role: "Member",
     color: "#9b6b9b",
@@ -146,12 +137,7 @@ const clubs: ClubItem[] = [
     delay: 160,
   },
   {
-    icon: (
-      <>
-        <path d="M5 15l5-9 5 9" stroke={C.gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-        <line x1="7" y1="12" x2="13" y2="12" stroke={C.gold} strokeWidth="1.3" />
-      </>
-    ),
+    icon: <Gamepad2 {...clubIconProps} />,
     name: "Game Design Club",
     role: "Member",
     color: C.gold,

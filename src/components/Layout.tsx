@@ -2,8 +2,35 @@ import { type ReactNode, useEffect, useLayoutEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
+import { isPageUnderConstruction } from '../config/siteFlags'
 
 const viewAnimatedSelector = ['.fade-in', '.reveal', '.h1-1', '.h1-2', '.h1-3', '.spec-item', '.logo-video-credit', '.spin', '.grad-text'].join(', ')
+const baseDocumentTitle = "Liam's Digital Portfolio"
+
+function getPageTitle(pathname: string) {
+  switch (pathname) {
+    case '/':
+      return 'Home'
+    case '/miracosta':
+      return isPageUnderConstruction('miracosta') ? 'MiraCosta (Under Construction)' : 'MiraCosta'
+    case '/stovesolutions':
+      return 'Stove Solutions'
+    case '/photography':
+      return 'Photography'
+    case '/socials':
+      return 'Socials'
+    case '/website':
+      return isPageUnderConstruction('website') ? 'Website (Under Construction)' : 'Website'
+    case '/2022-23-season':
+      return 'Robotics 2022-23 Season'
+    case '/2023-24-season':
+      return 'Robotics 2023-24 Season'
+    case '/zora2024':
+      return 'ZORA 2024'
+    default:
+      return 'Not Found'
+  }
+}
 
 interface LayoutProps {
   children: ReactNode
@@ -13,6 +40,10 @@ export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
   const [visible, setVisible] = useState(false)
   const hideHeader = location.pathname.startsWith('/zora2024')
+  const isHomePage = location.pathname === '/'
+  const hasUnderHeaderHero =
+    (location.pathname === '/website' && !isPageUnderConstruction('website')) ||
+    (location.pathname === '/miracosta' && !isPageUnderConstruction('miracosta'))
 
   useEffect(() => {
     if (!window.history.scrollRestoration) {
@@ -35,6 +66,10 @@ export default function Layout({ children }: LayoutProps) {
     setVisible(false)
     const id = requestAnimationFrame(() => setVisible(true))
     return () => cancelAnimationFrame(id)
+  }, [location.pathname])
+
+  useEffect(() => {
+    document.title = `${baseDocumentTitle} - ${getPageTitle(location.pathname)}`
   }, [location.pathname])
 
   useEffect(() => {
@@ -62,8 +97,8 @@ export default function Layout({ children }: LayoutProps) {
         })
       },
       {
-        threshold: 0.18,
-        rootMargin: '0px 0px -8% 0px',
+        threshold: 0.08,
+        rootMargin: '0px 0px -2% 0px',
       }
     )
 
@@ -86,7 +121,13 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       {!hideHeader && <Header />}
-      <main className={`main page-fade ${visible ? 'is-visible' : ''} ${hideHeader ? 'main--no-header' : ''}`.trim()}>
+      <main
+        className={`main page-fade ${visible ? 'is-visible' : ''} ${hideHeader ? 'main--no-header' : ''} ${
+          isHomePage ? 'main--home' : ''
+        } ${
+          hasUnderHeaderHero ? 'main--under-header-hero' : ''
+        }`.trim()}
+      >
         {children}
       </main>
       <Footer />

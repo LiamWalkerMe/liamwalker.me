@@ -116,22 +116,33 @@ export function ClosingSection({
                 fontSize: 15,
                 fontWeight: 600,
                 letterSpacing: "0.04em",
+                border: `1.5px solid ${C.gold}`,
                 textDecoration: "none",
-                transition: "transform 0.2s, box-shadow 0.2s",
+                transition: "background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s",
                 ...action.style,
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.transform = "scale(1.04)";
-                e.currentTarget.style.boxShadow = `0 12px 36px ${C.gold}55`;
+                e.currentTarget.style.background = C.navy;
+                e.currentTarget.style.color = C.gold;
+                e.currentTarget.style.borderColor = C.gold;
+                e.currentTarget.style.transform = "translateY(-2px)";
               }}
               onMouseOut={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow = "none";
+                e.currentTarget.style.background = C.gold;
+                e.currentTarget.style.color = C.navy;
+                e.currentTarget.style.borderColor = C.gold;
+                e.currentTarget.style.transform = "translateY(0)";
               }}
             >
               {action.label}
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke={C.navy} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </a>
           </div>

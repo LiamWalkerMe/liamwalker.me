@@ -1,6 +1,6 @@
 export const siteFlags = {
   miracosta: true,
-  website: true,
+  website: false,
 } as const
 
 export type SiteFlagKey = keyof typeof siteFlags

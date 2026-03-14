@@ -49,7 +49,7 @@ function getActionBaseStyle(variant: HeroAction["variant"]): CSSProperties {
       border: `1.5px solid ${C.navy}35`,
       textDecoration: "none",
       letterSpacing: "0.04em",
-      transition: "border-color 0.2s",
+      transition: "background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s",
       display: "inline-block",
     };
   }
@@ -61,9 +61,10 @@ function getActionBaseStyle(variant: HeroAction["variant"]): CSSProperties {
     borderRadius: 100,
     fontSize: 14,
     fontWeight: 500,
+    border: `1.5px solid ${C.navy}`,
     textDecoration: "none",
     letterSpacing: "0.04em",
-    transition: "transform 0.2s, box-shadow 0.2s",
+    transition: "background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s",
     display: "inline-block",
   };
 }
@@ -76,7 +77,7 @@ export function HeroSection({
   actions = [],
   stats = [],
   bgColor = `linear-gradient(150deg, ${C.sky} 0%, ${C.seafoam} 55%, ${C.sand} 100%)`,
-  bgSpeed = 0.28,
+  bgSpeed = 0.20,
   sectionStyle,
   containerStyle,
   contentStyle,
@@ -176,18 +177,28 @@ export function HeroSection({
                   style={{ ...getActionBaseStyle(action.variant), ...action.style }}
                   onMouseOver={(e) => {
                     if (action.variant === "secondary") {
-                      e.currentTarget.style.borderColor = `${C.navy}80`;
+                      e.currentTarget.style.background = C.navy;
+                      e.currentTarget.style.color = C.white;
+                      e.currentTarget.style.borderColor = C.navy;
+                      e.currentTarget.style.transform = "translateY(-2px)";
                     } else {
-                      e.currentTarget.style.transform = "scale(1.03)";
-                      e.currentTarget.style.boxShadow = `0 10px 28px ${C.navy}40`;
+                      e.currentTarget.style.background = C.white;
+                      e.currentTarget.style.color = C.navy;
+                      e.currentTarget.style.borderColor = C.navy;
+                      e.currentTarget.style.transform = "translateY(-2px)";
                     }
                   }}
                   onMouseOut={(e) => {
                     if (action.variant === "secondary") {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = C.navy;
                       e.currentTarget.style.borderColor = `${C.navy}35`;
+                      e.currentTarget.style.transform = "translateY(0)";
                     } else {
-                      e.currentTarget.style.transform = "scale(1)";
-                      e.currentTarget.style.boxShadow = "none";
+                      e.currentTarget.style.background = C.navy;
+                      e.currentTarget.style.color = C.white;
+                      e.currentTarget.style.borderColor = C.navy;
+                      e.currentTarget.style.transform = "translateY(0)";
                     }
                   }}
                 >
