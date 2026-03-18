@@ -49,6 +49,7 @@
 :root {
   --bg: #ffffff;
   --ink: #0f1115;
+  --brand-accent: var(--ink);
   --muted: #5b6573;
   --light: #ffffff;
   --accent: #0f8277;
@@ -81,6 +82,27 @@ img {
   max-width: 100%;
   display: block;
   border-radius: 0;
+}
+
+img.image-fade-target {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.42s ease,
+    transform 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+img.image-fade-target.is-image-loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  img.image-fade-target {
+    transition: none;
+    transform: none;
+  }
 }
 
 .main {
@@ -943,7 +965,9 @@ img {
 }
 
 .brand {
+  font-family: "Unbounded", "Figtree", system-ui, sans-serif;
   font-weight: 700;
+  color: var(--brand-accent);
 }
 
 .nav-links {

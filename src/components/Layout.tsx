@@ -5,7 +5,25 @@ import Footer from './Footer'
 import { isPageUnderConstruction } from '../config/siteFlags'
 
 const viewAnimatedSelector = ['.fade-in', '.reveal', '.h1-1', '.h1-2', '.h1-3', '.spec-item', '.logo-video-credit', '.spin', '.grad-text'].join(', ')
+const imageFadeSelector = 'img'
 const baseDocumentTitle = "Liam's Digital Portfolio"
+
+function getBrandAccent(pathname: string) {
+  switch (pathname) {
+    case '/':
+      return '#002142'
+    case '/miracosta':
+      return '#0d3b6e'
+    case '/website':
+      return '#24317b'
+    case '/stovesolutions':
+      return '#0f8277'
+    case '/zora2024':
+      return '#162466'
+    default:
+      return '#0f1115'
+  }
+}
 
 function getPageTitle(pathname: string) {
   switch (pathname) {
@@ -72,6 +90,15 @@ export default function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     document.title = `${baseDocumentTitle} - ${getPageTitle(location.pathname)}`
+  }, [location.pathname])
+
+  useEffect(() => {
+    const accent = getBrandAccent(location.pathname)
+    document.body.style.setProperty('--brand-accent', accent)
+
+    return () => {
+      document.body.style.removeProperty('--brand-accent')
+    }
   }, [location.pathname])
 
   useEffect(() => {
@@ -153,6 +180,90 @@ export default function Layout({ children }: LayoutProps) {
       mutationObserver.disconnect()
       observer.disconnect()
       observedElements.clear()
+    }
+  }, [location.pathname])
+
+  useEffect(() => {
+    const observedImages = new Set<HTMLImageElement>()
+    const imageCleanupMap = new Map<HTMLImageElement, () => void>()
+
+    const markImageLoaded = (image: HTMLImageElement) => {
+      if (image.classList.contains('is-image-loaded')) {
+        return
+      }
+
+      window.requestAnimationFrame(() => {
+        image.classList.add('is-image-loaded')
+      })
+    }
+
+    const observeImage = (image: HTMLImageElement) => {
+      if (observedImages.has(image)) {
+        return
+      }
+
+      observedImages.add(image)
+      image.classList.add('image-fade-target')
+      image.classList.remove('is-image-loaded')
+
+      if (image.complete) {
+        markImageLoaded(image)
+        return
+      }
+
+      const handleComplete = () => {
+        markImageLoaded(image)
+        cleanup()
+      }
+
+      const cleanup = () => {
+        image.removeEventListener('load', handleComplete)
+        image.removeEventListener('error', handleComplete)
+        imageCleanupMap.delete(image)
+      }
+
+      image.addEventListener('load', handleComplete)
+      image.addEventListener('error', handleComplete)
+      imageCleanupMap.set(image, cleanup)
+    }
+
+    const observeMatchingImages = (root: ParentNode) => {
+      if (root instanceof HTMLImageElement && root.matches(imageFadeSelector)) {
+        observeImage(root)
+      }
+
+      root.querySelectorAll<HTMLImageElement>(imageFadeSelector).forEach(observeImage)
+    }
+
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (!(node instanceof HTMLElement)) {
+            return
+          }
+
+          observeMatchingImages(node)
+        })
+      })
+    })
+
+    const id = window.requestAnimationFrame(() => {
+      const mainElement = mainRef.current
+
+      if (!mainElement) {
+        return
+      }
+
+      observeMatchingImages(mainElement)
+      mutationObserver.observe(mainElement, { childList: true, subtree: true })
+    })
+
+    return () => {
+      window.cancelAnimationFrame(id)
+      mutationObserver.disconnect()
+      imageCleanupMap.forEach((cleanup) => cleanup())
+      imageCleanupMap.clear()
+      observedImages.clear()
     }
   }, [location.pathname])
 
