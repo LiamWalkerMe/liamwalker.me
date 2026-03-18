@@ -1,20 +1,4 @@
 @font-face {
-  font-family: "Figtree";
-  src: url("/assets/Fonts/Figtree/Figtree-VariableFont_wght.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 300 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Figtree";
-  src: url("/assets/Fonts/Figtree/Figtree-Italic-VariableFont_wght.ttf") format("truetype");
-  font-style: italic;
-  font-weight: 300 900;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "DM Sans";
   src: url("/assets/Fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf") format("truetype");
   font-style: normal;
@@ -75,7 +59,7 @@
 
 body {
   margin: 0;
-  font-family: "Figtree", system-ui, -apple-system, sans-serif;
+  font-family: "DM Sans", system-ui, -apple-system, sans-serif;
   color: var(--ink);
   background: var(--bg);
 }
