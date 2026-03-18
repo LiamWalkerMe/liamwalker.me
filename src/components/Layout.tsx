@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useLayoutEffect, useState } from 'react'
+import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
@@ -39,9 +39,11 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
   const [visible, setVisible] = useState(false)
+  const mainRef = useRef<HTMLElement>(null)
   const hideHeader = location.pathname.startsWith('/zora2024')
   const isHomePage = location.pathname === '/'
   const hasUnderHeaderHero =
+    location.pathname === '/' ||
     (location.pathname === '/website' && !isPageUnderConstruction('website')) ||
     (location.pathname === '/miracosta' && !isPageUnderConstruction('miracosta'))
 
@@ -73,6 +75,8 @@ export default function Layout({ children }: LayoutProps) {
   }, [location.pathname])
 
   useEffect(() => {
+    const observedElements = new Set<HTMLElement>()
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -102,19 +106,53 @@ export default function Layout({ children }: LayoutProps) {
       }
     )
 
-    const id = window.requestAnimationFrame(() => {
-      const elements = document.querySelectorAll<HTMLElement>(viewAnimatedSelector)
+    const observeElement = (element: HTMLElement) => {
+      if (observedElements.has(element)) {
+        return
+      }
 
-      elements.forEach((element) => {
-        element.classList.remove('is-in-view')
-        element.classList.remove('is-in-view-active')
-        observer.observe(element)
+      element.classList.remove('is-in-view')
+      element.classList.remove('is-in-view-active')
+      observer.observe(element)
+      observedElements.add(element)
+    }
+
+    const observeMatchingElements = (root: ParentNode) => {
+      if (root instanceof HTMLElement && root.matches(viewAnimatedSelector)) {
+        observeElement(root)
+      }
+
+      root.querySelectorAll<HTMLElement>(viewAnimatedSelector).forEach(observeElement)
+    }
+
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (!(node instanceof HTMLElement)) {
+            return
+          }
+
+          observeMatchingElements(node)
+        })
       })
+    })
+
+    const id = window.requestAnimationFrame(() => {
+      const mainElement = mainRef.current
+
+      if (!mainElement) {
+        return
+      }
+
+      observeMatchingElements(mainElement)
+      mutationObserver.observe(mainElement, { childList: true, subtree: true })
     })
 
     return () => {
       window.cancelAnimationFrame(id)
+      mutationObserver.disconnect()
       observer.disconnect()
+      observedElements.clear()
     }
   }, [location.pathname])
 
@@ -122,6 +160,7 @@ export default function Layout({ children }: LayoutProps) {
     <>
       {!hideHeader && <Header />}
       <main
+        ref={mainRef}
         className={`main page-fade ${visible ? 'is-visible' : ''} ${hideHeader ? 'main--no-header' : ''} ${
           isHomePage ? 'main--home' : ''
         } ${

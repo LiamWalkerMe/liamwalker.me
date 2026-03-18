@@ -1,4 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react'
+import ResponsiveImage from './ResponsiveImage'
+import type { ResponsiveImageAsset } from '../lib/responsiveImages'
 
 interface SplitSectionProps {
   imageSrc: string
@@ -11,6 +13,8 @@ interface SplitSectionProps {
   imageFit?: CSSProperties['objectFit']
   imageWrapperStyle?: CSSProperties
   imageStyle?: CSSProperties
+  imageAsset?: ResponsiveImageAsset
+  imageSizes?: string
 }
 
 export default function SplitSection({
@@ -24,17 +28,36 @@ export default function SplitSection({
   imageFit = 'cover',
   imageWrapperStyle,
   imageStyle,
+  imageAsset,
+  imageSizes = '(max-width: 900px) 100vw, 50vw',
 }: SplitSectionProps) {
   const imageNode = (
     <div className="split-edge__media" style={imageWrapperStyle}>
-      <img
-        src={imageSrc}
-        alt={imageAlt}
-        style={{
-          objectFit: imageFit,
-          ...imageStyle,
-        }}
-      />
+      {imageAsset ? (
+        <ResponsiveImage
+          asset={imageAsset}
+          alt={imageAlt}
+          sizes={imageSizes}
+          loading="lazy"
+          decoding="async"
+          pictureStyle={{ width: '100%', height: '100%' }}
+          style={{
+            objectFit: imageFit,
+            ...imageStyle,
+          }}
+        />
+      ) : (
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          loading="lazy"
+          decoding="async"
+          style={{
+            objectFit: imageFit,
+            ...imageStyle,
+          }}
+        />
+      )}
     </div>
   )
 

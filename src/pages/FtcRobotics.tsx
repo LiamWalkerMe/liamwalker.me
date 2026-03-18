@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import SplitSection from '../components/SplitSection'
+import { responsiveImages } from '../generated/responsiveImages'
 
 export default function FtcRobotics() {
   return (
@@ -20,6 +21,7 @@ export default function FtcRobotics() {
       <SplitSection
         imageSrc="/assets/Robotics/2023/banner.jpeg"
         imageAlt="Crow Force 2023-24"
+        imageAsset={responsiveImages.ftc2023Banner}
         textClassName="gradient-panel no-radius"
         textStyle={{ textAlign: 'center' }}
       >
@@ -35,6 +37,7 @@ export default function FtcRobotics() {
       <SplitSection
         imageSrc="/assets/Robotics/2022/banner.jpg"
         imageAlt="Crow Force 2022-23"
+        imageAsset={responsiveImages.ftc2022Banner}
         sectionStyle={{
           background: 'linear-gradient(315deg, rgb(25,0,0) 0%, rgb(220,0,0) 100%)',
           padding: 0,

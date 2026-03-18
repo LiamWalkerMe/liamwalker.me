@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import SplitSection from '../components/SplitSection'
+import { responsiveImages } from '../generated/responsiveImages'
 
 export default function Education() {
   return (
@@ -13,7 +14,7 @@ export default function Education() {
       <section
         className="cover bg-accent fixed"
         style={{
-          backgroundImage: 'url(/assets/StoveSolutions/teamphoto.jpg)',
+          backgroundImage: 'url(/assets/StoveSolutions/teamphoto-1600.jpg)',
         }}
       >
         <div className="container" style={{ textAlign: 'center' }}>
@@ -32,6 +33,7 @@ export default function Education() {
       <SplitSection
         imageSrc="/assets/Robotics/banner.jpeg"
         imageAlt="FIRST Robotics"
+        imageAsset={responsiveImages.homeRoboticsBanner}
         textClassName="gradient-panel no-radius"
         textStyle={{ textAlign: 'center' }}
       >

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Maximize2, X } from 'lucide-react'
+import ResponsiveImage from '../components/ResponsiveImage'
+import { responsiveImages } from '../generated/responsiveImages'
 
 const introSections = [
   {
@@ -229,7 +231,7 @@ export default function StoveSolutions() {
                   <div className="concept-slide">
                     <h3>{slide.title}</h3>
                     <div className="image-frame tight">
-                      <img src={slide.image} alt={slide.title} className="stove-image" />
+                      <img src={slide.image} alt={slide.title} className="stove-image" loading="lazy" decoding="async" />
                       <button
                         className="lightbox-trigger"
                         onClick={() => setLightboxSrc(slide.image)}
@@ -280,7 +282,13 @@ export default function StoveSolutions() {
         <div className="container" style={{ textAlign: 'center', color: '#fff' }}>
           <h2 className="section-title">Our Mentor</h2>
           <div className="image-frame mentor-frame">
-            <img src="/assets/StoveSolutions/Mentor/ThankYouMentor.png" alt="Our mentor" className="mentor-image stove-image" />
+            <img
+              src="/assets/StoveSolutions/Mentor/ThankYouMentor.png"
+              alt="Our mentor"
+              className="mentor-image stove-image"
+              loading="lazy"
+              decoding="async"
+            />
             <button
               className="lightbox-trigger"
               onClick={() => setLightboxSrc('/assets/StoveSolutions/Mentor/ThankYouMentor.png')}
@@ -318,7 +326,15 @@ export default function StoveSolutions() {
             </p>
           </div>
           <div className="about-image image-frame fill">
-            <img src="/assets/StoveSolutions/teamphoto.jpg" alt="Stove Solutions team" className="stove-image" />
+            <ResponsiveImage
+              asset={responsiveImages.stoveTeamPhoto}
+              alt="Stove Solutions team"
+              pictureStyle={{ width: '100%', height: '100%' }}
+              className="stove-image"
+              sizes="(max-width: 900px) 100vw, 50vw"
+              loading="lazy"
+              decoding="async"
+            />
             <button
               className="lightbox-trigger"
               onClick={() => setLightboxSrc('/assets/StoveSolutions/teamphoto.jpg')}

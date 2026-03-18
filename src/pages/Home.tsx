@@ -1,29 +1,39 @@
 import { Link } from 'react-router-dom'
+import DeferredBackgroundSection from '../components/DeferredBackgroundSection'
+import ResponsiveImage from '../components/ResponsiveImage'
 import SplitSection from '../components/SplitSection'
+import { responsiveImages } from '../generated/responsiveImages'
 
 export default function Home() {
   return (
     <div className="page-stack page-stack--home">
-      <section className="hero">
-        <div className="container hero split">
-          <div className="hero-card fade-in">
-            <p className="hero-subtitle">Computer Science Student at MiraCosta College</p>
-            <h1 className="hero-title">liamwalker.me</h1>
-            <Link className="button" to="/website">
+      <section className="hero hero--home page-hero-under-header">
+        <div className="container hero-home">
+          <div className="hero-home__copy fade-in">
+            <p className="hero-subtitle hero-home__subtitle">Computer Science Student at MiraCosta College</p>
+            <h1 className="hero-title hero-home__title">liamwalker.me</h1>
+            <Link className="button hero-home__button" to="/website">
               Learn More About This Website
             </Link>
           </div>
-          <div className="hero-portrait fade-in">
-            <img src="/assets/Hero/profile.png" alt="Liam Walker" />
+          <div className="hero-portrait hero-home__portrait fade-in">
+            <ResponsiveImage
+              asset={responsiveImages.heroProfile}
+              alt="Liam Walker"
+              sizes="(max-width: 900px) calc(100vw - 40px), 480px"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              pictureStyle={{ width: '100%', height: '100%' }}
+            />
           </div>
         </div>
       </section>
 
-
-      <section
-        className="cover home-photography-cover"
+      <DeferredBackgroundSection
+        className="cover home-photography-cover page-stack-gap-before"
+        backgroundImageUrl="/assets/Photography/Banner-1600.jpg"
         style={{
-          backgroundImage: 'url(/assets/Photography/Banner.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: '67% 58%',
         }}
@@ -35,7 +45,7 @@ export default function Home() {
             Learn More
           </Link>
         </div>
-      </section>
+      </DeferredBackgroundSection>
 
       <section className="home-website-showcase page-stack-gap-before">
         <div className="container home-website-showcase__inner">
@@ -58,10 +68,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section
+      <DeferredBackgroundSection
         className="cover bg-accent fixed home-stove-cover page-stack-gap-before"
+        backgroundImageUrl="/assets/StoveSolutions/teamphoto-1600.jpg"
         style={{
-          backgroundImage: 'url(/assets/StoveSolutions/teamphoto.jpg)',
           backgroundPosition: 'center',
         }}
       >
@@ -76,14 +86,16 @@ export default function Home() {
             Learn More
           </Link>
         </div>
-      </section>
+      </DeferredBackgroundSection>
 
       <SplitSection
         imageSrc="/assets/Robotics/banner.jpeg"
         imageAlt="Liam Walker Robotics"
+        imageAsset={responsiveImages.homeRoboticsBanner}
         sectionStyle={{ paddingBottom: 0 }}
         textClassName="gradient-panel no-radius"
         textStyle={{ textAlign: 'center' }}
+        imageSizes="(max-width: 900px) 100vw, 50vw"
       >
         <div className="split-feature-copy home-robotics-copy" style={{ maxWidth: 520, margin: '0 auto' }}>
           <h2 className="title-xl">FIRST Robotics</h2>
@@ -93,8 +105,6 @@ export default function Home() {
           </Link>
         </div>
       </SplitSection>
-
-      
     </div>
   )
 }
