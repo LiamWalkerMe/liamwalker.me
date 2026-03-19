@@ -2,8 +2,8 @@ import type { ResponsiveImageAsset } from '../lib/responsiveImages'
 
 export const responsiveImages = {
   "heroProfile": {
-    "width": 1490,
-    "height": 1743,
+    "width": 1439,
+    "height": 1748,
     "fallbackMimeType": "image/png",
     "sources": {
       "avif": [

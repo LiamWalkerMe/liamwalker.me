@@ -54,7 +54,7 @@ const websiteVersions: WebsiteVersion[] = [
     title: "WordPress Beginnings",
     subtitle: "Shared hosting and first launch",
     body: "What began as a WordPress site hosted on a shared account quickly revealed its limitations — slow load times and a cumbersome design and launch process made it clear that a better solution was needed. To address this, the site was migrated to a dedicated, self-managed server, giving it the performance and flexibility it deserved.",
-    imageSrc: "/assets/Website/VSCode.png",
+    imageSrc: "/assets/Website/LocalHost.png",
     imageAlt: "Early website development stage",
   },
   {
@@ -62,7 +62,7 @@ const websiteVersions: WebsiteVersion[] = [
     title: "AWS EC2 Instance",
     subtitle: "More control, more overhead",
     body: "To further improve speed and reliability, the site was migrated to a dedicated Amazon EC2 instance. However, this introduced a new challenge: cost. A significant volume of automated bot traffic was driving up hosting expenses, making the solution unsustainable. This necessitated a shift toward a more cost-effective, and ideally free, hosting alternative.",
-    imageSrc: "/assets/Website/GitHub.png",
+    imageSrc: "/assets/Website/AWS.png",
     imageAlt: "Website version hosted on an EC2 setup",
   },
   {
@@ -74,11 +74,11 @@ const websiteVersions: WebsiteVersion[] = [
     imageAlt: "Website version built from a local WordPress environment",
   },
   {
-    id: "github-pages",
-    title: "GitHub Pages",
-    subtitle: "React-powered current iteration",
+    id: "react",
+    title: "React",
+    subtitle: "React + Github Pages",
     body: "The current iteration of the site represents a significant step forward in both design capability and technical complexity, supporting advanced page layouts and smooth animations. It is built on React, a framework gained hands-on experience with during an internship at Epik AI. Prior to development, each page is carefully designed in Figma — allowing for thoughtful exploration of typography, color, and layout — before being brought to life in code. React's widespread adoption across the industry makes it not only a powerful tool for this project, but a valuable and in-demand skill in modern web development.",
-    imageSrc: "/assets/Website/FrontPage.png",
+    imageSrc: "/assets/Website/React.png",
     imageAlt: "Current website front page",
   },
 ];
