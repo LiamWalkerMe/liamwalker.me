@@ -70,7 +70,7 @@ const websiteVersions: WebsiteVersion[] = [
     title: "Local WordPress",
     subtitle: "Static export from a local build",
     body: "GitHub Pages presented an attractive free hosting solution, though it came with a notable limitation: it does not support WordPress. To work around this, a local WordPress environment was used to build and export raw HTML, which was then deployed as a static site. However, it became apparent that WordPress — even in this configuration — was too restrictive. The decision was made to move on entirely and rebuild using a modern framework, one that offered the flexibility and customizability needed to truly showcase technical ability.",
-    imageSrc: "/assets/Website/LocalHost.png",
+    imageSrc: "/assets/Website/GitHub.png",
     imageAlt: "Website version built from a local WordPress environment",
   },
   {

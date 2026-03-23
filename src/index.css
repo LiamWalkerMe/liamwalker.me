@@ -188,9 +188,10 @@ img.image-fade-target.is-image-loaded {
 .hero-home {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  width: min(1180px, 100%);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
   align-items: center;
-  gap: clamp(80px, 5vw, 80px);
+  gap: clamp(40px, 5vw, 72px);
   min-height: 100svh;
   padding-top: clamp(200px, 8vw, 92px);
   padding-bottom: clamp(56px, 8vw, 92px);
@@ -250,11 +251,11 @@ img.image-fade-target.is-image-loaded {
 .hero-home__portrait {
   position: relative;
   z-index: 1;
-  align-self: end;
-  justify-self: end;
+  align-self: center;
+  justify-self: center;
   width: min(100%, 480px);
   max-width: 480px;
-  margin-right: clamp(8px, 4vw, 60px);
+  margin-right: 0;
 }
 
 .hero-home__portrait img {
