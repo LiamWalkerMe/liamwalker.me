@@ -62,6 +62,7 @@ export default function Layout({ children }: LayoutProps) {
   const isHomePage = location.pathname === '/'
   const hasUnderHeaderHero =
     location.pathname === '/' ||
+    location.pathname === '/photography' ||
     (location.pathname === '/website' && !isPageUnderConstruction('website')) ||
     (location.pathname === '/miracosta' && !isPageUnderConstruction('miracosta'))
 

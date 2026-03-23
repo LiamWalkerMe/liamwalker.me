@@ -67,12 +67,12 @@ export const photoSections = [
   {
     title: 'Mount Laguna',
     images: [
-      '/assets/Photography/Laguna/MountLaguna1.jpg',
       '/assets/Photography/Laguna/MountLaguna5.jpg',
       '/assets/Photography/Laguna/MountLaguna6.jpg',
       '/assets/Photography/Laguna/MountLaguna3.jpg',
       '/assets/Photography/Laguna/MountLaguna8.jpg',
       '/assets/Photography/Laguna/MountLaguna4.jpg',
+      '/assets/Photography/Laguna/MountLaguna1.jpg',
     ],
   },
 ]
