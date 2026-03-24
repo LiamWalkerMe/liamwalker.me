@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react'
-import { ArrowUpRight, Globe2 } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Globe2 } from 'lucide-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faInstagram, faLinkedinIn, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { Link } from 'react-router-dom'
 
 type SocialLink = {
   label: string
@@ -91,6 +92,11 @@ export default function Socials() {
   return (
     <div className="socials-page">
       <section className="container socials-shell">
+        <Link className="socials-back-link fade-in" to="/" aria-label="Back to home page">
+          <ArrowLeft size={18} aria-hidden="true" />
+          <span>Home</span>
+        </Link>
+
         <div className="socials-hero fade-in">
           <span className="socials-kicker">Find Me Online</span>
           <h1 className="socials-title">Socials</h1>

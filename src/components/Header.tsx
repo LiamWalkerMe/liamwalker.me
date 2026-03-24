@@ -9,7 +9,7 @@ const educationLinks = [
 ]
 
 const projectLinks = [
-  { label: 'Website', to: '/website' },
+  { label: 'This Website', to: '/website' },
   { label: 'Stove Solutions', to: '/stovesolutions' },
 ]
 
@@ -19,6 +19,11 @@ const roboticsLinks = [
 ]
 
 const socials = [
+  {
+    label: 'Socials',
+    to: '/socials',
+    color: '#607284',
+  },
   {
     label: 'GitHub',
     href: 'https://github.com/LiamWalkerMe',
@@ -31,12 +36,50 @@ const socials = [
     color: '#0a66c2',
     icon: faLinkedinIn,
   },
-  {
-    label: 'Socials',
-    to: '/socials',
-    color: '#607284',
-  },
+
 ]
+
+function HeaderSocialIcon({
+  social,
+  className,
+  onClick,
+}: {
+  social: (typeof socials)[number]
+  className?: string
+  onClick?: () => void
+}) {
+  if (social.to) {
+    return (
+      <Link
+        key={social.to}
+        to={social.to}
+        className={className ?? 'social-icon'}
+        style={{ background: social.color }}
+        aria-label={social.label}
+        title={social.label}
+        onClick={onClick}
+      >
+        <Share2 size={18} aria-hidden="true" />
+      </Link>
+    )
+  }
+
+  return (
+    <a
+      key={social.href}
+      href={social.href}
+      target="_blank"
+      rel="noreferrer"
+      className={className ?? 'social-icon'}
+      style={{ background: social.color }}
+      aria-label={social.label}
+      title={social.label}
+      onClick={onClick}
+    >
+      <FontAwesomeIcon icon={social.icon!} />
+    </a>
+  )
+}
 
 export default function Header() {
   const location = useLocation()
@@ -286,35 +329,25 @@ export default function Header() {
           <a className="nav-item" href="/LiamWalkerResume.pdf" target="_blank" rel="noreferrer" onClick={closeAllMenus}>
             Resume
           </a>
+          <div className="nav-mobile-socials">
+            {socials.map((social) => (
+              <HeaderSocialIcon
+                key={social.to ?? social.href}
+                social={social}
+                className="social-icon nav-mobile-social-icon"
+                onClick={closeAllMenus}
+              />
+            ))}
+          </div>
         </nav>
         <div className="nav-socials">
           {socials.map((social) => (
-            social.to ? (
-              <Link
-                key={social.to}
-                to={social.to}
-                className="social-icon"
-                style={{ background: social.color }}
-                aria-label={social.label}
-                title={social.label}
-                onClick={closeAllMenus}
-              >
-                <Share2 size={18} aria-hidden="true" />
-              </Link>
-            ) : (
-              <a
-                key={social.href}
-                href={social.href}
-                target="_blank"
-                rel="noreferrer"
-                className="social-icon"
-                style={{ background: social.color }}
-                aria-label={social.label}
-                title={social.label}
-              >
-                <FontAwesomeIcon icon={social.icon!} />
-              </a>
-            )
+            <HeaderSocialIcon
+              key={social.to ?? social.href}
+              social={social}
+              className="social-icon"
+              onClick={closeAllMenus}
+            />
           ))}
         </div>
       </div>

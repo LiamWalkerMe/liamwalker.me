@@ -483,10 +483,7 @@ img.image-fade-target.is-image-loaded {
   position: relative;
   isolation: isolate;
   color: #f7ebdf;
-  background:
-    radial-gradient(circle at top, rgba(125, 47, 20, 0.34), transparent 34%),
-    radial-gradient(circle at 18% 24%, rgba(255, 146, 90, 0.14), transparent 28%),
-    linear-gradient(180deg, #120706 0%, #0e0505 30%, #090304 100%);
+  background: linear-gradient(135deg, #341008 0%, #0F0000 100%);
 }
 
 .photography-page::before {
@@ -510,6 +507,7 @@ img.image-fade-target.is-image-loaded {
   min-height: clamp(580px, 88svh, 860px);
   display: grid;
   align-items: center;
+  background: radial-gradient(circle at center, #341008 0%, #1b0a07 100%);
   padding: calc(52px + var(--page-hero-header-overlap, 0px)) 0 64px;
 }
 
@@ -1090,10 +1088,7 @@ img.image-fade-target.is-image-loaded {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background:
-    radial-gradient(circle at 18% 22%, rgba(145, 57, 27, 0.22), transparent 28%),
-    radial-gradient(circle at 78% 24%, rgba(255, 232, 213, 0.12), transparent 18%),
-    linear-gradient(180deg, #5b1708 0%, #4b1206 52%, #3d0d04 100%);
+  background: radial-gradient(circle at center, #341008 0%, #1b0a07 100%);
 }
 
 .home-photography-promo::before {
@@ -1148,7 +1143,7 @@ img.image-fade-target.is-image-loaded {
 }
 
 .home-photography-promo__button.button {
-  --button-bg: rgba(34, 9, 6, 0.92);
+  --button-bg: #341008;
   --button-fg: #fff7f1;
   --button-border: rgba(255, 227, 207, 0.08);
   --button-hover-bg: #fff2e6;
@@ -1202,7 +1197,7 @@ img.image-fade-target.is-image-loaded {
 .home-photography-promo__rail-track {
   display: flex;
   width: max-content;
-  animation: homePhotographyRailScroll 124s linear infinite;
+  animation: homePhotographyRailScroll 300s linear infinite;
   will-change: transform;
 }
 
@@ -1816,6 +1811,10 @@ img.image-fade-target.is-image-loaded {
   gap: 12px;
 }
 
+.nav-mobile-socials {
+  display: none;
+}
+
 .social-icon {
   width: 42px;
   height: 42px;
@@ -1954,7 +1953,43 @@ img.image-fade-target.is-image-loaded {
   display: grid;
   justify-items: center;
   gap: clamp(34px, 5vw, 60px);
-  padding: clamp(64px, 8vw, 112px) 0 clamp(84px, 9vw, 124px);
+  padding: clamp(24px, 4vw, 48px) 0 clamp(84px, 9vw, 124px);
+}
+
+.socials-back-link {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.58);
+  color: #0f1f3d;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 18px 40px rgba(15, 23, 42, 0.08);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  backdrop-filter: saturate(180%) blur(18px);
+  transition: transform 0.24s ease, box-shadow 0.24s ease, background-color 0.24s ease;
+}
+
+.socials-back-link:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 24px 46px rgba(15, 23, 42, 0.12);
+}
+
+.socials-back-link:focus-visible {
+  outline: 2px solid rgba(15, 61, 115, 0.38);
+  outline-offset: 4px;
 }
 
 .socials-hero {
@@ -2150,7 +2185,7 @@ img.image-fade-target.is-image-loaded {
 @media (max-width: 720px) {
   .socials-shell {
     gap: 30px;
-    padding: 52px 0 72px;
+    padding: 24px 0 72px;
   }
 
   .socials-hero {
@@ -3311,6 +3346,20 @@ img.image-fade-target.is-image-loaded {
   .submenu-nested {
     min-width: 0;
     margin-left: 8px;
+  }
+
+  .nav-mobile-socials {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 4px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+  }
+
+  .nav-mobile-social-icon {
+    flex-shrink: 0;
   }
 
   .nav-socials {

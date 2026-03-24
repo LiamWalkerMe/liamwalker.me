@@ -1,21 +1,10 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import DeferredBackgroundSection from '../components/DeferredBackgroundSection'
 import ResponsiveImage from '../components/ResponsiveImage'
 import SplitSection from '../components/SplitSection'
 import { photoSections } from '../data/photography'
 import { responsiveImages } from '../generated/responsiveImages'
-
-const homeWebsiteRandomPages = [
-  { label: 'This Website', to: '/website' },
-  { label: 'Photography', to: '/photography' },
-  { label: 'Associates Degree', to: '/miracosta' },
-]
-
-function pickRandomHomeWebsitePage() {
-  return homeWebsiteRandomPages[Math.floor(Math.random() * homeWebsiteRandomPages.length)] ?? homeWebsiteRandomPages[0]
-}
 
 const homePhotographyImages = photoSections.flatMap((section) =>
   section.images.map((src, index) => ({
@@ -29,13 +18,6 @@ const homePhotographyRails = Array.from({ length: 3 }, (_, railIndex) =>
 )
 
 export default function Home() {
-  const navigate = useNavigate()
-  const [randomHomePage] = useState(() => pickRandomHomeWebsitePage())
-
-  const handleRandomWebsiteClick = () => {
-    navigate(randomHomePage.to)
-  }
-
   return (
     <div className="page-stack page-stack--home">
       <section className="hero hero--home page-hero-under-header">
@@ -44,13 +26,9 @@ export default function Home() {
             <p className="hero-subtitle hero-home__subtitle">COMPUTER SCIENCE STUDENT AT MIRACOSTA COLLEGE</p>
             <h1 className="hero-title hero-home__title">liamwalker.me</h1>
             <div className="hero-home__actions">
-              <button
-                type="button"
-                className="button hero-home__button"
-                onClick={handleRandomWebsiteClick}
-              >
-                View {randomHomePage.label}
-              </button>
+              <Link className="button hero-home__button" to="/miracosta">
+                View Associates Degree
+              </Link>
               <a
                 className="button hero-home__button hero-home__button--ghost"
                 href="/LiamWalkerResume.pdf"
@@ -76,7 +54,28 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="home-website-showcase page-stack-gap-before">
+        <div className="container home-website-showcase__inner">
+          <div className="home-website-showcase__copy fade-in">
+            <h2 className="home-website-showcase__title">This Website</h2>
+            <Link className="button home-website-showcase__button" to="/website">
+              Learn More
+            </Link>
+          </div>
 
+          <div className="home-website-showcase__preview fade-in">
+            <div className="home-website-showcase__frame">
+              <div
+                className="home-website-showcase__image"
+                role="img"
+                aria-label="Current website homepage preview"
+                style={{ backgroundImage: 'url("/assets/Website/React.png")' }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      
       <section className="home-photography-promo page-stack-gap-before">
         <div className="container home-photography-promo__inner">
           <div className="home-photography-promo__copy fade-in">
@@ -120,27 +119,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-website-showcase page-stack-gap-before">
-        <div className="container home-website-showcase__inner">
-          <div className="home-website-showcase__copy fade-in">
-            <h2 className="home-website-showcase__title">This Website</h2>
-            <Link className="button home-website-showcase__button" to="/website">
-              Learn More
-            </Link>
-          </div>
 
-          <div className="home-website-showcase__preview fade-in">
-            <div className="home-website-showcase__frame">
-              <div
-                className="home-website-showcase__image"
-                role="img"
-                aria-label="Current website homepage preview"
-                style={{ backgroundImage: 'url("/assets/Website/React.png")' }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
 
       <DeferredBackgroundSection
         className="cover bg-accent fixed home-stove-cover page-stack-gap-before"
