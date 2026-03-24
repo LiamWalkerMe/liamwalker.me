@@ -362,7 +362,7 @@ export default function Photography() {
     <div className="photography-page">
       <section className="photography-hero page-hero-under-header">
         <div className="container photography-hero__inner fade-in">
-          <span className="photography-hero__eyebrow">Travel And Landscape Journal</span>
+          <span className="photography-hero__eyebrow">My Creative Outlet</span>
           <h1 className="photography-hero__title">Photography</h1>
           <p className="photography-hero__lede">
             A scroll-driven collection of favorite frames from recent trips. Each section is built around a different location.

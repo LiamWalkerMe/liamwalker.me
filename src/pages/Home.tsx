@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ArrowUpRight } from 'lucide-react'
 import DeferredBackgroundSection from '../components/DeferredBackgroundSection'
 import ResponsiveImage from '../components/ResponsiveImage'
 import SplitSection from '../components/SplitSection'
@@ -22,11 +23,23 @@ export default function Home() {
       <section className="hero hero--home page-hero-under-header">
         <div className="container hero-home">
           <div className="hero-home__copy fade-in">
-            <p className="hero-subtitle hero-home__subtitle">Computer Science Student at MiraCosta College</p>
+            <p className="hero-subtitle hero-home__subtitle">COMPUTER SCIENCE STUDENT AT MIRACOSTA COLLEGE</p>
             <h1 className="hero-title hero-home__title">liamwalker.me</h1>
-            <Link className="button hero-home__button" to="/website">
-              Learn More About This Website
-            </Link>
+            <div className="hero-home__actions">
+              <a
+                className="button hero-home__button"
+                href="/LiamWalkerResume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="View resume, opens in a new tab"
+              >
+                View Resume
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
+              <Link className="button hero-home__button hero-home__button--ghost" to="/website">
+                This Website
+              </Link>
+            </div>
           </div>
           <div className="hero-portrait hero-home__portrait fade-in">
             <ResponsiveImage
