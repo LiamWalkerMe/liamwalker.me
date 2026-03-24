@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react'
+import { ChevronDown, ChevronRight, Menu, Share2, X } from 'lucide-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGithub, faLinkedinIn, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
 
 const educationLinks = [
   { label: 'MiraCosta', to: '/miracosta' },
@@ -32,10 +32,9 @@ const socials = [
     icon: faLinkedinIn,
   },
   {
-    label: 'Instagram',
-    href: 'https://instagram.com/liamwalker.me',
-    color: '#e1306c',
-    icon: faInstagram,
+    label: 'Socials',
+    to: '/socials',
+    color: '#607284',
   },
 ]
 
@@ -290,18 +289,32 @@ export default function Header() {
         </nav>
         <div className="nav-socials">
           {socials.map((social) => (
-            <a
-              key={social.href}
-              href={social.href}
-              target="_blank"
-              rel="noreferrer"
-              className="social-icon"
-              style={{ background: social.color }}
-              aria-label={social.label}
-              title={social.label}
-            >
-              <FontAwesomeIcon icon={social.icon} />
-            </a>
+            social.to ? (
+              <Link
+                key={social.to}
+                to={social.to}
+                className="social-icon"
+                style={{ background: social.color }}
+                aria-label={social.label}
+                title={social.label}
+                onClick={closeAllMenus}
+              >
+                <Share2 size={18} aria-hidden="true" />
+              </Link>
+            ) : (
+              <a
+                key={social.href}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                className="social-icon"
+                style={{ background: social.color }}
+                aria-label={social.label}
+                title={social.label}
+              >
+                <FontAwesomeIcon icon={social.icon!} />
+              </a>
+            )
           ))}
         </div>
       </div>

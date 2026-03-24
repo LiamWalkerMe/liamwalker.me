@@ -1,10 +1,21 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import DeferredBackgroundSection from '../components/DeferredBackgroundSection'
 import ResponsiveImage from '../components/ResponsiveImage'
 import SplitSection from '../components/SplitSection'
 import { photoSections } from '../data/photography'
 import { responsiveImages } from '../generated/responsiveImages'
+
+const homeWebsiteRandomPages = [
+  { label: 'This Website', to: '/website' },
+  { label: 'Photography', to: '/photography' },
+  { label: 'Associates Degree', to: '/miracosta' },
+]
+
+function pickRandomHomeWebsitePage() {
+  return homeWebsiteRandomPages[Math.floor(Math.random() * homeWebsiteRandomPages.length)] ?? homeWebsiteRandomPages[0]
+}
 
 const homePhotographyImages = photoSections.flatMap((section) =>
   section.images.map((src, index) => ({
@@ -18,6 +29,13 @@ const homePhotographyRails = Array.from({ length: 3 }, (_, railIndex) =>
 )
 
 export default function Home() {
+  const navigate = useNavigate()
+  const [randomHomePage] = useState(() => pickRandomHomeWebsitePage())
+
+  const handleRandomWebsiteClick = () => {
+    navigate(randomHomePage.to)
+  }
+
   return (
     <div className="page-stack page-stack--home">
       <section className="hero hero--home page-hero-under-header">
@@ -26,8 +44,15 @@ export default function Home() {
             <p className="hero-subtitle hero-home__subtitle">COMPUTER SCIENCE STUDENT AT MIRACOSTA COLLEGE</p>
             <h1 className="hero-title hero-home__title">liamwalker.me</h1>
             <div className="hero-home__actions">
-              <a
+              <button
+                type="button"
                 className="button hero-home__button"
+                onClick={handleRandomWebsiteClick}
+              >
+                View {randomHomePage.label}
+              </button>
+              <a
+                className="button hero-home__button hero-home__button--ghost"
                 href="/LiamWalkerResume.pdf"
                 target="_blank"
                 rel="noreferrer"
@@ -36,9 +61,6 @@ export default function Home() {
                 View Resume
                 <ArrowUpRight size={16} aria-hidden="true" />
               </a>
-              <Link className="button hero-home__button hero-home__button--ghost" to="/website">
-                This Website
-              </Link>
             </div>
           </div>
           <div className="hero-portrait hero-home__portrait fade-in">

@@ -65,7 +65,8 @@ export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
   const [visible, setVisible] = useState(false)
   const mainRef = useRef<HTMLElement>(null)
-  const hideHeader = location.pathname.startsWith('/zora2024')
+  const hideHeader = location.pathname.startsWith('/zora2024') || location.pathname === '/socials'
+  const hideFooter = location.pathname === '/socials'
   const isHomePage = location.pathname === '/'
   const hasUnderHeaderHero =
     location.pathname === '/' ||
@@ -288,7 +289,7 @@ export default function Layout({ children }: LayoutProps) {
       >
         {children}
       </main>
-      <Footer />
+      {!hideFooter && <Footer />}
     </>
   )
 }
