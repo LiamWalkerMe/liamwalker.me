@@ -2,7 +2,19 @@ import { Link } from 'react-router-dom'
 import DeferredBackgroundSection from '../components/DeferredBackgroundSection'
 import ResponsiveImage from '../components/ResponsiveImage'
 import SplitSection from '../components/SplitSection'
+import { photoSections } from '../data/photography'
 import { responsiveImages } from '../generated/responsiveImages'
+
+const homePhotographyImages = photoSections.flatMap((section) =>
+  section.images.map((src, index) => ({
+    id: `${section.title}-${index}`,
+    src,
+  }))
+)
+
+const homePhotographyRails = Array.from({ length: 3 }, (_, railIndex) =>
+  homePhotographyImages.filter((_, imageIndex) => imageIndex % 3 === railIndex)
+)
 
 export default function Home() {
   return (
@@ -30,22 +42,48 @@ export default function Home() {
         </div>
       </section>
 
-      <DeferredBackgroundSection
-        className="cover home-photography-cover page-stack-gap-before"
-        backgroundImageUrl="/assets/Photography/Banner-1600.jpg"
-        style={{
-          backgroundSize: 'cover',
-          backgroundPosition: '67% 58%',
-        }}
-      >
-        <div className="container home-photography-cover__content">
-          <h2 className="cover-title">Photography</h2>
-          <p className="cover-subtitle home-photography-cover__subtitle">My Creative Outlet</p>
-          <Link className="button light" to="/photography">
-            Learn More
-          </Link>
+      <section className="home-photography-promo page-stack-gap-before">
+        <div className="container home-photography-promo__inner">
+          <div className="home-photography-promo__copy fade-in">
+            <h2 className="home-photography-promo__title">Photography</h2>
+            <p className="home-photography-promo__subtitle">My Creative Outlet</p>
+            <Link className="button home-photography-promo__button" to="/photography">
+              Learn More
+            </Link>
+          </div>
+
+          <div className="home-photography-promo__rail-wrap fade-in" aria-hidden="true">
+            <div className="home-photography-promo__rail-stack">
+              {homePhotographyRails.map((railImages, railIndex) => (
+                <div
+                  key={`rail-${railIndex}`}
+                  className={`home-photography-promo__rail-viewport ${
+                    railIndex === 1 ? 'home-photography-promo__rail-viewport--reverse' : ''
+                  }`}
+                >
+                  <div className="home-photography-promo__rail-track">
+                    <div className="home-photography-promo__rail-group">
+                      {railImages.map((image) => (
+                        <div key={image.id} className="home-photography-promo__rail-card">
+                          <img src={image.src} alt="" loading="lazy" decoding="async" />
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="home-photography-promo__rail-group home-photography-promo__rail-group--duplicate">
+                      {railImages.map((image) => (
+                        <div key={`duplicate-${image.id}`} className="home-photography-promo__rail-card">
+                          <img src={image.src} alt="" loading="lazy" decoding="async" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </DeferredBackgroundSection>
+      </section>
 
       <section className="home-website-showcase page-stack-gap-before">
         <div className="container home-website-showcase__inner">

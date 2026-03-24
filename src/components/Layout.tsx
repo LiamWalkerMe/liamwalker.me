@@ -20,6 +20,13 @@ function getBrandAccent(pathname: string) {
       return '#0f8277'
     case '/zora2024':
       return '#162466'
+    case '/2022-23-season':
+      return '#7a0c2e'
+    case '/2023-24-season':
+      return '#7a0c2e'
+    case '/photography':
+      return '#1B0A07'
+
     default:
       return '#0f1115'
   }

@@ -55,12 +55,12 @@ const sectionDetails: Record<
   },
   LA: {
     eyebrow: 'Collection 02',
-    locations: 'West Hollywood | Downtown | Academy Museum | Griffith',
+    locations: 'West Hollywood | Peterson Automotive Museum | Erewhon | Griffith',
     note: 'Architecture, neon, and city light stitched together into one long evening walk.',
   },
   'Lake Tahoe': {
     eyebrow: 'Collection 03',
-    locations: 'Emerald Bay | Heavenly | Carnelian Bay | Cabin Nights',
+    locations: 'Lake View',
     note: 'Cold air, reflective water, and a slower rhythm once the sun starts to drop.',
   },
   'Imperial Sand Dunes': {
