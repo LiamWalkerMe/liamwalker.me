@@ -333,19 +333,6 @@ export default function Season2023() {
         </div>
       </section>
 
-      <section
-        className="cover"
-        style={{
-          background: gradient,
-          minHeight: '50vh',
-        }}
-      >
-        <div className="container" style={{ textAlign: 'center', padding: '40px 0' }}>
-          <h2 className="cover-title">Explore the Robot in 3D</h2>
-          
-        </div>
-      </section>
-
       <section className="section">
         <div className="container narrow">
           <h2 className="section-title">Interleague B</h2>

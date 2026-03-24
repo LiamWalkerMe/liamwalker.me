@@ -54,9 +54,47 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section className="home-miracosta-promo page-stack-gap-before">
+        <div className="container home-miracosta-promo__inner">
+          <div className="home-miracosta-promo__panel home-miracosta-promo__panel--start fade-in" aria-hidden="true">
+            <div className="home-miracosta-promo__panel-frame">
+              <img
+                className="home-miracosta-promo__panel-image"
+                src="/assets/New/placeholder.png"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+
+          <div className="home-miracosta-promo__content fade-in">
+            <p className="home-miracosta-promo__eyebrow">A.S-T IN COMPUTER SCIENCE</p>
+            <h2 className="home-miracosta-promo__title">MiraCosta</h2>
+            <Link className="button home-miracosta-promo__button" to="/miracosta">
+              Learn More
+            </Link>
+          </div>
+
+          <div className="home-miracosta-promo__panel home-miracosta-promo__panel--end fade-in" aria-hidden="true">
+            <div className="home-miracosta-promo__panel-frame">
+              <img
+                className="home-miracosta-promo__panel-image"
+                src="/assets/New/placeholder.png"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="home-website-showcase page-stack-gap-before">
         <div className="container home-website-showcase__inner">
           <div className="home-website-showcase__copy fade-in">
+            <p className="home-website-showcase__eyebrow">Digital Portfolio</p>
             <h2 className="home-website-showcase__title">This Website</h2>
             <Link className="button home-website-showcase__button" to="/website">
               Learn More
@@ -79,8 +117,8 @@ export default function Home() {
       <section className="home-photography-promo page-stack-gap-before">
         <div className="container home-photography-promo__inner">
           <div className="home-photography-promo__copy fade-in">
+            <p className="home-photography-promo__eyebrow">My Creative Outlet</p>
             <h2 className="home-photography-promo__title">Photography</h2>
-            <p className="home-photography-promo__subtitle">My Creative Outlet</p>
             <Link className="button home-photography-promo__button" to="/photography">
               Learn More
             </Link>

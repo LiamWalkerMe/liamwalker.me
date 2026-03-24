@@ -53,6 +53,8 @@ const SLIDES = [
   { label: "Family Celebration", caption: "Final day on campus", sub: "MiraCosta College - Oceanside" },
 ];
 
+const GRADUATION_PLACEHOLDER_SRC = "/assets/New/placeholder.png";
+
 const HERO_HEADER_OVERLAP = "128px";
 
 function useScrollY(): number {
@@ -223,31 +225,16 @@ function MiracostaEyebrow({ children }: { children: ReactNode }) {
 function MiracostaPhotoPlaceholder({
   label,
   aspectRatio = "3/4",
-  index,
 }: {
   label: string;
   aspectRatio?: string;
-  index: number;
 }) {
-  const patterns = [
-    `linear-gradient(135deg, ${C.sky} 0%, ${C.seafoam} 100%)`,
-    `linear-gradient(145deg, ${C.seafoam} 0%, ${C.sky} 100%)`,
-    `linear-gradient(120deg, #dce8f5 0%, ${C.seafoam} 100%)`,
-    `linear-gradient(150deg, ${C.sky} 20%, #e8daf0 100%)`,
-    `linear-gradient(130deg, #f0e8d8 0%, ${C.seafoam} 100%)`,
-  ];
-
   return (
     <div
       style={{
         aspectRatio,
-        background: patterns[index % patterns.length],
+        background: "rgba(255,255,255,0.42)",
         borderRadius: 14,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 10,
         border: "1px solid rgba(255,255,255,0.8)",
         position: "relative",
         overflow: "hidden",
@@ -255,33 +242,18 @@ function MiracostaPhotoPlaceholder({
         height: "100%",
       }}
     >
-      <div
+      <img
+        src={GRADUATION_PLACEHOLDER_SRC}
+        alt={label}
+        loading={label ? "eager" : "lazy"}
+        decoding="async"
         style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(13,59,110,0.04) 40px),
-          repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(13,59,110,0.04) 40px)`,
+          width: "100%",
+          height: "100%",
+          display: "block",
+          objectFit: "cover",
         }}
       />
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" style={{ opacity: 0.35 }}>
-        <rect x="2" y="6" width="32" height="24" rx="3" stroke={C.navy} strokeWidth="1.5" />
-        <circle cx="18" cy="18" r="6" stroke={C.navy} strokeWidth="1.5" />
-        <circle cx="28" cy="10" r="2" fill={C.navy} opacity={0.5} />
-      </svg>
-      {label && (
-        <span
-          style={{
-            fontSize: 11,
-            color: C.navy,
-            opacity: 0.4,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            fontWeight: 500,
-          }}
-        >
-          {label}
-        </span>
-      )}
     </div>
   );
 }
@@ -373,7 +345,7 @@ function HeroSection() {
             }}
           >
             <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.teal }} />
-            MiraCosta College · Class of 2026
+            A.S-T IN COMPUTER SCIENCE
           </div>
 
           <h1
@@ -658,7 +630,7 @@ function MemoriesSlideshow() {
             position: "relative",
           }}
         >
-          <MiracostaPhotoPlaceholder label={SLIDES[active].label} aspectRatio="4/5" index={active} />
+          <MiracostaPhotoPlaceholder label={SLIDES[active].label} aspectRatio="4/5" />
           <div
             style={{
               position: "absolute",
@@ -779,7 +751,7 @@ function MemoriesSlideshow() {
             }}
           >
             <div style={{ width: 52, height: 52, borderRadius: 10, overflow: "hidden", flexShrink: 0 }}>
-              <MiracostaPhotoPlaceholder label="" aspectRatio="1" index={index} />
+              <MiracostaPhotoPlaceholder label="" aspectRatio="1" />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 13, fontWeight: 600, color: C.navy, marginBottom: 2 }}>{slide.caption}</div>
