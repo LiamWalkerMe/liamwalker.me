@@ -40,7 +40,6 @@ export default function FtcRobotics() {
         imageAsset={responsiveImages.ftc2022Banner}
         sectionStyle={{
           background: 'linear-gradient(315deg, rgb(25,0,0) 0%, rgb(220,0,0) 100%)',
-          padding: 0,
         }}
         reverse={true}
         textStyle={{ color: '#fff', textAlign: 'center' }}

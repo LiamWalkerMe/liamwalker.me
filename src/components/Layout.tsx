@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
 import { isPageUnderConstruction } from '../config/siteFlags'
+import { isArchivedPath } from '../config/archivedPages'
 
 const viewAnimatedSelector = ['.fade-in', '.reveal', '.h1-1', '.h1-2', '.h1-3', '.spec-item', '.logo-video-credit', '.spin', '.grad-text'].join(', ')
 const imageFadeSelector = 'img'
@@ -65,7 +66,7 @@ export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
   const [visible, setVisible] = useState(false)
   const mainRef = useRef<HTMLElement>(null)
-  const hideHeader = location.pathname.startsWith('/zora2024') || location.pathname === '/socials'
+  const hideHeader = isArchivedPath(location.pathname) || location.pathname === '/socials'
   const hideFooter = location.pathname === '/socials'
   const isHomePage = location.pathname === '/'
   const hasUnderHeaderHero =
@@ -91,9 +92,9 @@ export default function Layout({ children }: LayoutProps) {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
   }, [location.pathname])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setVisible(false)
-    const id = requestAnimationFrame(() => setVisible(true))
+    const id = window.requestAnimationFrame(() => setVisible(true))
     return () => cancelAnimationFrame(id)
   }, [location.pathname])
 

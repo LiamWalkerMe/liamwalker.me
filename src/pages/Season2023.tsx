@@ -49,10 +49,8 @@ const modularTabs: VerticalTab[] = [
           <a href="/2022-23-season/" target="_blank" rel="noreferrer">
             Last season
           </a>
-          , our chassis resembled a cube which limited our access to wires and motors for repairs. The cube created a
-          higher center of mass, causing the robot to tip over when extending linear slides. Now, with our innovative
-          juggernaut design, our center of mass is lower, the robot is more stable, and wires and motors are easier to
-          access for quick, convenient repairs.
+          , our cube-shaped chassis made repairs harder and raised the center of mass. This season’s juggernaut-style
+          chassis is lower, more stable, and much easier to service.
         </p>
       </div>
     ),
@@ -69,8 +67,8 @@ const modularTabs: VerticalTab[] = [
         <p>
           <strong>Description:</strong>
           <br />
-          The main goals for our arm design are to have a wide range of motion, and be multi-functional, fast, and
-          accurate. We took inspiration from an excavator design to create a triple-jointed arm.ode itself.
+          We wanted an arm with wide range, speed, and accuracy. An excavator-inspired triple-jointed design gave us
+          flexible movement for intake, scoring, and hanging.
         </p>
       </div>
     ),
@@ -86,10 +84,9 @@ const modularTabs: VerticalTab[] = [
         />
         <p>
           <strong>Description:</strong>
-          <br />A ramp was carefully designed to align pixels as they enter the bed one at a time. The constraint of
-          fitting inside the chassis encouraged us to shorten the original ramp and perform multiple tests to find the
-          optimal angle for the pixels to be sent to the bed successfully. The sloped bed includes a side ramp to ensure
-          the pixels fall precisely where the claw can grab two at a time.
+          <br />
+          The intake ramp guides pixels into the robot one at a time. After testing different lengths and angles, we
+          tuned it to feed pixels cleanly into the bed so the claw can grab two at once.
         </p>
       </div>
     ),
@@ -102,9 +99,8 @@ const modularTabs: VerticalTab[] = [
         <p>
           <strong>Description:</strong>
           <br />
-          The claw grabs the pixels in a horizontal configuration allowing easy placement on the backboard. It only
-          utilizes one servo and is 3D printed. Early iterations used a stationary wrist so only the bottom part was
-          able to move.
+          The claw holds pixels horizontally for easier placement on the backboard. It uses one servo, is 3D printed,
+          and improved on earlier versions that had less wrist movement.
         </p>
       </div>
     ),
@@ -117,8 +113,8 @@ const modularTabs: VerticalTab[] = [
         <p>
           <strong>Description:</strong>
           <br />
-          Using a simple design, we launch our drone with a rubber band in a U channel. During earlier competitions, it
-          could be knocked out of place due to robot collisions so we added additional protections by competition 3.
+          The drone launcher uses a simple rubber-band design in a U-channel. After early collisions knocked it out of
+          place, we added extra protection before later competitions.
         </p>
       </div>
     ),
@@ -137,13 +133,7 @@ const interleagueAwards: VerticalTab[] = [
           <strong>Description:</strong>
         </p>
         <p>
-          This judged award is given to the team that most connects with their local science, technology, engineering,
-          and math (STEM) community. A true FIRST team is more than a sum of its parts and recognizes that engaging their
-          local STEM community plays an essential part in their success. The recipient of this award is recognized for
-          helping the community understand FIRST, the FIRST Tech Challenge, and the team itself. The team that wins the
-          Connect Award actively seeks and recruits engineers and explores the opportunities available in the world of
-          engineering, science, and technology. This team has a clear team plan and has identified steps to achieve
-          their goals
+          Recognizes the team that builds strong connections with its local STEM community and grows support for FIRST.
         </p>
       </div>
     ),
@@ -158,12 +148,7 @@ const interleagueAwards: VerticalTab[] = [
           <br />
           <strong>Description:</strong>
           <br />
-          The Control Award celebrates a team that uses sensors and software to increase the robot’s functionality in
-          the field. This award is given to the team that demonstrates innovative thinking to solve game challenges such
-          as autonomous operation, improving mechanical systems with intelligent control, or using sensors to achieve
-          better results. The control component should work consistently in the field. The team’s engineering portfolio
-          must contain a summary of the software, sensors, and mechanical control, but would not include copies of the
-          code itself.
+          Recognizes strong use of sensors, software, and reliable control systems to improve robot performance.
         </p>
       </div>
     ),
@@ -178,11 +163,7 @@ const interleagueAwards: VerticalTab[] = [
           <br />
           <strong>Description:</strong>
           <br />
-          This judged award recognizes design elements of the robot that are both functional and aesthetic. The Design
-          Award is presented to teams that incorporate industrial design elements into their solution. These design
-          elements could simplify the robot’s appearance by giving it a clean look, be decorative in nature, or
-          otherwise express the creativity of the team. The robot should be durable, efficiently designed, and
-          effectively address the game challenge.
+          Recognizes a robot that combines strong function with a clean, thoughtful design.
         </p>
       </div>
     ),
@@ -197,13 +178,7 @@ const interleagueAwards: VerticalTab[] = [
           <br />
           <strong>Description:</strong>
           <br />
-          The Innovate Award celebrates a team that thinks imaginatively and has the ingenuity, creativity, and
-          inventiveness to make their designs come to life. This judged award is given to the team that has an
-          innovative and creative robot design solution to any specific components in the FIRST Tech Challenge game.
-          Elements of this award include elegant design, robustness, and ‘out of the box’ thinking related to design.
-          This award may address the design of the whole robot or of a sub-assembly attached to the robot. The creative
-          component must work consistently, but a robot does not have to work all the time during matches to be
-          considered for this award.
+          Recognizes a creative and effective design solution for a specific game challenge.
         </p>
       </div>
     ),
@@ -218,10 +193,8 @@ const interleagueAwards: VerticalTab[] = [
           <br />
           <strong>Description:</strong>
           <br />
-          The Inspire Award winner is an inspiration to other teams, acting with Gracious Professionalism® both on and
-          off the playing field. This team shares their experiences, enthusiasm and knowledge with other teams,
-          sponsors, their community, and the judges. Working as a unit, this team will have shown success in performing
-          the task of designing and building a robot.
+          Recognizes the team that best represents the spirit of FIRST through teamwork, outreach, and overall
+          excellence.
         </p>
       </div>
     ),
@@ -236,11 +209,7 @@ const interleagueAwards: VerticalTab[] = [
           <br />
           <strong>Description:</strong>
           <br />
-          This team embraces the culture of FIRST and clearly shows what it means to be a team. This judged award
-          celebrates the team that represents the essence of the FIRST Tech Challenge competition through Gracious
-          Professionalism® and general enthusiasm for the overall philosophy of FIRST and what it means to be a FIRST
-          Tech Challenge team. This is a team who makes a collective effort to make FIRST known throughout their school
-          and community, and sparks others to embrace the culture of FIRST.
+          Recognizes the team that best shares the culture and enthusiasm of FIRST in its school and community.
         </p>
       </div>
     ),
@@ -250,15 +219,12 @@ const interleagueAwards: VerticalTab[] = [
     content: (
       <div className="vertical-tabs__content">
         <p>
-          <strong>Award Placement</strong> – 3nd Place
+          <strong>Award Placement</strong> – 3rd Place
           <br />
           <br />
           <strong>Description:</strong>
           <br />
-          This judged award is given to the team that best reflects the journey the team took as they experienced the
-          engineering design process during the build season. The engineering content within the portfolio is the key
-          reference for judges to help identify the most deserving team. The team’s engineering content must focus on
-          the design and build stage of the team’s robot.
+          Recognizes the team whose portfolio best shows its engineering design journey.
         </p>
       </div>
     ),
@@ -276,11 +242,7 @@ const regionalAwards: VerticalTab[] = [
           <br />
           <strong>Description:</strong>
           <br />
-          This judged award recognizes design elements of the robot that are both functional and aesthetic. The Design
-          Award is presented to teams that incorporate industrial design elements into their solution. These design
-          elements could simplify the robot’s appearance by giving it a clean look, be decorative in nature, or
-          otherwise express the creativity of the team. The robot should be durable, efficiently designed, and
-          effectively address the game challenge.
+          Recognizes a robot that combines strong function with a clean, thoughtful design.
         </p>
       </div>
     ),
@@ -291,7 +253,7 @@ export default function Season2023() {
   const gradient = 'linear-gradient(315deg, rgb(0,0,0) 0%, rgb(255,0,0) 100%)'
 
   return (
-    <div>
+    <div className="ftc-page">
       <section
         className="cover"
         style={{
@@ -308,17 +270,11 @@ export default function Season2023() {
         <div className="container narrow">
           <h2 className="section-title">Our Robot</h2>
           <p className="section-copy">
-            Before building our robot, we designed it all in the CAD software Fusion 360. We focused on a modular
-            system, starting with our chassis, then the arm, and then the intake, ensuring that each module could be
-            independently modified and worked together cohesively. A struggle last season was our intake/outtake
-            system. Since they were on the same side, it forced us to rotate the robot during matches and cost us
-            valuable time. Now, our intake/outtake system extends through the entire robot from end to end. Pixels are
-            taken in using a counter roller, sent up a ramp with a series of boot wheels, and fed into a bed to be
-            sorted and grabbed by our claw. Our intake consistently sorts the 1st pixel into the right position and the
-            2nd pixel into the left. This provides our coaches and human players more control over pixel placements on
-            the board. Last year we faced challenges with linear slides. So this season, we opted for a triple-jointed
-            arm. This increases our range of motion: ability to scoop pixels off the floor, speed: quickly place pixels
-            on the backboard, and strength: hanging using this bracket.
+            We designed the robot in Fusion 360 around a modular system so the chassis, arm, and intake could each be
+            improved without rebuilding everything. Compared with last season, the new intake and outtake run through
+            the full robot, sort two pixels into predictable positions, and give our drivers more control. We also
+            replaced the linear slides with a triple-jointed arm for better floor pickup, faster scoring, and a
+            stronger hanging setup.
           </p>
         </div>
         <div className="container wide">
@@ -337,12 +293,9 @@ export default function Season2023() {
         <div className="container narrow">
           <h2 className="section-title">Interleague B</h2>
           <p className="section-copy">
-            This event marked the fourth competition within our season, presenting us with a palpable sense of
-            anticipation as we prepared to engage in spirited competition. Initially, our performance was auspicious
-            as we swiftly ascended to the top position during the qualification matches. Regrettably, our journey took
-            an unexpected turn during the elimination rounds, culminating in our early exit following the first match.
-            Despite this setback, our team persevered with resilience. It was with profound satisfaction that we
-            emerged triumphant, clinching every award, including the coveted First Place Inspire Award.
+            Interleague B was our fourth event of the season. We finished qualification matches in first, but an early
+            elimination exit cut our playoff run short. Even so, it was one of our strongest judged events, and we won
+            every award, including 1st Place Inspire.
           </p>
         </div>
         <div className="container wide">
@@ -383,10 +336,8 @@ export default function Season2023() {
         <div className="container narrow">
           <h2 className="section-title">Regionals</h2>
           <p className="section-copy">
-            This event marked the culmination of our season, serving as our fifth and ultimate competition. While our
-            initial performance exhibited promise, we encountered unforeseen challenges with our robot shortly
-            thereafter, hindering our progression to the elimination rounds. Despite the disappointment weighing upon
-            us, our team was uplifted by an unexpected triumph: securing the prestigious First Place Design Award.
+            Regionals was our final event of the season. We showed promise early, but robot issues kept us out of the
+            elimination rounds. Even with that setback, we earned the 1st Place Design Award.
           </p>
         </div>
         <div className="container wide">

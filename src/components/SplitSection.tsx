@@ -10,6 +10,7 @@ interface SplitSectionProps {
   sectionStyle?: CSSProperties
   textClassName?: string
   textStyle?: CSSProperties
+  imageWrapperClassName?: string
   imageFit?: CSSProperties['objectFit']
   imageWrapperStyle?: CSSProperties
   imageStyle?: CSSProperties
@@ -25,6 +26,7 @@ export default function SplitSection({
   sectionStyle,
   textClassName = '',
   textStyle,
+  imageWrapperClassName = '',
   imageFit = 'cover',
   imageWrapperStyle,
   imageStyle,
@@ -32,7 +34,7 @@ export default function SplitSection({
   imageSizes = '(max-width: 900px) 100vw, 50vw',
 }: SplitSectionProps) {
   const imageNode = (
-    <div className="split-edge__media" style={imageWrapperStyle}>
+    <div className={`split-edge__media ${imageWrapperClassName}`.trim()} style={imageWrapperStyle}>
       {imageAsset ? (
         <ResponsiveImage
           asset={imageAsset}

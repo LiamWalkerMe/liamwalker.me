@@ -13,7 +13,7 @@ const leagueAwards: VerticalTab[] = [
           <br />
           <strong>Description:</strong>
           <br />
-          This award is given to the winning Alliance represented in the final Match.
+          Given to the alliance that wins the final match.
         </p>
       </div>
     ),
@@ -25,7 +25,7 @@ const regionalAwards: VerticalTab[] = [
     label: 'N/A',
     content: (
       <div className="vertical-tabs__content">
-        <p>No Awards Won At Regionals.</p>
+        <p>No awards were won at regionals.</p>
       </div>
     ),
   },
@@ -33,7 +33,7 @@ const regionalAwards: VerticalTab[] = [
 
 export default function Season2022() {
   return (
-    <div>
+    <div className="ftc-page">
       <section
         className="cover"
         style={{
@@ -59,17 +59,10 @@ export default function Season2022() {
         </div>
         <div className="container">
           <p className="section-copy">
-            With the constraints of a linear-slide system with a gripper on the front, as well as a robot with two side
-            plates, three initial chassis were designed. The requirements for each design were that the chassis must
-            have side plates to have the wheels and motors fit inside an area where no moving components reside (other
-            than the wheels). Design 1 was a long and slim chassis, Design 2 was a much shorter and much more compact
-            chassis, and Design 3 was a tall chassis, with the motors mounted facing down. All of these chassis used 2:1
-            bevel gear ratios connected to 19.2:1 motors, making the effective gear ratio from the motor to wheel 38.4:1,
-            which increased precision. It also translated motion from one axis to perpendicular axes for the wheels, as
-            this helped to position the motors in a more compact way than without gears. It was decided that clear
-            polycarbonate sheets would be used for the material of the side plates because polycarbonate is a relatively
-            cheap and strong option for such applications. Also, Crow Force has found success with polycarbonate in the
-            past.
+            We explored three chassis concepts built around a front gripper, linear slides, and protective side plates.
+            Each design kept the wheels and motors inside the frame, used bevel gears for compact packaging and better
+            control, and focused on precise movement. We chose clear polycarbonate for the side plates because it is
+            strong, affordable, and had already worked well for Crow Force in past seasons.
           </p>
         </div>
       </section>

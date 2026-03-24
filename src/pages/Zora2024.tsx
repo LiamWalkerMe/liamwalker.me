@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { isArchivedPath } from '../config/archivedPages'
 
 const issues = [
   {
     title: 'Energy',
     text:
-      'The Zora campaign promises to fund research into more efficient and cleaner sources of energy through any means possible. Efficiency in energy production would drastically reduce costs of living in many densely populated areas, leading to a better quality of life, and more reliability in necessary amenities in the modern day. In addition, cleaner energy research would directly impact the health of our global ecosystem, from the redwoods to the everglades. In today’s world there is still a fallacy in energy provision for many communities which must be corrected. In today’s world, energy means freedom. The Zora campaign will build energy for the present, and energy for the future. Zora 2024.',
+      'The Zora campaign supports cleaner, more efficient energy. Better power systems can lower costs, improve reliability, and support healthier communities.',
     image: '/assets/Zora2024/Issues/Energy.jpeg',
     lightText: true,
     reverse: false,
@@ -12,15 +14,15 @@ const issues = [
   {
     title: 'Healthcare',
     text:
-      'Our healthcare system needs change. We face challenges such as it being very costly, a lack of insurance, a lack of transparency, and a lack of access. The COVID-19 pandemic rocked the healthcare system and highlighted these flaws. We now have a shortage of healthcare workers. Expanding health Insurance, investing in more clinics to increase access, enforcing doctor-patient transparency, and decreasing costs for medical treatments and appointments are the beginnings of creating a better healthcare system. Life isn’t predictable and we want to be there when you need it. Vote Zora.',
+      'Healthcare should be easier to afford, easier to understand, and easier to access. Zora supports lower costs, more clinics, clearer pricing, and stronger support for healthcare workers.',
     image: '/assets/Zora2024/Issues/Healthcare.png',
     lightText: false,
     reverse: true,
   },
   {
-    title: 'Animal Protections',
+    title: 'Animal Rights',
     text:
-      'As Gandhi once said, “The greatness of a nation and its moral progress can be judged by the way its animals are treated.” My team and I believe in addressing not only the big problems but also the issues facing the under-represented. We pride ourselves on being active listeners, but more than that, we take action.Animal abuse is a rampant problem here in these states, whether it is defended by animal testing for the benefit of FDA-approved products or the abuse that farm animals endure before being used as a food product for us. We would never condone subjecting humans to this treatment, so why do we, as a nation, think it is acceptable to do so to the animals that help provide millions of products for our benefit?As your president, I would like to allocate funds to companies such as PETA to support them in their journey to protect the animals in this nation. I would also like to implement stricter policies to help protect many animals from being hunted for sport or products. This doesn’t just include our forest friends, but it also translates to the sea. Sea creatures such as orcas, salmon, tuna, and more are being hunted and overfished constantly, and there needs to be a stop to it. I hope that with a vote from all of you, I can help the animals in this nation and take action for those of you who are deeply concerned with this issue, like me.',
+      'Animals deserve stronger protections. Zora supports stricter anti-cruelty policies, less harmful testing, and better safeguards for wildlife on land and in the ocean.',
     image: '/assets/Zora2024/Issues/AnimalProtections.png',
     lightText: true,
     reverse: false,
@@ -28,7 +30,7 @@ const issues = [
   {
     title: 'Immigration',
     text:
-      'Families who enter the United States seeking asylum are often met with alternate harshness to their place of origin. The difficult, monotonous, and dragged-out immigration process, which can especially be observed at the Southern border, can often divide families and put them at greater risk of trafficking or imprisonment. This is not the America that we, our parents, our grandparents, or our great-grandparents arrived in. The Zora campaign is promising a more efficient immigration system, better funding to the United States Citizenship and Immigration Services offices. More courts will open, and more stations will be established so the Zora presidency can provide true democracy to the world.',
+      'Families seeking safety deserve a fairer and faster process. Zora supports better funding, more staff, and more courts so immigration cases move with less delay and less harm.',
     image: '/assets/Zora2024/Issues/Immigration.jpeg',
     lightText: true,
     reverse: true,
@@ -36,7 +38,7 @@ const issues = [
   {
     title: 'Education Programs ',
     text:
-      'A college degree is essential in this day and age. The Zora platform wants to help not only the underprivileged but also the underrepresented. We will increase funding to FAFSA and push policies that will help those in need of financial aid on a case-to-case basis. A college degree helps to open doors and we want to help open the door to your future. Vote Zora.',
+      'College and career education should be more reachable for every student. Zora supports more financial aid and targeted help for students who need extra support.',
     image: '/assets/Zora2024/Issues/Education.jpeg',
     lightText: false,
     reverse: false,
@@ -85,6 +87,7 @@ const teamMembers = [
 export default function Zora2024() {
   const [teamIndex, setTeamIndex] = useState(0)
   const carouselRef = useRef<HTMLDivElement | null>(null)
+  const isArchived = isArchivedPath('/zora2024')
 
   const handleTeamMove = (dir: number) => {
     const carousel = carouselRef.current
@@ -102,10 +105,12 @@ export default function Zora2024() {
         <div className="container">
           <img className="zora-hero-logo" src="/assets/Zora2024/Promotional/Logo.png" alt="Zora campaign" />
           <img className="zora-hero-image" src="/assets/Zora2024/Promotional/Headshot.png" alt="Zora campaign artwork" />
-          <p className="zora-hero-note">
-            This page is archived and only accessible by a link.
-            Website created by Liam Walker.
-          </p>
+          {isArchived && (
+            <p className="zora-hero-note">
+              This page is archived and listed in the Archived Pages menu.
+              Website created by Liam Walker.
+            </p>
+          )}
         </div>
       </section>
 
@@ -156,9 +161,9 @@ export default function Zora2024() {
       <section className="zora-team">
         <div className="container">
           <h2 className="zora-section-title">Meet the Team!</h2>
-          <div className="carousel" style={{ marginTop: 24 }}>
+          <div className="carousel zora-team-carousel" style={{ marginTop: 24 }}>
             <button className="carousel-arrow left" onClick={() => handleTeamMove(-1)} aria-label="Previous team member">
-              ‹
+              <ChevronLeft size={20} strokeWidth={2.25} />
             </button>
             <div
               className="carousel-viewport"
@@ -172,20 +177,26 @@ export default function Zora2024() {
               }}
             >
               <div className="carousel-track">
-                {teamMembers.map((member) => (
+                {teamMembers.map((member, index) => (
                   <div className="carousel-slide" key={member.name}>
-                    <div className="zora-team-card">
-                      <p className="zora-team-name">
-                        <strong>{member.name}</strong> – {member.role}
-                      </p>
-                      <img className="zora-team-image" src={member.image} alt={member.name} />
-                    </div>
+                    <article className="zora-team-card">
+                      <div className="zora-team-card__media">
+                        <img className="zora-team-image" src={member.image} alt={member.name} />
+                      </div>
+                      <div className="zora-team-card__body">
+                        <span className="zora-team-card__eyebrow">
+                          Team Member {String(index + 1).padStart(2, '0')}
+                        </span>
+                        <h3 className="zora-team-name">{member.name}</h3>
+                        <p className="zora-team-role">{member.role}</p>
+                      </div>
+                    </article>
                   </div>
                 ))}
               </div>
             </div>
             <button className="carousel-arrow right" onClick={() => handleTeamMove(1)} aria-label="Next team member">
-              ›
+              <ChevronRight size={20} strokeWidth={2.25} />
             </button>
           </div>
           <div className="carousel-dots">

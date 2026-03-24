@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Maximize2, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
 import ResponsiveImage from '../components/ResponsiveImage'
 import { responsiveImages } from '../generated/responsiveImages'
 
@@ -62,55 +62,82 @@ const conceptSlides = [
     title: 'Proof of Concept',
     image: '/assets/StoveSolutions/Carousel/ProofOfConcept.jpeg',
     text:
-      'Our first step was to create our proof of concept. We originally thought that a motor system to shut off the knob could work with a gas flow meter. After talking with our mentor, we realized that we didn’t need a flow meter to show us gas was flowing because we could assume that it was when the knob turned. We decided to take our project in a new direction and work with heat rather than gas flow.',
+      'We started with a gas-flow idea, then simplified the design after mentor feedback. That shift led us to focus on heat detection instead.',
   },
   {
     title: 'Our Stove',
     image: '/assets/StoveSolutions/Carousel/Stove.jpeg',
     text:
-      'After lots of calling around and trips to recycling yards, we found our beloved stove. With the help of Rob from Appliance Recycler, we were able to get our stove for free!',
+      'After a lot of calls and recycling-yard visits, we found a free stove through Appliance Recycler. It became the base for our full prototype.',
   },
   {
     title: 'Modifications',
     image: '/assets/StoveSolutions/Carousel/Modifications.jpeg',
     text:
-      'As you all can see, it has faced a few modifications from its original state, to how it is today. All of these modifications were done to improve aesthetics, increase ease in transportation, and figure out how the whole thing works.',
+      'We reworked the stove to improve the look, make it easier to move, and better understand how the internals fit together.',
   },
   {
     title: 'Gears',
     image: '/assets/StoveSolutions/Carousel/GearRatio.jpeg',
     text:
-      'In order to make our system work with a motor, we needed some gears. We designed gears to fit around the motor and the burner valve, which connects to the knob. We originally started with a 24 tooth gear around the burner valve and 36 tooth gear around the motor, however, this created a gear ratio that was too low and required too much torque from the motor. We fixed this issue by switching the 36 tooth gear to the burner valve so less effort was required from the motor.',
+      'We designed custom gears for the motor and burner valve. After testing, we flipped the gear sizes to get better torque with less strain on the motor.',
   },
   {
     title: 'L - Bracket',
     image: '/assets/StoveSolutions/Carousel/Welding.jpeg',
     text:
-      'The next issue we confronted was how to attach the motor next to the burner valve. We started with 3D designing a mount. Our first design was zip-tied around the gas line, however it allowed the motor to move out of place. This proved to be too fragile and easily detached. We needed a different solution that was more sturdy than 3D filament. Using the screw holes built into the motor, we realized we could attach the motor to an L-bracket and attach the bracket to the gas line with some welding. Which as you can see it didn’t turn out quite as well as we had hoped, but it still does the job!',
+      'Our first 3D-printed mount shifted too much, so we replaced it with a welded L-bracket. That gave the motor a sturdier, more reliable mount.',
   },
   {
     title: 'Thermocouple',
     image: '/assets/StoveSolutions/Carousel/TempuratureSensor.jpeg',
     text:
-      'Paired with the motors, the thermocouple was added by the gas nozzle so that it will be able to detect heat without exceeding the maximum temperature restriction.',
+      'We mounted a thermocouple near the gas nozzle so the system could sense heat quickly without exceeding its temperature limit.',
   },
   {
     title: 'Electronics',
     image: '/assets/StoveSolutions/Carousel/Wiring.jpeg',
     text:
-      'Learning electronics proved to be difficult, however we were able to connect a motor controller, power supply, bluetooth module, and LED light to our Arduino. Here is everything put together, as you can see, it looks great!',
+      'We connected the Arduino, motor controller, power supply, Bluetooth module, and LED into one working system ready for testing.',
   },
   {
     title: 'Logic',
     image: '/assets/StoveSolutions/Carousel/Flowchart.png',
     text:
-      'When the Arduino detects the knob has been turned the Arduino grabs the current temperature, waits 10 seconds, then grabs the temperature again. If the temperature change is less than .5 degrees fahrenheit then it shuts off. If not then it stays on. With all of the parts put together, here is a video of our product working, with a heat gun to simulate fire, and compressed air to simulate gas flow:',
+      'When the knob turns, the Arduino checks how much the temperature changes over 10 seconds. If the burner is not heating up, the system shuts the stove off.',
   },
   {
     title: 'Testing',
     image: '/assets/StoveSolutions/Carousel/Testing.jpeg',
     text:
-      'We tested gas leakage by sealing a balloon over the valve post-shutdown; no inflation indicated no leaks. For specs 2, 4, 6, and 7, 5 individuals operated the stove without heat, checking for shutdown, app updates, and LED activation controlled via the app. Test 3 involved 5 users mimicking accidental knob contact to ensure immediate shutdown. For spec 5, we compared measurements with 4 other stoves, confirming compatibility with minor adjustments pre-production.',
+      'We tested for gas leaks, shutdown response, app updates, LED alerts, and fit on other stoves. The prototype met the main goals with only minor adjustments needed.',
+  },
+]
+
+const aboutTeamMembers = [
+  {
+    initial: 'M',
+    name: 'Molly Glass',
+    role: 'Design Lead',
+    detail: 'Molly helps lead the product direction and keeps the design practical.',
+  },
+  {
+    initial: 'K',
+    name: "Kayla O'Neal",
+    role: 'CAD & Modeling',
+    detail: 'Kayla builds the CAD models that guide fit checks and hardware changes.',
+  },
+  {
+    initial: 'L',
+    name: 'Lilly Sweaney',
+    role: 'Product Design',
+    detail: 'Lilly helps shape the product so it stays clear, usable, and visually clean.',
+  },
+  {
+    initial: 'LW',
+    name: 'Liam Walker',
+    role: 'Software & Controls',
+    detail: 'Liam develops the monitoring logic and control system behind the prototype.',
   },
 ]
 
@@ -120,10 +147,16 @@ export default function StoveSolutions() {
   const logoVideoRef = useRef<HTMLVideoElement | null>(null)
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [isPageContentRevealed, setIsPageContentRevealed] = useState(false)
+  const [isLogoVideoVisible, setIsLogoVideoVisible] = useState(false)
 
   useEffect(() => {
     const video = logoVideoRef.current
     if (!video) return
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const fadeInDurationMs = prefersReducedMotion ? 0 : 800
+
     const playVideo = async () => {
       try {
         await video.play()
@@ -131,7 +164,16 @@ export default function StoveSolutions() {
         // Autoplay might be blocked; ignore.
       }
     }
-    playVideo()
+
+    const revealId = requestAnimationFrame(() => setIsLogoVideoVisible(true))
+    const playTimeoutId = window.setTimeout(() => {
+      playVideo()
+    }, fadeInDurationMs)
+
+    return () => {
+      cancelAnimationFrame(revealId)
+      window.clearTimeout(playTimeoutId)
+    }
   }, [])
 
   useEffect(() => {
@@ -160,19 +202,64 @@ export default function StoveSolutions() {
     }
   }, [lightboxSrc])
 
+  useEffect(() => {
+    let isRevealed = false
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === ' ' || event.key === 'End') {
+        revealPageContent()
+      }
+    }
+
+    const removeRevealListeners = () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('wheel', revealPageContent)
+      window.removeEventListener('touchmove', revealPageContent)
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+
+    const revealPageContent = () => {
+      if (isRevealed) return
+      isRevealed = true
+      window.clearTimeout(timeoutId)
+      removeRevealListeners()
+      setIsPageContentRevealed(true)
+    }
+
+    const handleScroll = () => {
+      if (window.scrollY > 4) {
+        revealPageContent()
+      }
+    }
+
+    const timeoutId = window.setTimeout(revealPageContent, 1500)
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('wheel', revealPageContent, { passive: true })
+    window.addEventListener('touchmove', revealPageContent, { passive: true })
+    window.addEventListener('keydown', handleKeyDown)
+    handleScroll()
+
+    return () => {
+      window.clearTimeout(timeoutId)
+      removeRevealListeners()
+    }
+  }, [])
+
   const moveSlide = (dir: number) => {
     setSlideIndex((prev) => (prev + dir + slideCount) % slideCount)
   }
 
+  const pageContentRevealClass = `stove-page-section ${isPageContentRevealed ? 'is-visible' : ''}`
+
   return (
-    <div>
+    <div className="stove-page">
       <section className="logo-video-section">
         <div className="container">
           <video
             ref={logoVideoRef}
-            className="logo-video"
+            className={`logo-video ${isLogoVideoVisible ? 'is-visible' : ''}`}
             src="/assets/StoveSolutions/banner.mp4"
-            autoPlay
             muted
             playsInline
             controls={false}
@@ -184,13 +271,13 @@ export default function StoveSolutions() {
               }
             }}
           />
-          <p className="logo-video-credit">By: Molly Glass, Kayla O&apos;Neal, Lilly Sweaney, and Liam Walker.</p>
+          <p className="logo-video-credit">BY: MOLLY GLASS, KAYLA O&apos;NEAL, LILLY SWEANEY, AND LIAM WALKER.</p>
         </div>
       </section>
       {introSections.map((section) => (
         <section
           key={section.title}
-          className="stove-cover parallax"
+          className={`stove-cover parallax fade-in ${pageContentRevealClass}`}
           style={{ backgroundImage: `url(${section.image})` }}
         >
           <div className="stove-cover-overlay" />
@@ -201,7 +288,7 @@ export default function StoveSolutions() {
         </section>
       ))}
 
-      <section className="section specs-section">
+      <section className={`section specs-section ${pageContentRevealClass}`}>
         <div className="container">
           <h2 className="section-title">Design Specifications</h2>
           <div className="spec-list">
@@ -218,19 +305,18 @@ export default function StoveSolutions() {
         </div>
       </section>
 
-      <section className="section concept-section">
+      <section className={`section concept-section ${pageContentRevealClass}`}>
         <div className="container">
           <h2 className="section-title">From Concept to Reality</h2>
           <div className="concept-carousel">
-            <button className="carousel-arrow left" onClick={() => moveSlide(-1)}>
-              ‹
+            <button className="carousel-arrow left" onClick={() => moveSlide(-1)} aria-label="Previous slide">
+              <ChevronLeft size={20} strokeWidth={2.25} />
             </button>
             <div className="carousel-track" style={{ transform: `translateX(-${slideIndex * 100}%)` }}>
-              {conceptSlides.map((slide) => (
+              {conceptSlides.map((slide, index) => (
                 <div key={slide.title} className="carousel-slide">
-                  <div className="concept-slide">
-                    <h3>{slide.title}</h3>
-                    <div className="image-frame tight">
+                  <article className="concept-slide">
+                    <div className="image-frame tight concept-slide__media">
                       <img src={slide.image} alt={slide.title} className="stove-image" loading="lazy" decoding="async" />
                       <button
                         className="lightbox-trigger"
@@ -240,13 +326,19 @@ export default function StoveSolutions() {
                         <Maximize2 size={16} />
                       </button>
                     </div>
-                    <p>{slide.text}</p>
-                  </div>
+                    <div className="concept-slide__body">
+                      <span className="concept-slide__eyebrow">
+                        Step {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <h3>{slide.title}</h3>
+                      <p>{slide.text}</p>
+                    </div>
+                  </article>
                 </div>
               ))}
             </div>
-            <button className="carousel-arrow right" onClick={() => moveSlide(1)}>
-              ›
+            <button className="carousel-arrow right" onClick={() => moveSlide(1)} aria-label="Next slide">
+              <ChevronRight size={20} strokeWidth={2.25} />
             </button>
           </div>
           <div className="carousel-dots">
@@ -262,7 +354,7 @@ export default function StoveSolutions() {
         </div>
       </section>
 
-      <section className="section">
+      <section className={`section ${pageContentRevealClass}`}>
         <div className="container" style={{ textAlign: 'center' }}>
           <div className="video-frame">
             <div style={{ position: 'relative', paddingTop: '56.25%' }}>
@@ -278,7 +370,7 @@ export default function StoveSolutions() {
         </div>
       </section>
 
-      <section className="section" style={{ background: '#0f8277' }}>
+      <section className={`section ${pageContentRevealClass}`} style={{ background: '#0f8277' }}>
         <div className="container" style={{ textAlign: 'center', color: '#fff' }}>
           <h2 className="section-title">Our Mentor</h2>
           <div className="image-frame mentor-frame">
@@ -300,48 +392,66 @@ export default function StoveSolutions() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container about-section">
-          <div className="about-copy">
-            <h2 className="section-title">About Us</h2>
-            <p>
-              Welcome to Stove Solutions, where your safety, satisfaction, and peace of mind are our top priorities.
-            </p>
-            <p>Our team is a powerhouse of talent and expertise:</p>
-            <p>
-              💡 Molly Glass: Molly is one of our designers, driving our commitment to excellence and innovation. Her
-              dedication to creating cutting-edge solutions is the important to our success.
-            </p>
-            <p>
-              💻 Kayla O&apos;Neal: With years of experience in computer aided design (CAD), Kayla digitally designs
-              elements of products before we install and test them.
-            </p>
-            <p>
-              💡 Lilly Sweaney: Lilly brings a creative touch to our products, making sure they are both functional and
-              aesthetically pleasing. She believes in enhancing your cooking space while keeping it secure.
-            </p>
-            <p>
-              💻 Liam Walker: Liam is our coding specialist, responsible for developing our state-of-the-art monitoring
-              systems.
-            </p>
+      <section className={`section about-section-wrap ${pageContentRevealClass}`}>
+        <div className="container about-section-shell">
+          <div className="about-section">
+            <div className="about-copy">
+              <span className="about-eyebrow">About Us</span>
+              <h2 className="section-title">A student team building safer stove technology.</h2>
+              <p className="about-lede">
+                Stove Solutions combines product design, CAD, electronics, and software to create a gas stove safety
+                system that feels practical in a real kitchen.
+              </p>
+              <p className="about-supporting-copy">
+                From early concepts to testing, our team focused on making the system reliable, approachable, and
+                ready for everyday use.
+              </p>
+            </div>
+
+            <div className="about-image-wrap">
+              <div className="about-image image-frame fill">
+                <ResponsiveImage
+                  asset={responsiveImages.stoveTeamPhoto}
+                  alt="Stove Solutions team"
+                  pictureStyle={{ width: '100%', height: '100%' }}
+                  className="stove-image"
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <button
+                  className="lightbox-trigger"
+                  onClick={() => setLightboxSrc('/assets/StoveSolutions/teamphoto.jpg')}
+                  aria-label="View full screen"
+                >
+                  <Maximize2 size={16} />
+                </button>
+              </div>
+              <div className="about-image-meta">
+                <p className="about-image-caption">The Stove Solutions team</p>
+                <div className="about-image-tags" aria-label="Team disciplines">
+                  <span className="about-image-tag">Design</span>
+                  <span className="about-image-tag">CAD</span>
+                  <span className="about-image-tag">Electronics</span>
+                  <span className="about-image-tag">Software</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="about-image image-frame fill">
-            <ResponsiveImage
-              asset={responsiveImages.stoveTeamPhoto}
-              alt="Stove Solutions team"
-              pictureStyle={{ width: '100%', height: '100%' }}
-              className="stove-image"
-              sizes="(max-width: 900px) 100vw, 50vw"
-              loading="lazy"
-              decoding="async"
-            />
-            <button
-              className="lightbox-trigger"
-              onClick={() => setLightboxSrc('/assets/StoveSolutions/teamphoto.jpg')}
-              aria-label="View full screen"
-            >
-              <Maximize2 size={16} />
-            </button>
+
+          <div className="about-team-grid">
+            {aboutTeamMembers.map((member) => (
+              <article key={member.name} className="about-member-card">
+                <div className="about-member-mark" aria-hidden="true">
+                  {member.initial}
+                </div>
+                <div className="about-member-copy">
+                  <span className="about-member-role">{member.role}</span>
+                  <h3>{member.name}</h3>
+                  <p>{member.detail}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>

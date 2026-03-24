@@ -160,22 +160,24 @@ export default function Home() {
 
 
       <DeferredBackgroundSection
-        className="cover bg-accent fixed home-stove-cover page-stack-gap-before"
-        backgroundImageUrl="/assets/StoveSolutions/teamphoto-1600.jpg"
+        className="home-stove-cover page-stack-gap-before"
+        backgroundImageUrl="/assets/StoveSolutions/teamphoto.jpg"
         style={{
-          backgroundPosition: 'center',
+          backgroundPosition: 'center center',
         }}
       >
         <div className="container home-stove-cover__content">
-          <img
-            src="/assets/StoveSolutions/banner.png"
-            alt="Stove Solutions"
-            className="home-stove-cover__banner"
-          />
-          <p className="home-stove-cover__description">An Engineering Design and Development Course Project</p>
-          <Link className="button accent" to="/stovesolutions">
-            Learn More
-          </Link>
+          <div className="home-stove-cover__copy fade-in">
+            <p className="home-stove-cover__eyebrow">AN ENGINEERING DESIGN AND DEVELOPMENT COURSE PROJECT</p>
+            <img
+              src="/assets/StoveSolutions/banner.png"
+              alt="Stove Solutions"
+              className="home-stove-cover__banner"
+            />
+            <Link className="button accent home-stove-cover__button" to="/stovesolutions">
+              Learn More
+            </Link>
+          </div>
         </div>
       </DeferredBackgroundSection>
 
@@ -184,13 +186,15 @@ export default function Home() {
         imageAlt="Liam Walker Robotics"
         imageAsset={responsiveImages.homeRoboticsBanner}
         sectionStyle={{ paddingBottom: 0 }}
-        textClassName="gradient-panel no-radius"
-        textStyle={{ textAlign: 'center' }}
+        textClassName="gradient-panel no-radius home-robotics-promo__panel fade-in"
+        textStyle={{ textAlign: 'center', animationDelay: '140ms' }}
+        imageWrapperClassName="home-robotics-promo__media fade-in"
+        imageWrapperStyle={{ animationDelay: '40ms' }}
         imageSizes="(max-width: 900px) 100vw, 50vw"
       >
         <div className="split-feature-copy home-robotics-copy" style={{ maxWidth: 520, margin: '0 auto' }}>
-          <h2 className="title-xl">FIRST Robotics</h2>
-          <p>My experience on Team #10809 Crow Force</p>
+          <p className="home-robotics-copy__eyebrow">My experience on Team #10809 Crow Force</p>
+          <h2 className="title-xl home-robotics-copy__title">FIRST Robotics</h2>
           <Link className="button light" to="/2023-24-season">
             Learn More
           </Link>

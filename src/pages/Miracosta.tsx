@@ -389,19 +389,28 @@ function HeroSection() {
                 color: C.white,
                 padding: "13px 30px",
                 borderRadius: 100,
+                border: "1px solid transparent",
                 fontSize: 14,
                 fontWeight: 500,
                 textDecoration: "none",
                 letterSpacing: "0.04em",
-                transition: "transform 0.2s, box-shadow 0.2s",
-                display: "inline-block",
+                transition: "transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s, border-color 0.2s",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.transform = "scale(1.03)";
-                e.currentTarget.style.boxShadow = `0 10px 28px ${C.navy}40`;
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.background = C.white;
+                e.currentTarget.style.color = C.navy;
+                e.currentTarget.style.borderColor = C.navy;
+                e.currentTarget.style.boxShadow = `0 12px 28px ${C.navy}24`;
               }}
               onMouseOut={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.background = C.navy;
+                e.currentTarget.style.color = C.white;
+                e.currentTarget.style.borderColor = "transparent";
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
@@ -419,13 +428,24 @@ function HeroSection() {
                 border: `1.5px solid ${C.navy}35`,
                 textDecoration: "none",
                 letterSpacing: "0.04em",
-                transition: "border-color 0.2s",
+                transition: "transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.borderColor = `${C.navy}80`;
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.background = C.navy;
+                e.currentTarget.style.color = C.white;
+                e.currentTarget.style.borderColor = C.navy;
+                e.currentTarget.style.boxShadow = `0 12px 28px ${C.navy}20`;
               }}
               onMouseOut={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = C.navy;
                 e.currentTarget.style.borderColor = `${C.navy}35`;
+                e.currentTarget.style.boxShadow = "none";
               }}
             >
               View Memories
@@ -1086,23 +1106,31 @@ function ClosingSection() {
             style={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: 10,
               background: C.gold,
               color: C.navy,
               padding: "16px 36px",
               borderRadius: 100,
+              border: "1px solid transparent",
               fontSize: 15,
               fontWeight: 600,
               letterSpacing: "0.04em",
               textDecoration: "none",
-              transition: "transform 0.2s, box-shadow 0.2s",
+              transition: "transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s, border-color 0.2s",
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.transform = "scale(1.04)";
-              e.currentTarget.style.boxShadow = `0 12px 36px ${C.gold}55`;
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.background = C.white;
+              e.currentTarget.style.color = C.navy;
+              e.currentTarget.style.borderColor = C.gold;
+              e.currentTarget.style.boxShadow = `0 12px 36px ${C.gold}32`;
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.background = C.gold;
+              e.currentTarget.style.color = C.navy;
+              e.currentTarget.style.borderColor = "transparent";
               e.currentTarget.style.boxShadow = "none";
             }}
           >
