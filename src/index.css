@@ -1133,10 +1133,6 @@ img.image-fade-target.is-image-loaded {
     aspect-ratio: 4 / 3;
   }
 
-  .photography-rail-frame__icon {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 .grid {

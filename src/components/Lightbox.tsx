@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
 type LightboxProps = {
@@ -28,14 +29,30 @@ export default function Lightbox({ src, alt, onClose }: LightboxProps) {
   }, [])
 
   useEffect(() => {
+    const scrollX = window.scrollX
+    const scrollY = window.scrollY
+
     restoreFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
 
-    const previousOverflow = document.body.style.overflow
+    const previousBodyStyles = {
+      overflow: document.body.style.overflow,
+      position: document.body.style.position,
+      top: document.body.style.top,
+      left: document.body.style.left,
+      right: document.body.style.right,
+      width: document.body.style.width,
+    }
+
     document.body.style.overflow = 'hidden'
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${scrollY}px`
+    document.body.style.left = '0'
+    document.body.style.right = '0'
+    document.body.style.width = '100%'
 
     const raf = window.requestAnimationFrame(() => {
       setIsOpen(true)
-      closeButtonRef.current?.focus()
+      closeButtonRef.current?.focus({ preventScroll: true })
     })
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -73,11 +90,18 @@ export default function Lightbox({ src, alt, onClose }: LightboxProps) {
 
     return () => {
       window.cancelAnimationFrame(raf)
-      document.body.style.overflow = previousOverflow
+      document.body.style.overflow = previousBodyStyles.overflow
+      document.body.style.position = previousBodyStyles.position
+      document.body.style.top = previousBodyStyles.top
+      document.body.style.left = previousBodyStyles.left
+      document.body.style.right = previousBodyStyles.right
+      document.body.style.width = previousBodyStyles.width
       document.removeEventListener('keydown', handleKeyDown)
 
+      window.scrollTo({ top: scrollY, left: scrollX, behavior: 'auto' })
+
       if (restoreFocusRef.current?.isConnected) {
-        restoreFocusRef.current.focus()
+        restoreFocusRef.current.focus({ preventScroll: true })
       }
     }
   }, [requestClose])
@@ -96,12 +120,13 @@ export default function Lightbox({ src, alt, onClose }: LightboxProps) {
     }
   }, [isClosing, onClose])
 
-  return (
+  return createPortal(
     <div
       ref={dialogRef}
       className={`lightbox${isOpen ? ' open' : ''}`}
       role="dialog"
       aria-modal="true"
+      data-lightbox-root="true"
       aria-label={`Expanded image: ${alt}`}
       onClick={requestClose}
     >
@@ -117,7 +142,16 @@ export default function Lightbox({ src, alt, onClose }: LightboxProps) {
       >
         <X size={20} aria-hidden="true" />
       </button>
-      <img src={src} alt={alt} onClick={(event) => event.stopPropagation()} />
-    </div>
+      <img
+        src={src}
+        alt={alt}
+        data-lightbox-image="true"
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
+        onClick={(event) => event.stopPropagation()}
+      />
+    </div>,
+    document.body
   )
 }

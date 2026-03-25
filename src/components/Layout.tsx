@@ -7,7 +7,7 @@ import { isArchivedPath } from '../config/archivedPages'
 import { applyRouteMetadataToDocument, getRouteMetadata, normalizePathname } from '../lib/routeMetadata'
 
 const viewAnimatedSelector = ['.fade-in', '.reveal', '.h1-1', '.h1-2', '.h1-3', '.spec-item', '.logo-video-credit', '.spin', '.grad-text'].join(', ')
-const imageFadeSelector = 'img'
+const imageFadeSelector = 'img:not([data-lightbox-image])'
 const initialBootMinDurationMs = 480
 const initialBootMaxDurationMs = 1800
 
