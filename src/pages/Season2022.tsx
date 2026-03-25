@@ -76,6 +76,7 @@ export default function Season2022() {
               <iframe
                 src="https://www.youtube.com/embed/fnGSo_S2PHU"
                 title="League Champ Livestream"
+                loading="lazy"
                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

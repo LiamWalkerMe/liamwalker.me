@@ -45,7 +45,7 @@ const modularSlides = [
     image: '/assets/Robotics/2023/Modular/Chassis.jpeg',
     description: (
       <>
-        <a href="/2022-23-season" target="_blank" rel="noreferrer">
+        <a href="/2022-23-season" target="_blank" rel="noopener noreferrer">
           Last season
         </a>
         , our cube-shaped chassis made repairs harder and raised the center of mass. This season&apos;s
@@ -257,6 +257,7 @@ export default function Season2023() {
               <iframe
                 src="https://www.youtube.com/embed/ie1PQW1d8bs"
                 title="Interleague Interviews"
+                loading="lazy"
                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -299,6 +300,7 @@ export default function Season2023() {
               <iframe
                 src="https://www.youtube.com/embed/rZmrD8Gy3eU"
                 title="Judging Presentation"
+                loading="lazy"
                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react'
+import Lightbox from '../components/Lightbox'
 import ResponsiveImage from '../components/ResponsiveImage'
 import { responsiveImages } from '../generated/responsiveImages'
 
@@ -145,8 +146,7 @@ export default function StoveSolutions() {
   const [slideIndex, setSlideIndex] = useState(0)
   const slideCount = conceptSlides.length
   const logoVideoRef = useRef<HTMLVideoElement | null>(null)
-  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null)
   const [isPageContentRevealed, setIsPageContentRevealed] = useState(false)
   const [isLogoVideoVisible, setIsLogoVideoVisible] = useState(false)
 
@@ -175,32 +175,6 @@ export default function StoveSolutions() {
       window.clearTimeout(playTimeoutId)
     }
   }, [])
-
-  useEffect(() => {
-    if (lightboxSrc) {
-      setIsLightboxOpen(false)
-      const id = requestAnimationFrame(() => setIsLightboxOpen(true))
-      return () => cancelAnimationFrame(id)
-    }
-    return undefined
-  }, [lightboxSrc])
-
-  useEffect(() => {
-    if (!lightboxSrc) return undefined
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsLightboxOpen(false)
-        setTimeout(() => setLightboxSrc(null), 220)
-      }
-    }
-    window.addEventListener('keydown', handleKey)
-    return () => {
-      document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', handleKey)
-    }
-  }, [lightboxSrc])
 
   useEffect(() => {
     let isRevealed = false
@@ -320,7 +294,8 @@ export default function StoveSolutions() {
                       <img src={slide.image} alt={slide.title} className="stove-image" loading="lazy" decoding="async" />
                       <button
                         className="lightbox-trigger"
-                        onClick={() => setLightboxSrc(slide.image)}
+                        type="button"
+                        onClick={() => setLightboxImage({ src: slide.image, alt: slide.title })}
                         aria-label="View full screen"
                       >
                         <Maximize2 size={16} />
@@ -361,6 +336,7 @@ export default function StoveSolutions() {
               <iframe
                 src="https://www.youtube.com/embed/s_jmXaB-jYE"
                 title="Stove Solutions Presentation"
+                loading="lazy"
                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -383,7 +359,13 @@ export default function StoveSolutions() {
             />
             <button
               className="lightbox-trigger"
-              onClick={() => setLightboxSrc('/assets/StoveSolutions/Mentor/ThankYouMentor.png')}
+              type="button"
+              onClick={() =>
+                setLightboxImage({
+                  src: '/assets/StoveSolutions/Mentor/ThankYouMentor.png',
+                  alt: 'Our mentor',
+                })
+              }
               aria-label="View full screen"
             >
               <Maximize2 size={16} />
@@ -421,7 +403,13 @@ export default function StoveSolutions() {
                 />
                 <button
                   className="lightbox-trigger"
-                  onClick={() => setLightboxSrc('/assets/StoveSolutions/teamphoto.jpg')}
+                  type="button"
+                  onClick={() =>
+                    setLightboxImage({
+                      src: '/assets/StoveSolutions/teamphoto.jpg',
+                      alt: 'Stove Solutions team',
+                    })
+                  }
                   aria-label="View full screen"
                 >
                   <Maximize2 size={16} />
@@ -456,28 +444,8 @@ export default function StoveSolutions() {
         </div>
       </section>
 
-      {lightboxSrc && (
-        <div
-          className={`lightbox ${isLightboxOpen ? 'open' : ''}`}
-          role="dialog"
-          aria-modal="true"
-          onClick={() => {
-            setIsLightboxOpen(false)
-            setTimeout(() => setLightboxSrc(null), 220)
-          }}
-        >
-          <button
-            className="lightbox-close"
-            onClick={() => {
-              setIsLightboxOpen(false)
-              setTimeout(() => setLightboxSrc(null), 220)
-            }}
-            aria-label="Close"
-          >
-            <X size={20} />
-          </button>
-          <img src={lightboxSrc} alt="Full screen" onClick={(event) => event.stopPropagation()} />
-        </div>
+      {lightboxImage && (
+        <Lightbox src={lightboxImage.src} alt={lightboxImage.alt} onClose={() => setLightboxImage(null)} />
       )}
     </div>
   )

@@ -28,7 +28,7 @@ export default function FtcRobotics() {
         <div style={{ maxWidth: 520, margin: '0 auto' }}>
           <h2 className="title-xl">2023-24 Season</h2>
           <p>1st place Inspire award winners.</p>
-          <Link className="button light" to="/2023-24-season">
+          <Link className="button light" to="/2023-24-season" reloadDocument>
             Learn More
           </Link>
         </div>
@@ -47,7 +47,7 @@ export default function FtcRobotics() {
         <div style={{ maxWidth: 520, margin: '0 auto' }}>
           <h2 className="title-xl">2022-23 Season</h2>
           <p>1st year as Software Lead.</p>
-          <Link className="button light" to="/2022-23-season">
+          <Link className="button light" to="/2022-23-season" reloadDocument>
             Learn More
           </Link>
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ChevronDown, ChevronRight, Menu, Share2, X } from 'lucide-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
@@ -53,6 +53,7 @@ function HeaderSocialIcon({
       <Link
         key={social.to}
         to={social.to}
+        reloadDocument
         className={className ?? 'social-icon'}
         style={{ background: social.color }}
         aria-label={social.label}
@@ -69,7 +70,7 @@ function HeaderSocialIcon({
       key={social.href}
       href={social.href}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       className={className ?? 'social-icon'}
       style={{ background: social.color }}
       aria-label={social.label}
@@ -82,7 +83,6 @@ function HeaderSocialIcon({
 }
 
 export default function Header() {
-  const location = useLocation()
   const headerRef = useRef<HTMLElement | null>(null)
   const [open, setOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
@@ -134,12 +134,6 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
-    setOpen(false)
-    setActiveMenu(null)
-    setActiveSubmenu(null)
-  }, [location.pathname])
-
-  useEffect(() => {
     const handlePointerDown = (event: MouseEvent) => {
       if (headerRef.current?.contains(event.target as Node)) {
         return
@@ -170,7 +164,7 @@ export default function Header() {
   return (
     <header ref={headerRef} className="nav">
       <div className="container nav-inner">
-        <Link to="/" className="brand">
+        <Link to="/" className="brand" reloadDocument>
           Liam&apos;s Digital Portfolio
         </Link>
         <button
@@ -193,7 +187,7 @@ export default function Header() {
           {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
         <nav id="site-navigation" className={`nav-links ${open ? 'open' : ''}`}>
-          <Link className="nav-item" to="/" onClick={closeAllMenus}>
+          <Link className="nav-item" to="/" reloadDocument onClick={closeAllMenus}>
             Home
           </Link>
           {educationLinks.length > 0 && (
@@ -232,7 +226,7 @@ export default function Header() {
               </button>
               <div className="submenu">
                 {educationLinks.map((item) => (
-                  <Link key={item.to} to={item.to} onClick={closeAllMenus}>
+                  <Link key={item.to} to={item.to} reloadDocument onClick={closeAllMenus}>
                     {item.label}
                   </Link>
                 ))}
@@ -276,7 +270,7 @@ export default function Header() {
             </button>
             <div className="submenu">
               {projectLinks.map((item) => (
-                <Link key={item.to} to={item.to} onClick={closeAllMenus}>
+                <Link key={item.to} to={item.to} reloadDocument onClick={closeAllMenus}>
                   {item.label}
                 </Link>
               ))}
@@ -315,7 +309,7 @@ export default function Header() {
                 </button>
                 <div className="submenu submenu-nested">
                   {roboticsLinks.map((item) => (
-                    <Link key={item.to} to={item.to} onClick={closeAllMenus}>
+                    <Link key={item.to} to={item.to} reloadDocument onClick={closeAllMenus}>
                       {item.label}
                     </Link>
                   ))}
@@ -323,10 +317,16 @@ export default function Header() {
               </div>
             </div>
           </div>
-          <Link className="nav-item" to="/photography" onClick={closeAllMenus}>
+          <Link className="nav-item" to="/photography" reloadDocument onClick={closeAllMenus}>
             Photography
           </Link>
-          <a className="nav-item" href="/LiamWalkerResume.pdf" target="_blank" rel="noreferrer" onClick={closeAllMenus}>
+          <a
+            className="nav-item"
+            href="/LiamWalkerResume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={closeAllMenus}
+          >
             Resume
           </a>
           <div className="nav-mobile-socials">

@@ -147,9 +147,14 @@ function WebsiteSkillStatCard({ value, suffix = "", label, delay = 0 }: SkillSta
     }
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDisplayValue(value);
-      setHasStarted(true);
-      return;
+      const raf = window.requestAnimationFrame(() => {
+        setDisplayValue(value);
+        setHasStarted(true);
+      });
+
+      return () => {
+        window.cancelAnimationFrame(raf);
+      };
     }
 
     const observer = new IntersectionObserver(

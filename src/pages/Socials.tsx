@@ -92,7 +92,7 @@ export default function Socials() {
   return (
     <div className="socials-page">
       <section className="container socials-shell">
-        <Link className="socials-back-link fade-in" to="/" aria-label="Back to home page">
+        <Link className="socials-back-link fade-in" to="/" reloadDocument aria-label="Back to home page">
           <ArrowLeft size={18} aria-hidden="true" />
           <span>Home</span>
         </Link>
@@ -117,7 +117,7 @@ export default function Socials() {
               key={social.href}
               href={social.href}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="social-card fade-in"
               style={
                 {

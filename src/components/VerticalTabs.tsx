@@ -16,10 +16,6 @@ export default function VerticalTabs({ idPrefix, tabs, autoRotate = false, autoR
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
-    setActiveIndex(0)
-  }, [idPrefix])
-
-  useEffect(() => {
     if (!autoRotate || tabs.length < 2) {
       return
     }

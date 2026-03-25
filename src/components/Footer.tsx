@@ -47,7 +47,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-inner">
         <div className="footer-brand-stack">
-          <Link to="/" className="footer-brand brand">
+          <Link to="/" className="footer-brand brand" reloadDocument>
             Liam&apos;s Digital Portfolio
           </Link>
           {archivedLinks.length > 0 && (
@@ -68,7 +68,7 @@ export default function Footer() {
                     key={item.to}
                     href={item.to}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="footer-archive-link"
                     onClick={() => setIsArchiveOpen(false)}
                   >
@@ -88,6 +88,7 @@ export default function Footer() {
                   key={social.to}
                   className="social-icon footer-social-icon"
                   to={social.to}
+                  reloadDocument
                   style={{ background: social.color }}
                   aria-label={social.label}
                   title={social.label}
@@ -100,7 +101,7 @@ export default function Footer() {
                   className="social-icon footer-social-icon"
                   href={social.href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   style={{ background: social.color }}
                   aria-label={social.label}
                   title={social.label}

@@ -20,7 +20,7 @@ export default function PageUnderConstruction({ title }: PageUnderConstructionPr
             <p style={{ margin: '0 0 24px', fontSize: 18, lineHeight: 1.7 }}>
               This page is not live yet, but it&apos;s on the way. Check back soon for the finished version.
             </p>
-            <Link className="button" to="/">
+            <Link className="button" to="/" reloadDocument>
               Go Home
             </Link>
           </div>

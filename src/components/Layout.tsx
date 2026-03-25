@@ -1,61 +1,56 @@
-import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { type CSSProperties, type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
 import { isPageUnderConstruction } from '../config/siteFlags'
 import { isArchivedPath } from '../config/archivedPages'
+import { applyRouteMetadataToDocument, getRouteMetadata } from '../lib/routeMetadata'
 
 const viewAnimatedSelector = ['.fade-in', '.reveal', '.h1-1', '.h1-2', '.h1-3', '.spec-item', '.logo-video-credit', '.spin', '.grad-text'].join(', ')
 const imageFadeSelector = 'img'
-const baseDocumentTitle = "Liam's Digital Portfolio"
+const initialBootMinDurationMs = 480
+const initialBootMaxDurationMs = 1800
 
-function getBrandAccent(pathname: string) {
-  switch (pathname) {
-    case '/':
-      return '#002142'
-    case '/miracosta':
-      return '#0d3b6e'
-    case '/website':
-      return '#24317b'
-    case '/stovesolutions':
-      return '#0f8277'
-    case '/zora2024':
-      return '#162466'
-    case '/2022-23-season':
-      return '#7a0c2e'
-    case '/2023-24-season':
-      return '#7a0c2e'
-    case '/photography':
-      return '#1B0A07'
-
-    default:
-      return '#0f1115'
+function waitForFonts() {
+  if (typeof document === 'undefined' || !('fonts' in document)) {
+    return Promise.resolve()
   }
+
+  return document.fonts.ready.then(() => undefined).catch(() => undefined)
 }
 
-function getPageTitle(pathname: string) {
-  switch (pathname) {
-    case '/':
-      return 'Home'
-    case '/miracosta':
-      return isPageUnderConstruction('miracosta') ? 'MiraCosta (Under Construction)' : 'MiraCosta'
-    case '/stovesolutions':
-      return 'Stove Solutions'
-    case '/photography':
-      return 'Photography'
-    case '/socials':
-      return 'Socials'
-    case '/website':
-      return isPageUnderConstruction('website') ? 'Website (Under Construction)' : 'Website'
-    case '/2022-23-season':
-      return 'Robotics 2022-23 Season'
-    case '/2023-24-season':
-      return 'Robotics 2023-24 Season'
-    case '/zora2024':
-      return 'ZORA 2024'
-    default:
-      return 'Not Found'
+function waitForImage(image: HTMLImageElement) {
+  if (image.complete) {
+    return Promise.resolve()
   }
+
+  return new Promise<void>((resolve) => {
+    const handleComplete = () => {
+      image.removeEventListener('load', handleComplete)
+      image.removeEventListener('error', handleComplete)
+      resolve()
+    }
+
+    image.addEventListener('load', handleComplete, { once: true })
+    image.addEventListener('error', handleComplete, { once: true })
+  })
+}
+
+function waitForCriticalImages(root: HTMLElement | null) {
+  if (!root || typeof window === 'undefined') {
+    return Promise.resolve()
+  }
+
+  const viewportCutoff = window.innerHeight * 1.15
+  const criticalImages = Array.from(root.querySelectorAll<HTMLImageElement>('img')).filter((image) => {
+    const rect = image.getBoundingClientRect()
+    const isPriorityImage = image.loading === 'eager' || image.getAttribute('fetchpriority') === 'high'
+    const isNearViewport = rect.width > 0 && rect.height > 0 && rect.top < viewportCutoff && rect.bottom > -80
+
+    return isPriorityImage || isNearViewport
+  })
+
+  return Promise.all(criticalImages.map(waitForImage)).then(() => undefined)
 }
 
 interface LayoutProps {
@@ -64,8 +59,9 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
-  const [visible, setVisible] = useState(false)
+  const routeMetadata = getRouteMetadata(location.pathname)
   const mainRef = useRef<HTMLElement>(null)
+  const [isInitialBootReady, setIsInitialBootReady] = useState(() => typeof window === 'undefined')
   const hideHeader = isArchivedPath(location.pathname) || location.pathname === '/socials'
   const hideFooter = location.pathname === '/socials'
   const isHomePage = location.pathname === '/'
@@ -92,24 +88,70 @@ export default function Layout({ children }: LayoutProps) {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
   }, [location.pathname])
 
-  useLayoutEffect(() => {
-    setVisible(false)
-    const id = window.requestAnimationFrame(() => setVisible(true))
-    return () => cancelAnimationFrame(id)
+  useEffect(() => {
+    applyRouteMetadataToDocument(location.pathname)
   }, [location.pathname])
 
   useEffect(() => {
-    document.title = `${baseDocumentTitle} - ${getPageTitle(location.pathname)}`
-  }, [location.pathname])
-
-  useEffect(() => {
-    const accent = getBrandAccent(location.pathname)
-    document.body.style.setProperty('--brand-accent', accent)
+    document.body.style.setProperty('--brand-accent', routeMetadata.themeColor)
 
     return () => {
       document.body.style.removeProperty('--brand-accent')
     }
-  }, [location.pathname])
+  }, [routeMetadata.themeColor])
+
+  useEffect(() => {
+    if (isInitialBootReady) {
+      return
+    }
+
+    let isCancelled = false
+    let minDelayTimer = 0
+    let maxDelayTimer = 0
+    let revealFrame = 0
+
+    const minDelay = new Promise<void>((resolve) => {
+      minDelayTimer = window.setTimeout(resolve, initialBootMinDurationMs)
+    })
+
+    const maxDelay = new Promise<void>((resolve) => {
+      maxDelayTimer = window.setTimeout(resolve, initialBootMaxDurationMs)
+    })
+
+    Promise.race([
+      Promise.all([minDelay, waitForFonts(), waitForCriticalImages(mainRef.current)]).then(() => undefined),
+      maxDelay,
+    ]).then(() => {
+      if (isCancelled) {
+        return
+      }
+
+      revealFrame = window.requestAnimationFrame(() => {
+        if (!isCancelled) {
+          setIsInitialBootReady(true)
+        }
+      })
+    })
+
+    return () => {
+      isCancelled = true
+      window.clearTimeout(minDelayTimer)
+      window.clearTimeout(maxDelayTimer)
+      window.cancelAnimationFrame(revealFrame)
+    }
+  }, [isInitialBootReady])
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+
+    if (!isInitialBootReady) {
+      document.body.style.overflow = 'hidden'
+    }
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [isInitialBootReady])
 
   useEffect(() => {
     const observedElements = new Set<HTMLElement>()
@@ -279,18 +321,28 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <>
-      {!hideHeader && <Header />}
-      <main
-        ref={mainRef}
-        className={`main page-fade ${visible ? 'is-visible' : ''} ${hideHeader ? 'main--no-header' : ''} ${
-          isHomePage ? 'main--home' : ''
-        } ${
-          hasUnderHeaderHero ? 'main--under-header-hero' : ''
-        }`.trim()}
-      >
-        {children}
-      </main>
-      {!hideFooter && <Footer />}
+      <div className={`app-shell ${isInitialBootReady ? 'is-ready' : 'is-booting'}`} aria-hidden={!isInitialBootReady}>
+        <a className="skip-link" href="#main-content">
+          Skip to content
+        </a>
+        {!hideHeader && <Header key={location.pathname} />}
+        <main
+          key={location.pathname}
+          id="main-content"
+          ref={mainRef}
+          className={`main page-fade ${hideHeader ? 'main--no-header' : ''} ${isHomePage ? 'main--home' : ''} ${
+            hasUnderHeaderHero ? 'main--under-header-hero' : ''
+          }`.trim()}
+        >
+          {children}
+        </main>
+        {!hideFooter && <Footer key={location.pathname} />}
+      </div>
+      <div
+        className={`boot-loader ${isInitialBootReady ? 'is-ready' : ''}`}
+        style={{ '--boot-loader-accent': routeMetadata.themeColor } as CSSProperties}
+        aria-hidden={isInitialBootReady}
+      />
     </>
   )
 }

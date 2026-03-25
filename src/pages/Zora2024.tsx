@@ -115,6 +115,7 @@ export default function Zora2024() {
               <iframe
                 src="https://www.youtube.com/embed/PzWQqw-5sYs?si=1dCG2Gr479iSFhZh"
                 title="Zora Campaign Video"
+                loading="lazy"
                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

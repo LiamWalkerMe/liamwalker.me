@@ -24,7 +24,7 @@ export default function Education() {
             style={{maxWidth: 1000, margin: '0 auto 20px' }}
           />
           <p>An Engineering Design and Development Course Project</p>
-          <Link className="button accent" to="/stovesolutions">
+          <Link className="button accent" to="/stovesolutions" reloadDocument>
             Learn More
           </Link>
         </div>
@@ -40,14 +40,14 @@ export default function Education() {
         <div style={{ maxWidth: 520, margin: '0 auto' }}>
           <h2 className="title-xl">FIRST Robotics</h2>
           <p>My experience on Team #10809 Crow Force</p>
-          <Link className="button light" to="/2023-24-season">
+          <Link className="button light" to="/2023-24-season" reloadDocument>
             Learn More
           </Link>
         </div>
       </SplitSection>
 
       <SplitSection
-        imageSrc="/assets/Website/FrontPage.png"
+        imageSrc="/assets/Website/React.png"
         imageAlt="Website preview"
         sectionStyle={{ background: '#f1f1f1' }}
         imageFit="contain"
@@ -64,7 +64,7 @@ export default function Education() {
         <div style={{ maxWidth: 520, margin: '0 auto' }}>
           <h2 className="title-xl">This Website!</h2>
           <p>Learn More About the Creation of This Website!</p>
-          <Link className="button" to="/website">
+          <Link className="button" to="/website" reloadDocument>
             Learn More
           </Link>
         </div>

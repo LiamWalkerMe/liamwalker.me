@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Maximize2, X } from 'lucide-react'
+import { Maximize2 } from 'lucide-react'
+import Lightbox from '../components/Lightbox'
 import { photoSections } from '../data/photography'
 
 type Tile = { images: string[] }
@@ -151,39 +152,12 @@ export default function Photography() {
   const [sectionProgresses, setSectionProgresses] = useState(() => gallerySections.map(() => 0))
   const [sectionRevealProgresses, setSectionRevealProgresses] = useState(() => gallerySections.map(() => 0))
   const [isPinnedLayout, setIsPinnedLayout] = useState(false)
-  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null)
   const sectionRefs = useRef<Array<HTMLElement | null>>([])
   const stickyRefs = useRef<Array<HTMLDivElement | null>>([])
   const viewportRefs = useRef<Array<HTMLDivElement | null>>([])
   const railRefs = useRef<Array<HTMLDivElement | null>>([])
   const tileRefs = useRef<Array<Array<HTMLElement | null>>>([])
-
-  useEffect(() => {
-    if (lightboxSrc) {
-      setIsLightboxOpen(false)
-      const id = requestAnimationFrame(() => setIsLightboxOpen(true))
-      return () => cancelAnimationFrame(id)
-    }
-    return undefined
-  }, [lightboxSrc])
-
-  useEffect(() => {
-    if (!lightboxSrc) return undefined
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsLightboxOpen(false)
-        setTimeout(() => setLightboxSrc(null), 220)
-      }
-    }
-    window.addEventListener('keydown', handleKey)
-    return () => {
-      document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', handleKey)
-    }
-  }, [lightboxSrc])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(pinnedLayoutQuery)
@@ -353,11 +327,6 @@ export default function Photography() {
     }
   }, [gallerySections, isPinnedLayout, sectionMetrics])
 
-  const closeLightbox = () => {
-    setIsLightboxOpen(false)
-    window.setTimeout(() => setLightboxSrc(null), 220)
-  }
-
   return (
     <div className="photography-page">
       <section className="photography-hero page-hero-under-header">
@@ -474,7 +443,12 @@ export default function Photography() {
                                     type="button"
                                     key={img}
                                     className="photography-rail-frame"
-                                    onClick={() => setLightboxSrc(img)}
+                                    onClick={() =>
+                                      setLightboxImage({
+                                        src: img,
+                                        alt: `${section.title} photograph ${imageIndex + 1}`,
+                                      })
+                                    }
                                     aria-label={`View ${section.title} photograph ${imageIndex + 1} full screen`}
                                     style={{
                                       opacity: 0.4 + frameReveal * 0.6,
@@ -501,13 +475,8 @@ export default function Photography() {
         })}
       </div>
 
-      {lightboxSrc && (
-        <div className={`lightbox ${isLightboxOpen ? 'open' : ''}`} role="dialog" aria-modal="true" onClick={closeLightbox}>
-          <button className="lightbox-close" onClick={closeLightbox} aria-label="Close">
-            <X size={20} />
-          </button>
-          <img src={lightboxSrc} alt="Full screen" onClick={(event) => event.stopPropagation()} />
-        </div>
+      {lightboxImage && (
+        <Lightbox src={lightboxImage.src} alt={lightboxImage.alt} onClose={() => setLightboxImage(null)} />
       )}
     </div>
   )

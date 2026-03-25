@@ -16,7 +16,7 @@ export default function NotFound() {
             <p style={{ margin: '0 0 24px', fontSize: 18, lineHeight: 1.7 }}>
               The page you were looking for doesn&apos;t exist or may have moved.
             </p>
-            <Link className="button" to="/">
+            <Link className="button" to="/" reloadDocument>
               Go Home
             </Link>
           </div>

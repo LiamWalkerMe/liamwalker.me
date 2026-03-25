@@ -26,14 +26,14 @@ export default function Home() {
             <p className="hero-subtitle hero-home__subtitle">COMPUTER SCIENCE STUDENT AT MIRACOSTA COLLEGE</p>
             <h1 className="hero-title hero-home__title">liamwalker.me</h1>
             <div className="hero-home__actions">
-              <Link className="button hero-home__button" to="/miracosta">
+              <Link className="button hero-home__button" to="/miracosta" reloadDocument>
                 View Associates Degree
               </Link>
               <a
                 className="button hero-home__button hero-home__button--ghost"
                 href="/LiamWalkerResume.pdf"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label="View resume, opens in a new tab"
               >
                 View Resume
@@ -72,7 +72,7 @@ export default function Home() {
           <div className="home-miracosta-promo__content fade-in">
             <p className="home-miracosta-promo__eyebrow">A.S-T IN COMPUTER SCIENCE</p>
             <h2 className="home-miracosta-promo__title">MiraCosta</h2>
-            <Link className="button home-miracosta-promo__button" to="/miracosta">
+            <Link className="button home-miracosta-promo__button" to="/miracosta" reloadDocument>
               Learn More
             </Link>
           </div>
@@ -96,7 +96,7 @@ export default function Home() {
           <div className="home-website-showcase__copy fade-in">
             <p className="home-website-showcase__eyebrow">Digital Portfolio</p>
             <h2 className="home-website-showcase__title">This Website</h2>
-            <Link className="button home-website-showcase__button" to="/website">
+            <Link className="button home-website-showcase__button" to="/website" reloadDocument>
               Learn More
             </Link>
           </div>
@@ -119,7 +119,7 @@ export default function Home() {
           <div className="home-photography-promo__copy fade-in">
             <p className="home-photography-promo__eyebrow">My Creative Outlet</p>
             <h2 className="home-photography-promo__title">Photography</h2>
-            <Link className="button home-photography-promo__button" to="/photography">
+            <Link className="button home-photography-promo__button" to="/photography" reloadDocument>
               Learn More
             </Link>
           </div>
@@ -174,7 +174,7 @@ export default function Home() {
               alt="Stove Solutions"
               className="home-stove-cover__banner"
             />
-            <Link className="button accent home-stove-cover__button" to="/stovesolutions">
+            <Link className="button accent home-stove-cover__button" to="/stovesolutions" reloadDocument>
               Learn More
             </Link>
           </div>
@@ -195,7 +195,7 @@ export default function Home() {
         <div className="split-feature-copy home-robotics-copy" style={{ maxWidth: 520, margin: '0 auto' }}>
           <p className="home-robotics-copy__eyebrow">My experience on Team #10809 Crow Force</p>
           <h2 className="title-xl home-robotics-copy__title">FIRST Robotics</h2>
-          <Link className="button light" to="/2023-24-season">
+          <Link className="button light" to="/2023-24-season" reloadDocument>
             Learn More
           </Link>
         </div>
