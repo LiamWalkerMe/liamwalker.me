@@ -1,5 +1,7 @@
+import { useState } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import AwardGrid, { type AwardItem } from '../components/AwardGrid'
 import Gallery from '../components/Gallery'
-import VerticalTabs, { type VerticalTab } from '../components/VerticalTabs'
 
 const robotPhotos = [
   '/assets/Robotics/2023/Robot/FTC1.jpeg',
@@ -37,220 +39,108 @@ const regionalPhotos = [
   '/assets/Robotics/2023/Regionals/FTC9.jpeg',
 ]
 
-const modularTabs: VerticalTab[] = [
+const modularSlides = [
   {
-    label: 'Chassis',
-    content: (
-      <div className="vertical-tabs__content">
-        <img src="/assets/Robotics/2023/Modular/Chassis.jpeg" alt="Chassis module" loading="lazy" />
-        <p>
-          <strong>Description:</strong>
-          <br />
-          <a href="/2022-23-season/" target="_blank" rel="noreferrer">
-            Last season
-          </a>
-          , our cube-shaped chassis made repairs harder and raised the center of mass. This season’s juggernaut-style
-          chassis is lower, more stable, and much easier to service.
-        </p>
-      </div>
+    title: 'Chassis',
+    image: '/assets/Robotics/2023/Modular/Chassis.jpeg',
+    description: (
+      <>
+        <a href="/2022-23-season" target="_blank" rel="noreferrer">
+          Last season
+        </a>
+        , our cube-shaped chassis made repairs harder and raised the center of mass. This season&apos;s
+        juggernaut-style chassis is lower, more stable, and much easier to service.
+      </>
     ),
   },
   {
-    label: 'Arm',
-    content: (
-      <div className="vertical-tabs__content">
-        <img
-          src="/assets/Robotics/2023/Modular/Arm.jpeg"
-          alt="Arm module"
-          loading="lazy"
-        />
-        <p>
-          <strong>Description:</strong>
-          <br />
-          We wanted an arm with wide range, speed, and accuracy. An excavator-inspired triple-jointed design gave us
-          flexible movement for intake, scoring, and hanging.
-        </p>
-      </div>
-    ),
+    title: 'Arm',
+    image: '/assets/Robotics/2023/Modular/Arm.jpeg',
+    description:
+      'We wanted an arm with wide range, speed, and accuracy. An excavator-inspired triple-jointed design gave us flexible movement for intake, scoring, and hanging.',
   },
   {
-    label: 'Intake',
-    content: (
-      <div className="vertical-tabs__content">
-        <img
-          src= "/assets/Robotics/2023/Modular/Intake.jpeg"
-          alt="Intake module"
-          loading="lazy"
-        />
-        <p>
-          <strong>Description:</strong>
-          <br />
-          The intake ramp guides pixels into the robot one at a time. After testing different lengths and angles, we
-          tuned it to feed pixels cleanly into the bed so the claw can grab two at once.
-        </p>
-      </div>
-    ),
+    title: 'Intake',
+    image: '/assets/Robotics/2023/Modular/Intake.jpeg',
+    description:
+      'The intake ramp guides pixels into the robot one at a time. After testing different lengths and angles, we tuned it to feed pixels cleanly into the bed so the claw can grab two at once.',
   },
   {
-    label: 'Claw',
-    content: (
-      <div className="vertical-tabs__content">
-        <img src="/assets/Robotics/2023/Modular/Claw.jpeg" alt="Claw module" loading="lazy" />
-        <p>
-          <strong>Description:</strong>
-          <br />
-          The claw holds pixels horizontally for easier placement on the backboard. It uses one servo, is 3D printed,
-          and improved on earlier versions that had less wrist movement.
-        </p>
-      </div>
-    ),
+    title: 'Claw',
+    image: '/assets/Robotics/2023/Modular/Claw.jpeg',
+    description:
+      'The claw holds pixels horizontally for easier placement on the backboard. It uses one servo, is 3D printed, and improved on earlier versions that had less wrist movement.',
   },
   {
-    label: 'Drone Launcher',
-    content: (
-      <div className="vertical-tabs__content">
-        <img src="/assets/Robotics/2023/Modular/DroneLauncher.jpeg" alt="Drone launcher module" loading="lazy" />
-        <p>
-          <strong>Description:</strong>
-          <br />
-          The drone launcher uses a simple rubber-band design in a U-channel. After early collisions knocked it out of
-          place, we added extra protection before later competitions.
-        </p>
-      </div>
-    ),
+    title: 'Drone Launcher',
+    image: '/assets/Robotics/2023/Modular/DroneLauncher.jpeg',
+    description:
+      'The drone launcher uses a simple rubber-band design in a U-channel. After early collisions knocked it out of place, we added extra protection before later competitions.',
   },
 ]
 
-const interleagueAwards: VerticalTab[] = [
+const interleagueAwards: AwardItem[] = [
   {
-    label: 'Connect',
-    content: (
-      <div className="vertical-tabs__content">
-        <p>
-          <strong>Award Placement</strong> – 2nd Place
-          <br />
-          <br />
-          <strong>Description:</strong>
-        </p>
-        <p>
-          Recognizes the team that builds strong connections with its local STEM community and grows support for FIRST.
-        </p>
-      </div>
-    ),
+    title: 'Connect',
+    placement: '2nd Place',
+    description: 'Recognizes the team that builds strong connections with its local STEM community and grows support for FIRST.',
+    icon: 'handshake',
   },
   {
-    label: 'Control',
-    content: (
-      <div className="vertical-tabs__content">
-        <p>
-          <strong>Award Placement</strong> – 2nd Place
-          <br />
-          <br />
-          <strong>Description:</strong>
-          <br />
-          Recognizes strong use of sensors, software, and reliable control systems to improve robot performance.
-        </p>
-      </div>
-    ),
+    title: 'Control',
+    placement: '2nd Place',
+    description: 'Recognizes strong use of sensors, software, and reliable control systems to improve robot performance.',
+    icon: 'cpu',
   },
   {
-    label: 'Design',
-    content: (
-      <div className="vertical-tabs__content">
-        <p>
-          <strong>Award Placement</strong> – 2nd Place
-          <br />
-          <br />
-          <strong>Description:</strong>
-          <br />
-          Recognizes a robot that combines strong function with a clean, thoughtful design.
-        </p>
-      </div>
-    ),
+    title: 'Design',
+    placement: '2nd Place',
+    description: 'Recognizes a robot that combines strong function with a clean, thoughtful design.',
+    icon: 'ruler',
   },
   {
-    label: 'Innovate',
-    content: (
-      <div className="vertical-tabs__content">
-        <p>
-          <strong>Award Placement</strong> – 2nd Place
-          <br />
-          <br />
-          <strong>Description:</strong>
-          <br />
-          Recognizes a creative and effective design solution for a specific game challenge.
-        </p>
-      </div>
-    ),
+    title: 'Innovate',
+    placement: '2nd Place',
+    description: 'Recognizes a creative and effective design solution for a specific game challenge.',
+    icon: 'lightbulb',
   },
   {
-    label: 'Inspire',
-    content: (
-      <div className="vertical-tabs__content">
-        <p>
-          <strong>Award Placement</strong> – 1st Place
-          <br />
-          <br />
-          <strong>Description:</strong>
-          <br />
-          Recognizes the team that best represents the spirit of FIRST through teamwork, outreach, and overall
-          excellence.
-        </p>
-      </div>
-    ),
+    title: 'Inspire',
+    placement: '1st Place',
+    description: 'Recognizes the team that best represents the spirit of FIRST through teamwork, outreach, and overall excellence.',
+    icon: 'star',
   },
   {
-    label: 'Motivate',
-    content: (
-      <div className="vertical-tabs__content">
-        <p>
-          <strong>Award Placement</strong> – 2nd Place
-          <br />
-          <br />
-          <strong>Description:</strong>
-          <br />
-          Recognizes the team that best shares the culture and enthusiasm of FIRST in its school and community.
-        </p>
-      </div>
-    ),
+    title: 'Motivate',
+    placement: '2nd Place',
+    description: 'Recognizes the team that best shares the culture and enthusiasm of FIRST in its school and community.',
+    icon: 'megaphone',
   },
   {
-    label: 'Think',
-    content: (
-      <div className="vertical-tabs__content">
-        <p>
-          <strong>Award Placement</strong> – 3rd Place
-          <br />
-          <br />
-          <strong>Description:</strong>
-          <br />
-          Recognizes the team whose portfolio best shows its engineering design journey.
-        </p>
-      </div>
-    ),
+    title: 'Think',
+    placement: '3rd Place',
+    description: 'Recognizes the team whose portfolio best shows its engineering design journey.',
+    icon: 'file',
   },
 ]
 
-const regionalAwards: VerticalTab[] = [
+const regionalAwards: AwardItem[] = [
   {
-    label: 'Design',
-    content: (
-      <div className="vertical-tabs__content">
-        <p>
-          <strong>Award Placement</strong> – 1st Place
-          <br />
-          <br />
-          <strong>Description:</strong>
-          <br />
-          Recognizes a robot that combines strong function with a clean, thoughtful design.
-        </p>
-      </div>
-    ),
+    title: 'Design',
+    placement: '1st Place',
+    description: 'Recognizes a robot that combines strong function with a clean, thoughtful design.',
+    icon: 'ruler',
   },
 ]
 
 export default function Season2023() {
   const gradient = 'linear-gradient(315deg, rgb(0,0,0) 0%, rgb(255,0,0) 100%)'
+  const [modularSlideIndex, setModularSlideIndex] = useState(0)
+  const modularSlideCount = modularSlides.length
+
+  const moveModularSlide = (direction: number) => {
+    setModularSlideIndex((prev) => (prev + direction + modularSlideCount) % modularSlideCount)
+  }
 
   return (
     <div className="ftc-page">
@@ -278,14 +168,58 @@ export default function Season2023() {
           </p>
         </div>
         <div className="container wide">
-          <Gallery images={robotPhotos} alt="2023-24 robot" />
+          <Gallery images={robotPhotos} alt="2023-24 robot" enableLightbox={false} />
         </div>
       </section>
 
-      <section className="section">
+      <section className="section modular-carousel-section">
         <div className="container">
           <h2 className="section-title">Modular Systems</h2>
-          <VerticalTabs idPrefix="modular" tabs={modularTabs} />
+          <div className="concept-carousel modular-carousel">
+            <button
+              type="button"
+              className="carousel-arrow left"
+              onClick={() => moveModularSlide(-1)}
+              aria-label="Previous modular system"
+            >
+              <ChevronLeft size={20} strokeWidth={2.25} />
+            </button>
+            <div className="carousel-track" style={{ transform: `translateX(-${modularSlideIndex * 100}%)` }}>
+              {modularSlides.map((slide, index) => (
+                <div key={slide.title} className="carousel-slide">
+                  <article className="concept-slide">
+                    <div className="image-frame tight concept-slide__media">
+                      <img src={slide.image} alt={`${slide.title} module`} loading="lazy" decoding="async" />
+                    </div>
+                    <div className="concept-slide__body">
+                      <span className="concept-slide__eyebrow">Module {String(index + 1).padStart(2, '0')}</span>
+                      <h3>{slide.title}</h3>
+                      <p>{slide.description}</p>
+                    </div>
+                  </article>
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              className="carousel-arrow right"
+              onClick={() => moveModularSlide(1)}
+              aria-label="Next modular system"
+            >
+              <ChevronRight size={20} strokeWidth={2.25} />
+            </button>
+          </div>
+          <div className="carousel-dots">
+            {modularSlides.map((slide, index) => (
+              <button
+                type="button"
+                key={slide.title}
+                className={`carousel-dot ${index === modularSlideIndex ? 'active' : ''}`}
+                onClick={() => setModularSlideIndex(index)}
+                aria-label={`Go to ${slide.title}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -299,14 +233,14 @@ export default function Season2023() {
           </p>
         </div>
         <div className="container wide">
-          <Gallery images={interleaguePhotos} alt="Interleague B" />
+          <Gallery images={interleaguePhotos} alt="Interleague B" enableLightbox={false} />
         </div>
       </section>
 
       <section className="section">
         <div className="container">
           <h2 className="section-title">Awards Won</h2>
-          <VerticalTabs idPrefix="interleague-awards" tabs={interleagueAwards} />
+          <AwardGrid awards={interleagueAwards} ariaLabel="Interleague B awards" />
         </div>
       </section>
 
@@ -341,14 +275,14 @@ export default function Season2023() {
           </p>
         </div>
         <div className="container wide">
-          <Gallery images={regionalPhotos} alt="Regional competition" />
+          <Gallery images={regionalPhotos} alt="Regional competition" enableLightbox={false} />
         </div>
       </section>
 
       <section className="section">
         <div className="container">
           <h2 className="section-title">Awards Won</h2>
-          <VerticalTabs idPrefix="regional-awards" tabs={regionalAwards} />
+          <AwardGrid awards={regionalAwards} ariaLabel="2023-24 regional awards" />
         </div>
       </section>
 

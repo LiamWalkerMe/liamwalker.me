@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { isArchivedPath } from '../config/archivedPages'
 
@@ -53,10 +53,10 @@ const teamMembers = [
   },
   {
     name: 'Jack Burnett',
-    role: 'Vice President Candadite',
+    role: 'Vice Presidential Candidate',
     image: '/assets/Zora2024/Team/Jack.jpeg',
   },
-    {
+  {
     name: 'Liam Walker',
     role: 'Campaign Manager',
     image: '/assets/Zora2024/Team/Liam.jpeg',
@@ -81,22 +81,15 @@ const teamMembers = [
     role: 'Campaign Worker',
     image: '/assets/Zora2024/Team/Emma.jpeg',
   },
-
 ]
 
 export default function Zora2024() {
   const [teamIndex, setTeamIndex] = useState(0)
-  const carouselRef = useRef<HTMLDivElement | null>(null)
+  const teamCount = teamMembers.length
   const isArchived = isArchivedPath('/zora2024')
 
   const handleTeamMove = (dir: number) => {
-    const carousel = carouselRef.current
-    if (!carousel) return
-    const slideWidth = carousel.clientWidth
-    if (!slideWidth) return
-    const currentIndex = Math.round(carousel.scrollLeft / slideWidth)
-    const nextIndex = (currentIndex + dir + teamMembers.length) % teamMembers.length
-    carousel.scrollTo({ left: nextIndex * slideWidth, behavior: 'smooth' })
+    setTeamIndex((currentIndex) => (currentIndex + dir + teamCount) % teamCount)
   }
 
   return (
@@ -165,35 +158,29 @@ export default function Zora2024() {
             <button className="carousel-arrow left" onClick={() => handleTeamMove(-1)} aria-label="Previous team member">
               <ChevronLeft size={20} strokeWidth={2.25} />
             </button>
-            <div
-              className="carousel-viewport"
-              ref={carouselRef}
-              onScroll={(event) => {
-                const target = event.currentTarget
-                const slideWidth = target.clientWidth
-                if (!slideWidth) return
-                const nextIndex = Math.round(target.scrollLeft / slideWidth)
-                setTeamIndex((prev) => (prev === nextIndex ? prev : nextIndex))
-              }}
-            >
-              <div className="carousel-track">
-                {teamMembers.map((member, index) => (
-                  <div className="carousel-slide" key={member.name}>
-                    <article className="zora-team-card">
-                      <div className="zora-team-card__media">
-                        <img className="zora-team-image" src={member.image} alt={member.name} />
-                      </div>
-                      <div className="zora-team-card__body">
-                        <span className="zora-team-card__eyebrow">
-                          Team Member {String(index + 1).padStart(2, '0')}
-                        </span>
-                        <h3 className="zora-team-name">{member.name}</h3>
-                        <p className="zora-team-role">{member.role}</p>
-                      </div>
-                    </article>
-                  </div>
-                ))}
-              </div>
+            <div className="carousel-track" style={{ transform: `translateX(-${teamIndex * 100}%)` }}>
+              {teamMembers.map((member, index) => (
+                <div className="carousel-slide" key={member.name}>
+                  <article className="zora-team-card">
+                    <div className="zora-team-card__media">
+                      <img
+                        className="zora-team-image"
+                        src={member.image}
+                        alt={member.name}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="zora-team-card__body">
+                      <span className="zora-team-card__eyebrow">
+                        Team Member {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <h3 className="zora-team-name">{member.name}</h3>
+                      <p className="zora-team-role">{member.role}</p>
+                    </div>
+                  </article>
+                </div>
+              ))}
             </div>
             <button className="carousel-arrow right" onClick={() => handleTeamMove(1)} aria-label="Next team member">
               <ChevronRight size={20} strokeWidth={2.25} />
@@ -204,7 +191,7 @@ export default function Zora2024() {
               <button
                 key={`team-dot-${index}`}
                 className={`carousel-dot ${index === teamIndex ? 'active' : ''}`}
-                onClick={() => handleTeamMove(index - teamIndex)}
+                onClick={() => setTeamIndex(index)}
                 aria-label={`Go to team member ${index + 1}`}
               />
             ))}

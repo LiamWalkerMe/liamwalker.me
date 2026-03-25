@@ -1,33 +1,22 @@
+import AwardGrid, { type AwardItem } from '../components/AwardGrid'
 import Gallery from '../components/Gallery'
-import VerticalTabs, { type VerticalTab } from '../components/VerticalTabs'
 import { season2022Photos } from '../data/robotics'
 
-const leagueAwards: VerticalTab[] = [
+const leagueAwards: AwardItem[] = [
   {
-    label: 'Winning Alliance',
-    content: (
-      <div className="vertical-tabs__content">
-        <p>
-          <strong>Award Placement</strong> – 1st Place
-          <br />
-          <br />
-          <strong>Description:</strong>
-          <br />
-          Given to the alliance that wins the final match.
-        </p>
-      </div>
-    ),
+    title: 'Winning Alliance',
+    placement: '1st Place',
+    description: 'Given to the alliance that wins the final match.',
+    icon: 'trophy',
   },
 ]
 
-const regionalAwards: VerticalTab[] = [
+const regionalAwards: AwardItem[] = [
   {
-    label: 'N/A',
-    content: (
-      <div className="vertical-tabs__content">
-        <p>No awards were won at regionals.</p>
-      </div>
-    ),
+    title: 'No Awards',
+    placement: 'Regionals',
+    description: 'No awards were won at regionals.',
+    icon: 'minus',
   },
 ]
 
@@ -100,14 +89,14 @@ export default function Season2022() {
         <div className="container">
           <h2 className="section-title">Awards Won</h2>
           <p className="section-subtitle">League Champ</p>
-          <VerticalTabs idPrefix="league-champ" tabs={leagueAwards} autoRotate />
+          <AwardGrid awards={leagueAwards} ariaLabel="League Champ awards" />
         </div>
       </section>
 
       <section className="section">
         <div className="container">
           <p className="section-subtitle">Regionals</p>
-          <VerticalTabs idPrefix="regional-awards-2022" tabs={regionalAwards} />
+          <AwardGrid awards={regionalAwards} ariaLabel="2022-23 regional awards" />
         </div>
       </section>
     </div>

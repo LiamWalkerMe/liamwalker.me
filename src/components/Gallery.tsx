@@ -4,9 +4,10 @@ import { Maximize2 } from 'lucide-react'
 type GalleryProps = {
   images: string[]
   alt: string
+  enableLightbox?: boolean
 }
 
-export default function Gallery({ images, alt }: GalleryProps) {
+export default function Gallery({ images, alt, enableLightbox = true }: GalleryProps) {
   const [activeImage, setActiveImage] = useState<string | null>(null)
   const [isVisible, setIsVisible] = useState(false)
 
@@ -63,22 +64,28 @@ export default function Gallery({ images, alt }: GalleryProps) {
     <>
       <div className="gallery">
         {images.map((img, index) => (
-          <button
-            key={img}
-            type="button"
-            className="gallery-item image-frame"
-            onClick={() => openLightbox(img)}
-            aria-label={`Open ${alt} ${index + 1}`}
-          >
-            <span className="lightbox-trigger" aria-hidden="true">
-              <Maximize2 size={16} />
-            </span>
-            <img src={img} alt={`${alt} ${index + 1}`} loading="lazy" />
-          </button>
+          enableLightbox ? (
+            <button
+              key={img}
+              type="button"
+              className="gallery-item image-frame"
+              onClick={() => openLightbox(img)}
+              aria-label={`Open ${alt} ${index + 1}`}
+            >
+              <span className="lightbox-trigger" aria-hidden="true">
+                <Maximize2 size={16} />
+              </span>
+              <img src={img} alt={`${alt} ${index + 1}`} loading="lazy" />
+            </button>
+          ) : (
+            <div key={img} className="gallery-item gallery-item--static image-frame">
+              <img src={img} alt={`${alt} ${index + 1}`} loading="lazy" />
+            </div>
+          )
         ))}
       </div>
 
-      {activeImage && (
+      {enableLightbox && activeImage && (
         <div
           className={`lightbox${isVisible ? ' open' : ''}`}
           onClick={closeLightbox}
