@@ -4,7 +4,7 @@ import Header from './Header'
 import Footer from './Footer'
 import { isPageUnderConstruction } from '../config/siteFlags'
 import { isArchivedPath } from '../config/archivedPages'
-import { applyRouteMetadataToDocument, getRouteMetadata } from '../lib/routeMetadata'
+import { applyRouteMetadataToDocument, getRouteMetadata, normalizePathname } from '../lib/routeMetadata'
 
 const viewAnimatedSelector = ['.fade-in', '.reveal', '.h1-1', '.h1-2', '.h1-3', '.spec-item', '.logo-video-credit', '.spin', '.grad-text'].join(', ')
 const imageFadeSelector = 'img'
@@ -59,17 +59,18 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
-  const routeMetadata = getRouteMetadata(location.pathname)
+  const pathname = normalizePathname(location.pathname)
+  const routeMetadata = getRouteMetadata(pathname)
   const mainRef = useRef<HTMLElement>(null)
   const [isInitialBootReady, setIsInitialBootReady] = useState(() => typeof window === 'undefined')
-  const hideHeader = isArchivedPath(location.pathname) || location.pathname === '/socials'
-  const hideFooter = location.pathname === '/socials'
-  const isHomePage = location.pathname === '/'
+  const hideHeader = isArchivedPath(pathname) || pathname === '/socials'
+  const hideFooter = pathname === '/socials'
+  const isHomePage = pathname === '/'
   const hasUnderHeaderHero =
-    location.pathname === '/' ||
-    location.pathname === '/photography' ||
-    (location.pathname === '/website' && !isPageUnderConstruction('website')) ||
-    (location.pathname === '/miracosta' && !isPageUnderConstruction('miracosta'))
+    pathname === '/' ||
+    pathname === '/photography' ||
+    (pathname === '/website' && !isPageUnderConstruction('website')) ||
+    (pathname === '/miracosta' && !isPageUnderConstruction('miracosta'))
 
   useEffect(() => {
     if (!window.history.scrollRestoration) {
@@ -89,8 +90,8 @@ export default function Layout({ children }: LayoutProps) {
   }, [location.pathname])
 
   useEffect(() => {
-    applyRouteMetadataToDocument(location.pathname)
-  }, [location.pathname])
+    applyRouteMetadataToDocument(pathname)
+  }, [pathname])
 
   useEffect(() => {
     document.body.style.setProperty('--brand-accent', routeMetadata.themeColor)
@@ -233,7 +234,7 @@ export default function Layout({ children }: LayoutProps) {
       observer.disconnect()
       observedElements.clear()
     }
-  }, [location.pathname])
+  }, [pathname])
 
   useEffect(() => {
     const observedImages = new Set<HTMLImageElement>()
@@ -317,7 +318,7 @@ export default function Layout({ children }: LayoutProps) {
       imageCleanupMap.clear()
       observedImages.clear()
     }
-  }, [location.pathname])
+  }, [pathname])
 
   return (
     <>
@@ -325,9 +326,9 @@ export default function Layout({ children }: LayoutProps) {
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
-        {!hideHeader && <Header key={location.pathname} />}
+        {!hideHeader && <Header key={pathname} />}
         <main
-          key={location.pathname}
+          key={pathname}
           id="main-content"
           ref={mainRef}
           className={`main page-fade ${hideHeader ? 'main--no-header' : ''} ${isHomePage ? 'main--home' : ''} ${
@@ -336,7 +337,7 @@ export default function Layout({ children }: LayoutProps) {
         >
           {children}
         </main>
-        {!hideFooter && <Footer key={location.pathname} />}
+        {!hideFooter && <Footer key={pathname} />}
       </div>
       <div
         className={`boot-loader ${isInitialBootReady ? 'is-ready' : ''}`}
