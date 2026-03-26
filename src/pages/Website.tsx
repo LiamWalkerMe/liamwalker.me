@@ -1,4 +1,4 @@
-import { type MouseEvent, useEffect, useRef, useState } from "react";
+import { type MouseEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface WebsiteFeature {
@@ -25,6 +25,31 @@ interface SkillStat {
   value: number;
   suffix?: string;
   label: string;
+}
+
+interface DevelopmentProcessStage {
+  id: string;
+  label: string;
+  iconSrc: string;
+}
+
+interface DevelopmentProcessStep {
+  id: string;
+  activeStageId: string;
+  imageSrc: string;
+  imageAlt: string;
+  caption: string;
+}
+
+interface ProcessMetric {
+  scrollSpan: number;
+  stickyHeight: number;
+}
+
+interface ProcessTimelineState {
+  currentIndex: number;
+  nextIndex: number;
+  transitionProgress: number;
 }
 
 const websiteFeatures: WebsiteFeature[] = [
@@ -54,7 +79,7 @@ const websiteVersions: WebsiteVersion[] = [
     title: "WordPress Beginnings",
     subtitle: "Shared hosting and first launch",
     body: "The WordPress site started on a shared hosting account, and it didn't take long to outgrow it. Load times were slow, and getting updates live was more of a hassle than it needed to be — tweaking something small still meant wading through a process that felt heavier than it should. \n Moving to a dedicated, self-managed server fixed both problems. With full control over the environment, the site got faster and deploying changes became a lot more straightforward. It's the kind of setup that actually gets out of your way and lets you focus on the work.",
-    imageSrc: "/assets/Website/LocalHost.png",
+    imageSrc: "/assets/Website/LocalApp.png",
     imageAlt: "Early website development stage",
   },
   {
@@ -78,8 +103,79 @@ const websiteVersions: WebsiteVersion[] = [
     title: "React",
     subtitle: "FIGMA → REACT → GITHUB PAGES",
     body: "The current version of the site is built on React, which was picked up during an internship at Epik AI. It handles more complex layouts and animations than anything the previous setups could manage. \n The workflow starts in Figma. Every page gets designed there first, which makes it easy to experiment with typography, color, and layout before writing a single line of code. From there it gets built out in React and deployed to GitHub Pages. That full cycle, from design tool to framework to live site, is what makes it possible to build something that feels genuinely modern and design-forward rather than just functional. The end result looks like it had a designer behind it, because it did. \n React was also a practical choice. It's one of the more in-demand skills in the industry right now, so the project does double duty as a portfolio piece and something worth knowing well.",
-    imageSrc: "/assets/Website/React.png",
+    imageSrc: "/assets/Website/FrontPage.png",
     imageAlt: "Current website front page",
+  },
+];
+
+const developmentProcessStages: DevelopmentProcessStage[] = [
+  {
+    id: "figma",
+    label: "Figma",
+    iconSrc: "/assets/Website/Icons/Figma.png",
+  },
+  {
+    id: "build",
+    label: "VS Code + React",
+    iconSrc: "/assets/Website/Icons/Code.png",
+  },
+  {
+    id: "local",
+    label: "Localhost",
+    iconSrc: "/assets/Website/Icons/Chrome.png",
+  },
+  {
+    id: "github",
+    label: "GitHub",
+    iconSrc: "/assets/Website/Icons/GitHub.png",
+  },
+  {
+    id: "live",
+    label: "Final Product",
+    iconSrc: "/assets/Website/Icons/Chrome.png",
+  },
+];
+
+const developmentProcessSteps: DevelopmentProcessStep[] = [
+  {
+    id: "figma-design",
+    activeStageId: "figma",
+    imageSrc: "/assets/Website/Development/FigmaApp.png",
+    imageAlt: "Website design in Figma",
+    caption:
+      "This Figma screen is where the page gets mapped out first. It is where the layout, spacing, colors, and overall visual direction for this website are worked through before anything moves into code.",
+  },
+  {
+    id: "react-build",
+    activeStageId: "build",
+    imageSrc: "/assets/Website/Development/VSCode.png",
+    imageAlt: "Website code in VS Code",
+    caption:
+      "Once the design feels right, it gets rebuilt in VS Code using React. This is the stage where the static mockup turns into a real page with responsive layout, styling, and the interactions that make this website feel more polished.",
+  },
+  {
+    id: "localhost-preview",
+    activeStageId: "local",
+    imageSrc: "/assets/Website/Development/LocalHost.png",
+    imageAlt: "Website running locally in the browser",
+    caption:
+      "The localhost preview is where the page gets checked in the browser while changes are still being made. It makes it easy to test spacing, typography, animation timing, and content updates in real time before anything is published.",
+  },
+  {
+    id: "github-deploy",
+    activeStageId: "github",
+    imageSrc: "/assets/Website/Development/GitHub-ghpages.png",
+    imageAlt: "GitHub deployment workflow for the website",
+    caption:
+      "When an update is ready, the project gets pushed to GitHub and sent through the deployment flow for this site. That step is what takes the work from a local build into a version that can actually be shipped.",
+  },
+  {
+    id: "live-site",
+    activeStageId: "live",
+    imageSrc: "/assets/Website/FrontPage.png",
+    imageAlt: "Final published version of the website",
+    caption:
+      "After deployment finishes, the newest version of the website is live as the final product. This is the part where all of the design work, code changes, and testing come together in the finished page that people actually see.",
   },
 ];
 
@@ -112,8 +208,63 @@ const skillStats: SkillStat[] = [
   { value: 20, suffix: "+", label: "tools explored" },
 ];
 
+const developmentProcessPinnedLayoutQuery = "(min-width: 960px) and (prefers-reduced-motion: no-preference)";
+const emptyProcessMetric: ProcessMetric = { scrollSpan: 0, stickyHeight: 0 };
+
 function getFadeDelay(delayMs: number) {
   return { animationDelay: `${delayMs}ms` };
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function easeInOutCubic(value: number) {
+  return value < 0.5 ? 4 * value * value * value : 1 - Math.pow(-2 * value + 2, 3) / 2;
+}
+
+function getProcessTimelineState(progress: number, stepCount: number): ProcessTimelineState {
+  if (stepCount <= 1) {
+    return {
+      currentIndex: 0,
+      nextIndex: 0,
+      transitionProgress: 1,
+    };
+  }
+
+  const maxIndex = stepCount - 1;
+  const stageProgress = clamp(progress, 0, 1) * maxIndex;
+  const currentIndex = Math.min(Math.floor(stageProgress), maxIndex);
+  const nextIndex = Math.min(currentIndex + 1, maxIndex);
+  const stageOffset = stageProgress - currentIndex;
+  const transitionProgress =
+    currentIndex === maxIndex ? 1 : easeInOutCubic(clamp((stageOffset - 0.42) / 0.58, 0, 1));
+
+  return {
+    currentIndex,
+    nextIndex,
+    transitionProgress,
+  };
+}
+
+function getProcessStepStrength(index: number, timelineState: ProcessTimelineState) {
+  if (index === timelineState.currentIndex && index === timelineState.nextIndex) {
+    return 1;
+  }
+
+  if (index === timelineState.currentIndex) {
+    return 1 - timelineState.transitionProgress;
+  }
+
+  if (index === timelineState.nextIndex) {
+    return timelineState.transitionProgress;
+  }
+
+  return 0;
+}
+
+function getDevelopmentProcessStageLabel(activeStageId: string) {
+  return developmentProcessStages.find((stage) => stage.id === activeStageId)?.label ?? "";
 }
 
 function handleWebsiteAnchorClick(event: MouseEvent<HTMLAnchorElement>) {
@@ -227,10 +378,54 @@ function WebsiteSkillStatCard({ value, suffix = "", label, delay = 0 }: SkillSta
   );
 }
 
+function WebsiteProcessStageList({ stageStrengths }: { stageStrengths: number[] }) {
+  return (
+    <ul className="website-process__stage-list" aria-label="Development workflow">
+      {developmentProcessStages.map((stage, index) => {
+        const strength = easeInOutCubic(clamp(stageStrengths[index] ?? 0, 0, 1));
+        const isActive = strength > 0.52;
+        const iconStrength = clamp((strength - 0.12) / 0.88, 0, 1);
+
+        return (
+          <li
+            key={stage.id}
+            className={`website-process__stage-item${isActive ? " is-active" : ""}`}
+            style={{
+              opacity: 0.34 + strength * 0.66,
+              transform: `translate3d(${Math.round(strength * 18)}px, 0, 0) scale(${0.92 + strength * 0.08})`,
+            }}
+          >
+            <span
+              className="website-process__stage-icon"
+              aria-hidden="true"
+              style={{
+                opacity: iconStrength,
+                transform: `translate3d(${Math.round((1 - iconStrength) * 8)}px, 0, 0) scale(${0.72 + iconStrength * 0.28})`,
+              }}
+            >
+              <img src={stage.iconSrc} alt="" loading="lazy" decoding="async" />
+            </span>
+            <span>{stage.label}</span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 export default function Website() {
   const [activeVersionIndex, setActiveVersionIndex] = useState(0);
   const [isHistoryPaused, setIsHistoryPaused] = useState(false);
+  const [isProcessPinned, setIsProcessPinned] = useState(false);
+  const [processMetric, setProcessMetric] = useState<ProcessMetric>(emptyProcessMetric);
+  const [processProgress, setProcessProgress] = useState(0);
+  const processSectionRef = useRef<HTMLElement | null>(null);
+  const processStickyRef = useRef<HTMLDivElement | null>(null);
   const activeVersion = websiteVersions[activeVersionIndex];
+  const processTimelineState = getProcessTimelineState(processProgress, developmentProcessSteps.length);
+  const processStageStrengths = developmentProcessStages.map((_, index) =>
+    getProcessStepStrength(index, processTimelineState)
+  );
 
   useEffect(() => {
     if (isHistoryPaused || websiteVersions.length < 2) {
@@ -245,6 +440,118 @@ export default function Website() {
       window.clearTimeout(timeoutId);
     };
   }, [activeVersionIndex, isHistoryPaused]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(developmentProcessPinnedLayoutQuery);
+
+    const syncProcessLayout = () => {
+      setIsProcessPinned(mediaQuery.matches);
+    };
+
+    syncProcessLayout();
+    mediaQuery.addEventListener("change", syncProcessLayout);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncProcessLayout);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!isProcessPinned) {
+      return undefined;
+    }
+
+    const measure = () => {
+      const stickyElement = processStickyRef.current;
+      const viewportHeight = window.innerHeight || 0;
+
+      if (!stickyElement || viewportHeight <= 0) {
+        setProcessMetric(emptyProcessMetric);
+        return;
+      }
+
+      const stickyHeight = Math.max(stickyElement.offsetHeight, viewportHeight);
+      const stepTravel = Math.max(viewportHeight * 0.72, 420);
+      const scrollSpan = stepTravel * Math.max(developmentProcessSteps.length - 1, 1);
+
+      setProcessMetric((previousMetric) => {
+        if (
+          Math.abs(previousMetric.scrollSpan - scrollSpan) <= 1 &&
+          Math.abs(previousMetric.stickyHeight - stickyHeight) <= 1
+        ) {
+          return previousMetric;
+        }
+
+        return {
+          scrollSpan,
+          stickyHeight,
+        };
+      });
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      measure();
+    });
+
+    if (processStickyRef.current) {
+      resizeObserver.observe(processStickyRef.current);
+    }
+
+    measure();
+    window.addEventListener("resize", measure);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [isProcessPinned]);
+
+  useEffect(() => {
+    if (!isProcessPinned) {
+      return undefined;
+    }
+
+    let frameId = 0;
+
+    const updateProgress = () => {
+      const sectionElement = processSectionRef.current;
+
+      if (!sectionElement || processMetric.scrollSpan <= 0) {
+        setProcessProgress(0);
+        frameId = 0;
+        return;
+      }
+
+      const nextProgress = clamp(-sectionElement.getBoundingClientRect().top / processMetric.scrollSpan, 0, 1);
+
+      setProcessProgress((previousProgress) =>
+        Math.abs(previousProgress - nextProgress) > 0.002 ? nextProgress : previousProgress
+      );
+
+      frameId = 0;
+    };
+
+    const scheduleUpdate = () => {
+      if (frameId !== 0) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(updateProgress);
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+
+      if (frameId !== 0) {
+        window.cancelAnimationFrame(frameId);
+      }
+    };
+  }, [isProcessPinned, processMetric.scrollSpan]);
 
   return (
     <div className="website-page">
@@ -292,6 +599,104 @@ export default function Website() {
               </article>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section
+        id="development-process"
+        ref={processSectionRef}
+        className={`website-process${isProcessPinned ? " is-pinned" : ""}`}
+        style={
+          isProcessPinned && processMetric.scrollSpan > 0
+            ? { height: `${Math.round(processMetric.stickyHeight + processMetric.scrollSpan)}px` }
+            : undefined
+        }
+      >
+        <div
+          className="website-process__sticky"
+          ref={(node) => {
+            processStickyRef.current = node;
+          }}
+        >
+          <div className="container website-process__layout">
+            <div className="website-process__intro">
+              <div className="website-section-kicker fade-in" style={getFadeDelay(20)}>
+                How It Gets Built
+              </div>
+              <h2
+                className="website-display-title website-display-title--section website-process__title fade-in"
+                style={getFadeDelay(80)}
+              >
+                Development Process
+              </h2>
+              <p className="website-process__intro-copy fade-in" style={getFadeDelay(140)}>
+                Each update moves through the same workflow: design in Figma, build in React, test locally, push to
+                GitHub, and ship the final page live.
+              </p>
+            </div>
+
+            {isProcessPinned ? (
+              <div className="website-process__experience">
+                <div className="website-process__media-column">
+                  <div className="website-process__media-stack">
+                    {developmentProcessSteps.map((step, index) => {
+                      const strength = easeInOutCubic(getProcessStepStrength(index, processTimelineState));
+
+                      return (
+                        <article
+                          key={step.id}
+                          className={`website-process-card${strength > 0.5 ? " is-active" : ""}`}
+                          aria-hidden={strength < 0.08}
+                          style={{
+                            opacity: strength,
+                            transform: `translate3d(0, ${Math.round((1 - strength) * 42)}px, 0) scale(${0.94 + strength * 0.06})`,
+                            pointerEvents: strength > 0.08 ? "auto" : "none",
+                          }}
+                        >
+                          <img
+                            className="website-process-card__image"
+                            src={step.imageSrc}
+                            alt={step.imageAlt}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <p className="website-process-card__caption">{step.caption}</p>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="website-process__copy-column">
+                  <div className="website-process__copy-panel">
+                    <WebsiteProcessStageList stageStrengths={processStageStrengths} />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="website-process__mobile-list">
+                {developmentProcessSteps.map((step, index) => (
+                  <article
+                    key={step.id}
+                    className="website-process-card website-process-card--stacked fade-in"
+                    style={getFadeDelay(180 + index * 60)}
+                  >
+                    <img
+                      className="website-process-card__image"
+                      src={step.imageSrc}
+                      alt={step.imageAlt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <h3 className="website-process-card__mobile-title">
+                      {getDevelopmentProcessStageLabel(step.activeStageId)}
+                    </h3>
+                    <p className="website-process-card__caption">{step.caption}</p>
+                  </article>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </section>
 

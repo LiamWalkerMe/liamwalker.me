@@ -47,7 +47,7 @@ export default function Education() {
       </SplitSection>
 
       <SplitSection
-        imageSrc="/assets/Website/React.png"
+        imageSrc="/assets/Website/FrontPage.png"
         imageAlt="Website preview"
         sectionStyle={{ background: '#f1f1f1' }}
         imageFit="contain"

@@ -107,7 +107,7 @@ export default function Home() {
                 className="home-website-showcase__image"
                 role="img"
                 aria-label="Current website homepage preview"
-                style={{ backgroundImage: 'url("/assets/Website/React.png")' }}
+                style={{ backgroundImage: 'url("/assets/Website/FrontPage.png")' }}
               />
             </div>
           </div>

@@ -77,7 +77,7 @@ const routeMetadata: Record<string, RouteMetadata> = {
     description:
       'A look at how this portfolio evolved through WordPress, AWS, GitHub Pages, Figma, and React.',
     themeColor: '#24317b',
-    imagePath: '/assets/Website/React.png',
+    imagePath: '/assets/Website/FrontPage.png',
     imageAlt: "A preview of Liam Walker's portfolio website",
   },
   '/2022-23-season': {
@@ -159,7 +159,7 @@ function getUnderConstructionMetadata(pathname: string): RouteMetadata | null {
       title: 'This Website (Under Construction) | Liam Walker',
       description: 'This page is currently being updated and will return with more details soon.',
       themeColor: '#24317b',
-      imagePath: '/assets/Website/React.png',
+      imagePath: '/assets/Website/FrontPage.png',
       imageAlt: "A preview of Liam Walker's portfolio website",
     }
   }

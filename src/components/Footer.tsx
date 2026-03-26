@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { ArrowUpRight, ChevronUp, Share2 } from 'lucide-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
 import { getArchivedPages } from '../config/archivedPages'
+import { normalizePathname } from '../lib/routeMetadata'
 
 const socials = [
   { label: 'Socials', to: '/socials', color: '#607284' },
@@ -14,8 +15,11 @@ const socials = [
 const archivedLinks = getArchivedPages()
 
 export default function Footer() {
+  const location = useLocation()
+  const pathname = normalizePathname(location.pathname)
   const archiveMenuRef = useRef<HTMLDivElement | null>(null)
   const [isArchiveOpen, setIsArchiveOpen] = useState(false)
+  const visibleArchivedLinks = archivedLinks.filter((item) => normalizePathname(item.to) !== pathname)
 
   useEffect(() => {
     if (!isArchiveOpen) return undefined
@@ -50,7 +54,7 @@ export default function Footer() {
           <Link to="/" className="footer-brand brand" reloadDocument>
             Liam&apos;s Digital Portfolio
           </Link>
-          {archivedLinks.length > 0 && (
+          {visibleArchivedLinks.length > 0 && (
             <div ref={archiveMenuRef} className={`footer-archive${isArchiveOpen ? ' is-open' : ''}`}>
               <button
                 type="button"
@@ -63,7 +67,7 @@ export default function Footer() {
                 <ChevronUp className="footer-archive-icon" size={16} aria-hidden="true" />
               </button>
               <div className="footer-archive-menu">
-                {archivedLinks.map((item) => (
+                {visibleArchivedLinks.map((item) => (
                   <a
                     key={item.to}
                     href={item.to}

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 
 const C = {
   navy: "#0d3b6e",
@@ -52,6 +53,152 @@ const SLIDES = [
   { label: "Cap & Gown", caption: "Friends", sub: "FrontWave Arena - Oceanside" },
   { label: "Family Celebration", caption: "Final day on campus", sub: "MiraCosta College - Oceanside" },
 ];
+
+interface CourseworkDetail {
+  code: string;
+  title: string;
+  units: string;
+  prerequisites: string;
+  enrollment?: string;
+  credit: string;
+  format: string;
+  offered: string;
+  description: string;
+  catalogUrl: string;
+}
+
+const COURSEWORK_DETAILS: ReadonlyArray<CourseworkDetail> = [
+  {
+    code: "CS 111",
+    title: "INTRO TO COMPUTER SCI I: JAVA",
+    units: "3 units",
+    prerequisites: "None",
+    enrollment: "",
+    credit: "Acceptable for Credit: CSU, UC",
+    format: "Lecture 2 hours, laboratory 3 hours",
+    offered: "Typically offered Fall, Spring, and Summer",
+    description:
+      "Introduces object-oriented programming for computer science and engineering majors through topics of personal and social relevance. Covers control structures, data types, input/output, operators, classes, methods and parameters, basic inheritance, documentation practices, testing, and verification techniques.",
+    catalogUrl: "https://catalog.miracosta.edu/disciplines/computerscience/#courseinventory",
+  },
+  {
+    code: "CS 112",
+    title: "INTRO TO COMPUTER SCI II: JAVA",
+    units: "3 units",
+    prerequisites: "CS 111",
+    enrollment: "",
+    credit: "Acceptable for Credit: CSU, UC",
+    format: "Lecture 2 hours, laboratory 3 hours",
+    offered: "Typically offered Fall, Spring, and Summer",
+    description:
+      "Builds on CS 111 with advanced object-oriented programming concepts including abstraction, inheritance, polymorphism, and encapsulation. Topics include recursion, generics, event-driven programming, graphical user interfaces, file input/output, and exception handling.",
+    catalogUrl: "https://catalog.miracosta.edu/disciplines/computerscience/#courseinventory",
+  },
+  {
+    code: "CS 113",
+    title: "BASIC DATA STRUCTURES/ALGORITHMS",
+    units: "3 units",
+    prerequisites: "CS 112",
+    enrollment: "",
+    credit: "Acceptable for Credit: CSU, UC",
+    format: "Lecture 2 hours, laboratory 3 hours",
+    offered: "Typically offered Fall, Spring, and Summer",
+    description:
+      "Focuses on efficient algorithms and properly designed data structures while introducing the software development process with industry-standard tools. Topics include searching, sorting, hashing, algorithm analysis, object-oriented design, collections, lists, stacks, queues, trees, sets, dictionaries, and graphs.",
+    catalogUrl: "https://catalog.miracosta.edu/disciplines/computerscience/#courseinventory",
+  },
+  {
+    code: "CS 150",
+    title: "C++ PROGRAMMING",
+    units: "3 units",
+    prerequisites: "None",
+    enrollment: "",
+    credit: "Acceptable for Credit: CSU, UC",
+    format: "Lecture 2 hours, laboratory 3 hours",
+    offered: "Typically offered Fall, Spring, and Summer",
+    description:
+      "Uses an object-oriented approach to design and programming in C++. Covers data input/output, data types, control structures, operators, functions, and the operating environment, leading to the construction of moderately complex programs.",
+    catalogUrl: "https://catalog.miracosta.edu/disciplines/computerscience/#courseinventory",
+  },
+  {
+    code: "CS 151",
+    title: "ADVANCED C++ PROGRAMMING",
+    units: "3 units",
+    prerequisites: "CS 150",
+    enrollment: "",
+    credit: "Acceptable for Credit: CSU, UC",
+    format: "Lecture 2 hours, laboratory 3 hours",
+    offered: "Typically offered Fall and Spring",
+    description:
+      "Advances C++ design and implementation with larger programs and stronger testing practices. Topics include polymorphism, inheritance, class libraries, the standard template library, pointers, advanced file input/output, recursion, virtual functions, exception handling, dynamic memory management, bitwise operators, and data structures such as linked lists, stacks, queues, and binary trees.",
+    catalogUrl: "https://catalog.miracosta.edu/disciplines/computerscience/#courseinventory",
+  },
+  {
+    code: "CS 220",
+    title: "COMPUTER ARCH AND ASSEM LANG",
+    units: "3 units",
+    prerequisites: "CS 112",
+    enrollment: "",
+    credit: "Acceptable for Credit: CSU, UC",
+    format: "Lecture 2 hours, laboratory 3 hours",
+    offered: "Typically offered Fall, Spring, and Summer",
+    description:
+      "Introduces the physical and structural foundations of assembly language programming. Topics include machine architecture, memory addressing, input/output, interrupts, control structures, compiling, and linking.",
+    catalogUrl: "https://catalog.miracosta.edu/disciplines/computerscience/#courseinventory",
+  },
+  {
+    code: "CS 226",
+    title: "DISCRETE STRUCTURES",
+    units: "4 units",
+    prerequisites: "CS 111, CS 138, or CS 150 and MATH 126, MATH 126S, or placement eligibility",
+    enrollment: "",
+    credit: "Acceptable for Credit: CSU, UC",
+    format: "Lecture 3.5 hours, laboratory 1.5 hours",
+    offered: "Typically offered Fall and Spring",
+    description:
+      "Introduces discrete mathematics for computer science, including logic, methods of proof, number theory, sets, counting, relations, recursion, recurrence relations, Boolean algebra, graphs, trees, and networks. Applications connect directly to algorithms, undecidability, program correctness, and digital logic design.",
+    catalogUrl: "https://catalog.miracosta.edu/disciplines/computerscience/#courseinventory",
+  },
+  {
+    code: "MATH 260",
+    title: "CALC & ANALYTIC GEOMETRY III",
+    units: "4 units",
+    prerequisites: "MATH 155",
+    enrollment: "Not open to students with prior credit in MATH 260H",
+    credit: "Acceptable for Credit: CSU, UC",
+    format: "Lecture 3.5 hours, laboratory 1.5 hours",
+    offered: "Typically offered Fall, Spring, and Summer",
+    description:
+      "The third course in a three-semester calculus sequence covering vectors in two- and three-dimensional space, quadratic surfaces, vector-valued functions of several variables, partial differentiation and multiple integration, vector fields, line integrals, and conservative fields for mathematics, science, and engineering majors.",
+    catalogUrl: "https://catalog.miracosta.edu/disciplines/mathematics/#courseinventory",
+  },
+  {
+    code: "MATH 265",
+    title: "DIFFERENTIAL EQUATIONS",
+    units: "4 units",
+    prerequisites: "MATH 155",
+    enrollment: "Not open to students with prior credit in MATH 265H",
+    credit: "Acceptable for Credit: CSU, UC",
+    format: "Lecture 4 hours",
+    offered: "Typically offered Fall and Spring",
+    description:
+      "Introduces the theory and applications of ordinary differential equations of first and higher order, along with systems of linear differential equations. Includes quantitative and qualitative methods, existence and uniqueness of solutions, and analytical, numerical, power-series, and Laplace-transform techniques.",
+    catalogUrl: "https://catalog.miracosta.edu/disciplines/mathematics/#courseinventory",
+  },
+  {
+    code: "MATH 270",
+    title: "LINEAR ALGEBRA",
+    units: "4 units",
+    prerequisites: "MATH 155",
+    enrollment: "Not open to students with prior credit in MATH 270H",
+    credit: "Acceptable for Credit: CSU, UC",
+    format: "Lecture 4 hours",
+    offered: "Typically offered Fall and Spring",
+    description:
+      "Introduces core linear algebra topics including matrix algebra, Gaussian elimination, determinants, vector spaces, introductory proof work, linear transformations, orthogonality, eigenvalues and eigenvectors, and computational methods.",
+    catalogUrl: "https://catalog.miracosta.edu/disciplines/mathematics/#courseinventory",
+  },
+] as const;
 
 const GRADUATION_PLACEHOLDER_SRC = "/assets/New/placeholder.png";
 
@@ -269,7 +416,6 @@ function MiracostaPageStyles() {
       @keyframes fadeUp   { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       @keyframes shimmer  { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
-
       .reveal, .h1-1, .h1-2, .h1-3 {
         opacity: 0;
         transform: translateY(28px);
@@ -294,6 +440,41 @@ function MiracostaPageStyles() {
         animation-play-state: paused;
       }
       .grad-text.is-in-view-active { animation-play-state: running; }
+
+      .coursework-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        background: rgba(13,59,110,0.28);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: opacity 0.32s ease;
+      }
+      .coursework-flip-shell {
+        width: min(760px, 100%);
+        perspective: 1600px;
+        transition: transform 0.42s cubic-bezier(0.16,1,0.3,1), opacity 0.28s ease;
+      }
+      .coursework-flip-card {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-height: 460px;
+        display: block;
+      }
+      .coursework-face {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 28px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.88);
+        box-shadow: 0 28px 80px rgba(13,59,110,0.18);
+      }
     `}</style>
   );
 }
@@ -850,6 +1031,405 @@ function MemoriesSection() {
   );
 }
 
+function CourseworkCard({
+  course,
+  delay = 0,
+  onSelect,
+  isActive = false,
+}: {
+  course: CourseworkDetail;
+  delay?: number;
+  onSelect: (course: CourseworkDetail, rect: DOMRect) => void;
+  isActive?: boolean;
+}) {
+  const { code, title } = course;
+
+  return (
+    <button
+      type="button"
+      className="reveal"
+      style={{
+        flex: "1 1 160px",
+        minHeight: 96,
+        width: "100%",
+        maxWidth: "none",
+        background:
+          "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.88) 28%, rgba(248,252,255,0.78) 52%, rgba(229,242,250,0.42) 100%), linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(255,255,255,0.86) 100%)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        border: "1px solid rgba(255,255,255,0.96)",
+        borderRadius: 18,
+        boxShadow: "0 10px 24px rgba(13,59,110,0.09)",
+        padding: "18px 16px 16px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        textAlign: "center",
+        animationDelay: `${delay}ms`,
+        transformStyle: "preserve-3d",
+        transition: "transform 0.1s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.12s ease, opacity 0.28s ease",
+        cursor: "pointer",
+        willChange: "transform",
+        appearance: "none",
+        outline: "none",
+        overflow: "hidden",
+        opacity: isActive ? 0 : 1,
+        pointerEvents: isActive ? "none" : "auto",
+      }}
+      onClick={(event) => onSelect(course, event.currentTarget.getBoundingClientRect())}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = "0 28px 56px rgba(13,59,110,0.2)";
+        e.currentTarget.style.borderColor = "rgba(26,95,168,0.28)";
+        e.currentTarget.style.background =
+          "radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 24%, rgba(246,251,255,0.9) 50%, rgba(226,240,249,0.44) 100%), linear-gradient(180deg, rgba(255,255,255,0.99) 0%, rgba(249,252,255,0.95) 100%)";
+      }}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;
+        const py = (e.clientY - rect.top) / rect.height;
+        const rotateY = (px - 0.5) * 16;
+        const rotateX = (0.5 - py) * 16;
+        const glowX = (px * 100).toFixed(1);
+        const glowY = (py * 100).toFixed(1);
+
+        e.currentTarget.style.transform = `perspective(900px) translateY(-10px) scale(1.04) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+        e.currentTarget.style.background = `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.97) 18%, rgba(244,250,255,0.9) 38%, rgba(222,238,248,0.44) 100%), linear-gradient(180deg, rgba(255,255,255,0.99) 0%, rgba(249,252,255,0.95) 100%)`;
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "perspective(900px) translateY(0) scale(1) rotateX(0deg) rotateY(0deg)";
+        e.currentTarget.style.boxShadow = "0 12px 32px rgba(13,59,110,0.1)";
+        e.currentTarget.style.borderColor = "rgba(255,255,255,0.96)";
+        e.currentTarget.style.background =
+          "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.88) 28%, rgba(248,252,255,0.78) 52%, rgba(229,242,250,0.42) 100%), linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(255,255,255,0.86) 100%)";
+      }}
+    >
+      <div
+        style={{
+          width: 34,
+          height: 2,
+          borderRadius: 999,
+          background: `linear-gradient(90deg, ${C.teal}, ${C.blue})`,
+          opacity: 0.7,
+          marginBottom: 10,
+        }}
+      />
+      <div
+        style={{
+          fontFamily: "'Figtree', sans-serif",
+          fontSize: "clamp(21px, 2.5vw, 28px)",
+          fontWeight: 700,
+          color: C.navy,
+          letterSpacing: "-0.025em",
+          lineHeight: 1,
+          marginBottom: 8,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {code}
+      </div>
+      <div
+        style={{
+          fontFamily: "'Figtree', sans-serif",
+          fontSize: 11.5,
+          fontWeight: 700,
+          letterSpacing: "0.02em",
+          textTransform: "uppercase",
+          color: C.blue,
+          lineHeight: 1.32,
+          maxWidth: "100%",
+          whiteSpace: "normal",
+          textWrap: "balance",
+        }}
+      >
+        {title}
+      </div>
+    </button>
+  );
+}
+
+function MajorPrepSection() {
+  const [selectedCourse, setSelectedCourse] = useState<CourseworkDetail | null>(null);
+  const [detailExpanded, setDetailExpanded] = useState(false);
+  const [selectedRect, setSelectedRect] = useState<DOMRect | null>(null);
+  const closeTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!selectedCourse) {
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+    const rafId = requestAnimationFrame(() => setDetailExpanded(true));
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      document.body.style.overflow = "";
+    };
+  }, [selectedCourse]);
+
+  useEffect(() => {
+    if (!selectedCourse) {
+      return;
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeDetail();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [selectedCourse]);
+
+  const openDetail = (course: CourseworkDetail, rect: DOMRect) => {
+    if (closeTimeoutRef.current) {
+      window.clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+
+    setDetailExpanded(false);
+    setSelectedRect(rect);
+    setSelectedCourse(course);
+  };
+
+  const closeDetail = () => {
+    setDetailExpanded(false);
+
+    if (closeTimeoutRef.current) {
+      window.clearTimeout(closeTimeoutRef.current);
+    }
+
+    closeTimeoutRef.current = window.setTimeout(() => {
+      setSelectedCourse(null);
+      setSelectedRect(null);
+      closeTimeoutRef.current = null;
+    }, 420);
+  };
+
+  const modalWidth = typeof window !== "undefined" ? Math.min(760, window.innerWidth - 56) : 760;
+  const modalHeight = typeof window !== "undefined" ? Math.min(560, window.innerHeight - 56) : 560;
+  const modalLeft = typeof window !== "undefined" ? (window.innerWidth - modalWidth) / 2 : 0;
+  const modalTop = typeof window !== "undefined" ? (window.innerHeight - modalHeight) / 2 : 0;
+  const shellTransform =
+    selectedRect && !detailExpanded
+      ? `translate(${(selectedRect.left - modalLeft).toFixed(2)}px, ${(selectedRect.top - modalTop).toFixed(2)}px) scale(${(selectedRect.width / modalWidth).toFixed(3)}, ${(selectedRect.height / modalHeight).toFixed(3)})`
+      : "translate(0px, 0px) scale(1, 1)";
+
+  return (
+    <MiracostaSection
+      id="coursework"
+      bgColor={`linear-gradient(150deg, ${C.sky} 0%, ${C.seafoam} 55%, ${C.sand} 100%)`}
+      bgSpeed={0.24}
+      style={{ padding: "96px 48px 88px" }}
+    >
+      <div style={{ maxWidth: 1020, margin: "0 auto" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: 32,
+            alignItems: "start",
+            marginBottom: 42,
+          }}
+        >
+          <div style={{ maxWidth: 520 }}>
+            <MiracostaEyebrow>
+              <span style={{ whiteSpace: "nowrap" }}>Computer Science & Mathematics Courses</span>
+            </MiracostaEyebrow>
+            <h2
+              style={{
+                fontFamily: "'Fraunces', serif",
+                fontWeight: 800,
+                fontSize: "clamp(38px, 5.5vw, 66px)",
+                color: C.navy,
+                letterSpacing: "-0.04em",
+                lineHeight: 0.98,
+                marginBottom: 0,
+              }}
+            >
+              Major Prep
+              <br />
+              <em style={{ fontStyle: "italic", fontWeight: 400, color: C.teal, fontSize: "0.8em" }}>Coursework</em>
+            </h2>
+            <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.78, maxWidth: 460, fontWeight: 300, margin: "18px 0 0" }}>
+              The major-preparation classes at MiraCosta shaped the transfer path from both sides: mathematics for structure and rigor, and computer science for implementation, problem solving, and systems thinking.
+            </p>
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
+            gap: 16,
+          }}
+        >
+          {COURSEWORK_DETAILS.map((course, courseIndex) => (
+            <CourseworkCard
+              key={course.code}
+              course={course}
+              delay={courseIndex * 70}
+              onSelect={openDetail}
+              isActive={selectedCourse?.code === course.code}
+            />
+          ))}
+        </div>
+      </div>
+
+      {selectedCourse && (
+        createPortal(
+          <div
+            className="coursework-overlay"
+            onClick={closeDetail}
+            style={{ opacity: detailExpanded ? 1 : 0 }}
+          >
+            <div
+              className="coursework-flip-shell"
+              onClick={(event) => event.stopPropagation()}
+              style={{
+                position: "fixed",
+                left: modalLeft,
+                top: modalTop,
+                width: modalWidth,
+                height: modalHeight,
+                transform: shellTransform,
+                transformOrigin: "top left",
+                opacity: detailExpanded ? 1 : 0,
+              }}
+            >
+              <div className="coursework-flip-card">
+                <div
+                  className="coursework-face"
+                  style={{
+                    background: "linear-gradient(180deg, rgba(255,255,255,0.99) 0%, rgba(247,250,253,0.95) 100%)",
+                    padding: "28px 28px 26px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 20,
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 20 }}>
+                    <div>
+                      <div style={{ fontFamily: "'Figtree', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", color: C.blue, textTransform: "uppercase", marginBottom: 8 }}>
+                        {selectedCourse.code}
+                      </div>
+                      <div style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(24px, 3vw, 34px)", fontWeight: 700, color: C.navy, lineHeight: 1.06 }}>
+                        {selectedCourse.title}
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={closeDetail}
+                      style={{
+                        width: 42,
+                        height: 42,
+                        borderRadius: "50%",
+                        border: `1px solid ${C.navy}20`,
+                        background: "rgba(255,255,255,0.8)",
+                        color: C.navy,
+                        fontSize: 22,
+                        cursor: "pointer",
+                        flexShrink: 0,
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
+                    {[
+                      selectedCourse.units,
+                      `Prerequisites: ${selectedCourse.prerequisites}`,
+                      selectedCourse.enrollment ? `Enrollment: ${selectedCourse.enrollment}` : null,
+                      selectedCourse.credit,
+                      selectedCourse.format,
+                      selectedCourse.offered,
+                    ]
+                      .filter(Boolean)
+                      .map((item) => (
+                        <div
+                          key={item}
+                          style={{
+                            background: "rgba(218,238,248,0.4)",
+                            border: "1px solid rgba(13,59,110,0.08)",
+                            borderRadius: 14,
+                            padding: "12px 14px",
+                            fontSize: 13.5,
+                            color: C.navy,
+                            lineHeight: 1.55,
+                          }}
+                        >
+                          {item}
+                        </div>
+                      ))}
+                  </div>
+
+                  <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.86, margin: 0 }}>
+                    {selectedCourse.description}
+                  </p>
+
+                  <div style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "center", flexWrap: "wrap", marginTop: "auto" }}>
+                    <button
+                      type="button"
+                      onClick={closeDetail}
+                      style={{
+                        border: `1px solid ${C.navy}22`,
+                        background: "transparent",
+                        color: C.navy,
+                        borderRadius: 999,
+                        padding: "12px 18px",
+                        fontSize: 13,
+                        fontWeight: 700,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Close
+                    </button>
+
+                    <a
+                      href={selectedCourse.catalogUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 10,
+                        borderRadius: 999,
+                        textDecoration: "none",
+                        padding: "12px 18px",
+                        background: C.teal,
+                        color: C.white,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      View Catalog
+                      <span aria-hidden="true" style={{ fontSize: 15, lineHeight: 1 }}>
+                        ↗
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )
+      )}
+    </MiracostaSection>
+  );
+}
+
 function ClubCard({
   icon,
   name,
@@ -1167,6 +1747,8 @@ export default function Miracosta() {
       <DegreeSection />
       <MiracostaWave fill={C.sand} flip />
       <MemoriesSection />
+      <MiracostaWave fill={C.sky} />
+      <MajorPrepSection />
       <MiracostaWave fill={C.cream} />
       <ClubsSection />
       <MiracostaWave fill={C.navy} flip />
