@@ -50,6 +50,33 @@ function replaceCanonicalLink(html, href) {
   return html.replace('</head>', `  <link rel="canonical" href="${escapedHref}" />\n</head>`)
 }
 
+function extractLeadingHeadLinks(appHtml) {
+  const headLinks = []
+  let remainingHtml = appHtml
+  const linkPattern = /^<link\s+rel="(?:preload|modulepreload)"[^>]*\/>/i
+
+  while (true) {
+    const match = remainingHtml.match(linkPattern)
+
+    if (!match) {
+      break
+    }
+
+    headLinks.push(match[0])
+    remainingHtml = remainingHtml.slice(match[0].length)
+  }
+
+  return { headLinks, appHtml: remainingHtml }
+}
+
+function injectHeadLinks(html, links) {
+  if (links.length === 0) {
+    return html
+  }
+
+  return html.replace('</head>', `  ${links.join('\n  ')}\n</head>`)
+}
+
 function injectAppHtml(html, appHtml, route) {
   const escapedRoute = escapeHtml(route)
 
@@ -60,7 +87,9 @@ function injectAppHtml(html, appHtml, route) {
 }
 
 function renderDocument(template, appHtml, metadata) {
-  let html = injectAppHtml(template, appHtml, metadata.path)
+  const { headLinks, appHtml: bodyHtml } = extractLeadingHeadLinks(appHtml)
+  let html = injectHeadLinks(template, headLinks)
+  html = injectAppHtml(html, bodyHtml, metadata.path)
 
   html = replaceTitle(html, metadata.title)
   html = replaceMetaTag(html, 'name', 'description', metadata.description)

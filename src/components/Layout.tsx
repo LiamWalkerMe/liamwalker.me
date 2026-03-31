@@ -62,7 +62,13 @@ export default function Layout({ children }: LayoutProps) {
   const pathname = normalizePathname(location.pathname)
   const routeMetadata = getRouteMetadata(pathname)
   const mainRef = useRef<HTMLElement>(null)
-  const [isInitialBootReady, setIsInitialBootReady] = useState(() => typeof window === 'undefined')
+  const [isInitialBootReady, setIsInitialBootReady] = useState(() => {
+    if (typeof document === 'undefined') {
+      return true
+    }
+
+    return document.getElementById('root')?.hasChildNodes() ?? true
+  })
   const hideHeader = isArchivedPath(pathname) || pathname === '/socials'
   const hideFooter = pathname === '/socials'
   const isHomePage = pathname === '/'

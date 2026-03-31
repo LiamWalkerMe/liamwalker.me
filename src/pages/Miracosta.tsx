@@ -1682,47 +1682,19 @@ function ClosingSection() {
         <div style={{ marginBottom: 64 }}>
           <a
             href="/future-college"
+            className="button"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 10,
-              background: CAL_POLY.gold,
-              color: CAL_POLY.green,
-              padding: "18px 36px",
-              borderRadius: 100,
-              border: "1px solid transparent",
-              fontSize: 19,
-              fontWeight: 700,
-              letterSpacing: "0.03em",
-              textDecoration: "none",
-              transition: "transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s, border-color 0.2s",
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.background = C.white;
-              e.currentTarget.style.color = CAL_POLY.green;
-              e.currentTarget.style.borderColor = CAL_POLY.gold;
-              e.currentTarget.style.boxShadow = `0 12px 36px ${CAL_POLY.gold}32`;
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.background = CAL_POLY.gold;
-              e.currentTarget.style.color = CAL_POLY.green;
-              e.currentTarget.style.borderColor = "transparent";
-              e.currentTarget.style.boxShadow = "none";
-            }}
+              "--button-bg": CAL_POLY.gold,
+              "--button-fg": "#111111",
+              "--button-border": "transparent",
+              "--button-hover-bg": C.white,
+              "--button-hover-fg": "#111111",
+              "--button-hover-border": CAL_POLY.gold,
+              fontSize: 16,
+              paddingInline: 28,
+            } as CSSProperties}
           >
             Continue to *Future College*
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M3 8h10M9 4l4 4-4 4"
-                stroke={CAL_POLY.green}
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
           </a>
         </div>
 
