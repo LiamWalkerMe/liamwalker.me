@@ -5,13 +5,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "clean": "node scripts/clean-build.mjs",
     "images:generate": "node scripts/generate-responsive-images.mjs",
     "predev": "npm run images:generate",
     "prebuild": "npm run images:generate",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "dev": "vite",
-    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir .ssr && node scripts/prerender.mjs",
+    "build": "npm run clean && tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir .ssr && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

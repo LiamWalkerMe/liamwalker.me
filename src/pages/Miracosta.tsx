@@ -14,6 +14,12 @@ const C = {
   gold: "#c89a10",
 } as const;
 
+const CAL_POLY = {
+  green: "#154734",
+  gold: "#BD8B13",
+  lightGreen: "#6FA58A",
+} as const;
+
 const HERO_STATS = [
   { val: "A.S.-T", label: "Computer Science" },
   { val: "2 Years", label: "of coursework" },
@@ -1550,6 +1556,40 @@ function ClubsSection() {
           <ClubCard
             icon={
               <>
+                <rect x="4" y="5" width="12" height="10" rx="1.5" fill={CAL_POLY.green} fillOpacity={0.72} />
+                <path d="M7 9l2 2 4-3" stroke={C.white} strokeWidth="1.2" strokeLinecap="round" />
+              </>
+            }
+            name="CS Club"
+            role="Member"
+            color={CAL_POLY.green}
+            bg={`${CAL_POLY.lightGreen}2e`}
+            desc="Examined how computer science intersects with ethics, accessibility, and real-world impact — reinforcing that software is a tool for meaningful change, not just technical output."
+            delay={0}
+          />
+          <ClubCard
+            icon={
+              <>
+                <path
+                  d="M5 15l5-9 5 9"
+                  stroke={CAL_POLY.gold}
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <line x1="7" y1="12" x2="13" y2="12" stroke={CAL_POLY.gold} strokeWidth="1.3" />
+              </>
+            }
+            name="Game Design Club"
+            role="Member"
+            color={CAL_POLY.gold}
+            bg={`${CAL_POLY.gold}18`}
+            desc="Combined design thinking and logic using Godot — contributing to game jams, design documents, and peer critiques in a collaborative environment that encouraged creative confidence."
+            delay={80}
+          />
+          <ClubCard
+            icon={
+              <>
                 <rect x="5" y="6" width="10" height="8" rx="1" fill={C.blue} fillOpacity={0.7} />
                 <line x1="10" y1="14" x2="10" y2="16" stroke={C.blue} strokeWidth="1.2" />
                 <line x1="7" y1="16" x2="13" y2="16" stroke={C.blue} strokeWidth="1.2" />
@@ -1558,57 +1598,9 @@ function ClubsSection() {
             name="Film Club"
             role="Member"
             color={C.blue}
-            bg={`${C.sky}55`}
+            bg={`${C.sky}72`}
             desc="A hands-on creative space for discussing film, sharing projects, and building portfolios — contributing ideas, giving feedback, and applying storytelling principles to future career goals."
-            delay={0}
-          />
-          <ClubCard
-            icon={
-              <>
-                <rect x="4" y="5" width="12" height="10" rx="1.5" fill={C.teal} fillOpacity={0.6} />
-                <path d="M7 9l2 2 4-3" stroke={C.white} strokeWidth="1.2" strokeLinecap="round" />
-              </>
-            }
-            name="CS for the Common Good"
-            role="Member"
-            color={C.teal}
-            bg={`${C.seafoam}55`}
-            desc="Examined how computer science intersects with ethics, accessibility, and real-world impact — reinforcing that software is a tool for meaningful change, not just technical output."
-            delay={80}
-          />
-          <ClubCard
-            icon={
-              <>
-                <circle cx="10" cy="8" r="3" fill="#9b6b9b" fillOpacity={0.7} />
-                <path d="M4 16c0-3 2.7-5 6-5s6 2 6 5" fill="#9b6b9b" fillOpacity={0.4} />
-              </>
-            }
-            name="LeetCode Club"
-            role="Member"
-            color="#9b6b9b"
-            bg="#f0e8f488"
-            desc="Sharpened algorithmic thinking and technical interview preparation through peer collaboration — breaking down complex problems and building confidence in both coding and communication."
             delay={160}
-          />
-          <ClubCard
-            icon={
-              <>
-                <path
-                  d="M5 15l5-9 5 9"
-                  stroke={C.gold}
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <line x1="7" y1="12" x2="13" y2="12" stroke={C.gold} strokeWidth="1.3" />
-              </>
-            }
-            name="Game Design Club"
-            role="Member"
-            color={C.gold}
-            bg={`${C.sand}88`}
-            desc="Combined design thinking and logic using Godot — contributing to game jams, design documents, and peer critiques in a collaborative environment that encouraged creative confidence."
-            delay={240}
           />
         </div>
       </div>
@@ -1618,7 +1610,14 @@ function ClubsSection() {
 
 function ClosingSection() {
   return (
-    <section style={{ background: C.navy, padding: "96px 48px 108px", position: "relative", overflow: "hidden" }}>
+    <section
+      style={{
+        background: `radial-gradient(circle at 82% 14%, ${CAL_POLY.lightGreen}2b 0%, transparent 34%), radial-gradient(circle at 14% 82%, ${CAL_POLY.lightGreen}1a 0%, transparent 28%), ${CAL_POLY.green}`,
+        padding: "96px 48px 108px",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       <div
         style={{
           position: "absolute",
@@ -1627,7 +1626,7 @@ function ClosingSection() {
           width: 320,
           height: 320,
           borderRadius: "50%",
-          background: `radial-gradient(circle, ${C.teal}1a 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${CAL_POLY.lightGreen}22 0%, transparent 70%)`,
           pointerEvents: "none",
         }}
       />
@@ -1639,7 +1638,7 @@ function ClosingSection() {
           width: 200,
           height: 200,
           borderRadius: "50%",
-          background: `radial-gradient(circle, ${C.gold}1a 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${CAL_POLY.lightGreen}18 0%, transparent 70%)`,
           pointerEvents: "none",
         }}
       />
@@ -1653,7 +1652,7 @@ function ClosingSection() {
                 width: index === 3 ? 22 : 8,
                 height: 8,
                 borderRadius: 100,
-                background: C.sky,
+                background: CAL_POLY.gold,
                 opacity: 0.15 + index * 0.12,
               }}
             />
@@ -1668,16 +1667,16 @@ function ClosingSection() {
             color: C.white,
             letterSpacing: "-0.03em",
             lineHeight: 1.05,
-            marginBottom: 28,
-          }}
+          marginBottom: 28,
+        }}
         >
           What comes next
           <br />
-          <span style={{ color: C.gold, fontStyle: "italic" }}>is the whole point.</span>
+          <span style={{ color: CAL_POLY.gold, fontStyle: "italic" }}>is the whole point.</span>
         </h2>
 
-        <p style={{ fontSize: 17, color: `${C.sky}bb`, lineHeight: 1.85, maxWidth: 500, margin: "0 auto 52px", fontWeight: 300 }}>
-          The A.S.-T was just the first step. Earning it secured my admission to <strong style={{ color: C.gold }}>*Future College*</strong> — proof that the foundation built at MiraCosta was exactly the right one. The next chapter begins now.
+        <p style={{ fontSize: 17, color: "rgba(255, 255, 255, 0.82)", lineHeight: 1.85, maxWidth: 500, margin: "0 auto 52px", fontWeight: 300 }}>
+          The A.S.-T was just the first step. Earning it secured my admission to <strong style={{ color: CAL_POLY.gold }}>*Future College*</strong> — proof that the foundation built at MiraCosta was exactly the right one. The next chapter begins now.
         </p>
 
         <div style={{ marginBottom: 64 }}>
@@ -1688,45 +1687,51 @@ function ClosingSection() {
               alignItems: "center",
               justifyContent: "center",
               gap: 10,
-              background: C.gold,
-              color: C.navy,
-              padding: "16px 36px",
+              background: CAL_POLY.gold,
+              color: CAL_POLY.green,
+              padding: "18px 36px",
               borderRadius: 100,
               border: "1px solid transparent",
-              fontSize: 15,
-              fontWeight: 600,
-              letterSpacing: "0.04em",
+              fontSize: 19,
+              fontWeight: 700,
+              letterSpacing: "0.03em",
               textDecoration: "none",
               transition: "transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s, border-color 0.2s",
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = "translateY(-2px)";
               e.currentTarget.style.background = C.white;
-              e.currentTarget.style.color = C.navy;
-              e.currentTarget.style.borderColor = C.gold;
-              e.currentTarget.style.boxShadow = `0 12px 36px ${C.gold}32`;
+              e.currentTarget.style.color = CAL_POLY.green;
+              e.currentTarget.style.borderColor = CAL_POLY.gold;
+              e.currentTarget.style.boxShadow = `0 12px 36px ${CAL_POLY.gold}32`;
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.background = C.gold;
-              e.currentTarget.style.color = C.navy;
+              e.currentTarget.style.background = CAL_POLY.gold;
+              e.currentTarget.style.color = CAL_POLY.green;
               e.currentTarget.style.borderColor = "transparent";
               e.currentTarget.style.boxShadow = "none";
             }}
           >
             Continue to *Future College*
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke={C.navy} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M3 8h10M9 4l4 4-4 4"
+                stroke={CAL_POLY.green}
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </a>
         </div>
 
         <div
           style={{
-            borderTop: "1px solid rgba(255,255,255,0.08)",
+            borderTop: `1px solid ${CAL_POLY.gold}33`,
             paddingTop: 32,
             fontSize: 12,
-            color: "rgba(255,255,255,0.22)",
+            color: "rgba(255,255,255,0.34)",
             letterSpacing: "0.16em",
             textTransform: "uppercase",
           }}
@@ -1751,7 +1756,7 @@ export default function Miracosta() {
       <MajorPrepSection />
       <MiracostaWave fill={C.cream} />
       <ClubsSection />
-      <MiracostaWave fill={C.navy} flip />
+      <MiracostaWave fill={CAL_POLY.green} flip />
       <ClosingSection />
     </>
   );
