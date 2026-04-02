@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react'
 import DeferredBackgroundSection from '../components/DeferredBackgroundSection'
 import ResponsiveImage from '../components/ResponsiveImage'
 import SplitSection from '../components/SplitSection'
+import { isPageUnderConstruction } from '../config/siteFlags'
 import { photoSections } from '../data/photography'
 import { responsiveImages } from '../generated/responsiveImages'
 
@@ -18,6 +19,8 @@ const homePhotographyRails = Array.from({ length: 3 }, (_, railIndex) =>
 )
 
 export default function Home() {
+  const showMiracostaContent = !isPageUnderConstruction('miracosta')
+
   return (
     <div className="page-stack page-stack--home">
       <section className="hero hero--home page-hero-under-header">
@@ -26,9 +29,11 @@ export default function Home() {
             <p className="hero-subtitle hero-home__subtitle">COMPUTER SCIENCE STUDENT AT MIRACOSTA COLLEGE</p>
             <h1 className="hero-title hero-home__title">liamwalker.me</h1>
             <div className="hero-home__actions">
-              <Link className="button hero-home__button" to="/miracosta" reloadDocument>
-                View Associates Degree
-              </Link>
+              {showMiracostaContent ? (
+                <Link className="button hero-home__button" to="/miracosta" reloadDocument>
+                  View Associate Degrees
+                </Link>
+              ) : null}
               <a
                 className="button hero-home__button hero-home__button--ghost"
                 href="/LiamWalkerResume.pdf"
@@ -55,41 +60,43 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-miracosta-promo page-stack-gap-before">
-        <div className="container home-miracosta-promo__inner">
-          <div className="home-miracosta-promo__panel home-miracosta-promo__panel--start fade-in" aria-hidden="true">
-            <div className="home-miracosta-promo__panel-frame">
-              <img
-                className="home-miracosta-promo__panel-image"
-                src="/assets/New/placeholder.png"
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
+      {showMiracostaContent ? (
+        <section className="home-miracosta-promo page-stack-gap-before">
+          <div className="container home-miracosta-promo__inner">
+            <div className="home-miracosta-promo__panel home-miracosta-promo__panel--start fade-in" aria-hidden="true">
+              <div className="home-miracosta-promo__panel-frame">
+                <img
+                  className="home-miracosta-promo__panel-image"
+                  src="/assets/New/placeholder.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+
+            <div className="home-miracosta-promo__content fade-in">
+              <p className="home-miracosta-promo__eyebrow">THREE ASSOCIATE DEGREES</p>
+              <h2 className="home-miracosta-promo__title">MiraCosta</h2>
+              <Link className="button home-miracosta-promo__button" to="/miracosta" reloadDocument>
+                Learn More
+              </Link>
+            </div>
+
+            <div className="home-miracosta-promo__panel home-miracosta-promo__panel--end fade-in" aria-hidden="true">
+              <div className="home-miracosta-promo__panel-frame">
+                <img
+                  className="home-miracosta-promo__panel-image"
+                  src="/assets/New/placeholder.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
             </div>
           </div>
-
-          <div className="home-miracosta-promo__content fade-in">
-            <p className="home-miracosta-promo__eyebrow">A.S-T IN COMPUTER SCIENCE</p>
-            <h2 className="home-miracosta-promo__title">MiraCosta</h2>
-            <Link className="button home-miracosta-promo__button" to="/miracosta" reloadDocument>
-              Learn More
-            </Link>
-          </div>
-
-          <div className="home-miracosta-promo__panel home-miracosta-promo__panel--end fade-in" aria-hidden="true">
-            <div className="home-miracosta-promo__panel-frame">
-              <img
-                className="home-miracosta-promo__panel-image"
-                src="/assets/New/placeholder.png"
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section className="home-website-showcase page-stack-gap-before">
         <div className="container home-website-showcase__inner">

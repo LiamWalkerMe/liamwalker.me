@@ -40,7 +40,7 @@ const routeMetadata: Record<string, RouteMetadata> = {
     path: '/miracosta',
     title: 'MiraCosta | Liam Walker',
     description:
-      'Coursework, academic highlights, and transfer-focused computer science study at MiraCosta College.',
+      'Coursework, academic highlights, and three associate degrees in computer science, mathematics, and liberal arts: mathematics and science at MiraCosta College.',
     themeColor: '#0d3b6e',
     imagePath: '/assets/Hero/profile.png',
     imageAlt: 'Portrait of Liam Walker',

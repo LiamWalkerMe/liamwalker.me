@@ -21,9 +21,39 @@ const CAL_POLY = {
 } as const;
 
 const HERO_STATS = [
-  { val: "A.S.-T", label: "Computer Science" },
+  { val: "3", label: "associate degrees" },
   { val: "2 Years", label: "of coursework" },
-  { val: "UC / CSU", label: "transfer eligible" },
+  { val: "CS + Math", label: "transfer-ready foundation" },
+];
+
+type DegreeCredential = {
+  shortLabel: string;
+  title: string;
+  subtitle: string;
+  compactTitle?: string;
+  accent: string;
+};
+
+const DEGREE_CREDENTIALS: ReadonlyArray<DegreeCredential> = [
+  {
+    shortLabel: "A.D.-T",
+    title: "Computer Science",
+    subtitle: "Associate of Science for Transfer",
+    accent: C.blue,
+  },
+  {
+    shortLabel: "A.D.-T",
+    title: "Mathematics",
+    subtitle: "Associate of Science for Transfer",
+    accent: C.teal,
+  },
+  {
+    shortLabel: "A.A.",
+    title: "Liberal Arts",
+    subtitle: "Mathematics and Science",
+    compactTitle: "Liberal Arts: Mathematics and Science",
+    accent: C.gold,
+  },
 ];
 
 const DEGREE_HIGHLIGHTS = [
@@ -41,7 +71,7 @@ const DEGREE_HIGHLIGHTS = [
   },
   {
     title: "Transfer Pathway",
-    body: "The A.S.-T guarantees priority admission consideration to CSU campuses.",
+    body: "The transfer-focused degrees strengthened my CSU pathway while the broader liberal arts work deepened the math and science foundation behind it.",
     color: C.gold,
     delay: 160,
   },
@@ -532,7 +562,7 @@ function HeroSection() {
             }}
           >
             <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.teal }} />
-            A.S-T IN COMPUTER SCIENCE
+            THREE ASSOCIATE DEGREES
           </div>
 
           <h1
@@ -565,7 +595,7 @@ function HeroSection() {
               margin: "0 auto 44px",
             }}
           >
-            A reflection on earning an <strong style={{ color: C.navy, fontWeight: 600 }}>Associate of Science in Computer Science for Transfer</strong> — the coursework, the community, and the people who shaped my college experience.
+            A reflection on earning <strong style={{ color: C.navy, fontWeight: 600 }}>three associate degrees</strong> at MiraCosta — and on the coursework, the community, and the people who shaped my college experience.
           </p>
 
           <div className="h1-3" style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
@@ -688,7 +718,7 @@ function DegreeSection() {
       style={{ padding: "96px 48px 88px" }}
     >
       <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-        <MiracostaEyebrow>The Degree</MiracostaEyebrow>
+        <MiracostaEyebrow>The Degrees</MiracostaEyebrow>
         <h2
           style={{
             fontFamily: "'Fraunces', serif",
@@ -701,12 +731,59 @@ function DegreeSection() {
             marginBottom: 52,
           }}
         >
-          Associate of Science in
+          Three associate degrees
           <br />
           <em style={{ fontStyle: "italic", fontWeight: 400, color: C.teal, fontSize: "0.82em" }}>
-            Computer Science for Transfer
+            earned at MiraCosta
           </em>
         </h2>
+
+        <p
+          style={{
+            maxWidth: 760,
+            fontSize: 16,
+            lineHeight: 1.9,
+            color: C.muted,
+            margin: "0 0 32px",
+            fontWeight: 300,
+          }}
+        >
+          The degrees reflected the same throughline from different angles: computer science for implementation, mathematics
+          for rigor, and liberal arts for breadth across mathematics and science.
+        </p>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18, marginBottom: 32 }}>
+          {DEGREE_CREDENTIALS.map((degree, index) => (
+            <MiracostaCard key={degree.shortLabel} delay={index * 80}>
+              <div style={{ width: 3, height: 28, background: degree.accent, borderRadius: 2, marginBottom: 16 }} />
+              <div
+                style={{
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: degree.accent,
+                  marginBottom: 10,
+                }}
+              >
+                {degree.shortLabel}
+              </div>
+              <div
+                style={{
+                  fontFamily: "'Fraunces', serif",
+                  fontSize: 24,
+                  fontWeight: 700,
+                  lineHeight: 1.1,
+                  color: C.navy,
+                  marginBottom: 8,
+                }}
+              >
+                {degree.title}
+              </div>
+              <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.75, margin: 0 }}>{degree.subtitle}</p>
+            </MiracostaCard>
+          ))}
+        </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: 18, marginBottom: 32 }}>
           {DEGREE_HIGHLIGHTS.map((highlight) => (
@@ -735,7 +812,7 @@ function DegreeSection() {
             borderRadius: 18,
             padding: "36px 44px",
             display: "flex",
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "space-between",
             flexWrap: "wrap",
             gap: 24,
@@ -761,12 +838,41 @@ function DegreeSection() {
                 fontWeight: 700,
                 color: C.white,
                 lineHeight: 1.2,
+                marginBottom: 16,
               }}
             >
-              Associate of Science for Transfer
+              Three associate degrees completed
             </div>
-            <div style={{ color: `${C.sky}aa`, fontSize: 14, marginTop: 6, fontWeight: 300 }}>
-              Computer Science · MiraCosta College · Oceanside, CA
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: 10,
+                flexWrap: "nowrap",
+                whiteSpace: "nowrap",
+                overflowX: "auto",
+                maxWidth: "100%",
+                color: `${C.sky}cc`,
+                fontSize: 14,
+                fontWeight: 300,
+                paddingBottom: 4,
+              }}
+            >
+              {DEGREE_CREDENTIALS.map((degree, index) => (
+                <span
+                  key={`${degree.shortLabel}-${degree.compactTitle ?? degree.title}`}
+                  style={{ display: "inline-flex", alignItems: "baseline", gap: 8, flexShrink: 0 }}
+                >
+                  <span style={{ color: degree.accent, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                    {degree.shortLabel}
+                  </span>
+                  <span>{degree.compactTitle ?? degree.title}</span>
+                  {index < DEGREE_CREDENTIALS.length - 1 ? <span style={{ color: `${C.sky}66` }}>·</span> : null}
+                </span>
+              ))}
+            </div>
+            <div style={{ color: `${C.sky}aa`, fontSize: 14, marginTop: 18, fontWeight: 300 }}>
+              MiraCosta College · Oceanside, CA
             </div>
           </div>
           <div
@@ -1174,6 +1280,20 @@ function MajorPrepSection() {
     };
   }, [selectedCourse]);
 
+  const closeDetail = useCallback(() => {
+    setDetailExpanded(false);
+
+    if (closeTimeoutRef.current) {
+      window.clearTimeout(closeTimeoutRef.current);
+    }
+
+    closeTimeoutRef.current = window.setTimeout(() => {
+      setSelectedCourse(null);
+      setSelectedRect(null);
+      closeTimeoutRef.current = null;
+    }, 420);
+  }, []);
+
   useEffect(() => {
     if (!selectedCourse) {
       return;
@@ -1190,7 +1310,7 @@ function MajorPrepSection() {
     return () => {
       window.removeEventListener("keydown", handleEscape);
     };
-  }, [selectedCourse]);
+  }, [selectedCourse, closeDetail]);
 
   const openDetail = (course: CourseworkDetail, rect: DOMRect) => {
     if (closeTimeoutRef.current) {
@@ -1201,20 +1321,6 @@ function MajorPrepSection() {
     setDetailExpanded(false);
     setSelectedRect(rect);
     setSelectedCourse(course);
-  };
-
-  const closeDetail = () => {
-    setDetailExpanded(false);
-
-    if (closeTimeoutRef.current) {
-      window.clearTimeout(closeTimeoutRef.current);
-    }
-
-    closeTimeoutRef.current = window.setTimeout(() => {
-      setSelectedCourse(null);
-      setSelectedRect(null);
-      closeTimeoutRef.current = null;
-    }, 420);
   };
 
   const modalWidth = typeof window !== "undefined" ? Math.min(760, window.innerWidth - 56) : 760;
@@ -1560,7 +1666,7 @@ function ClubsSection() {
                 <path d="M7 9l2 2 4-3" stroke={C.white} strokeWidth="1.2" strokeLinecap="round" />
               </>
             }
-            name="CS Club"
+            name="Computer Science for the Common Good Club"
             role="Member"
             color={CAL_POLY.green}
             bg={`${CAL_POLY.lightGreen}2e`}
@@ -1676,7 +1782,7 @@ function ClosingSection() {
         </h2>
 
         <p style={{ fontSize: 17, color: "rgba(255, 255, 255, 0.82)", lineHeight: 1.85, maxWidth: 500, margin: "0 auto 52px", fontWeight: 300 }}>
-          The A.S.-T was just the first step. Earning it secured my admission to <strong style={{ color: CAL_POLY.gold }}>*Future College*</strong> — proof that the foundation built at MiraCosta was exactly the right one. The next chapter begins now.
+          Those three degrees were more than milestones. Earning them secured my admission to <strong style={{ color: CAL_POLY.gold }}>*Future College*</strong> — proof that the foundation built at MiraCosta was exactly the right one. The next chapter begins now.
         </p>
 
         <div style={{ marginBottom: 64 }}>
