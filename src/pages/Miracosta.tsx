@@ -562,7 +562,7 @@ function HeroSection() {
             }}
           >
             <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.teal }} />
-            THREE ASSOCIATE DEGREES
+            MIRACOSTA JOURNEY
           </div>
 
           <h1
@@ -595,7 +595,7 @@ function HeroSection() {
               margin: "0 auto 44px",
             }}
           >
-            A reflection on earning <strong style={{ color: C.navy, fontWeight: 600 }}>three associate degrees</strong> at MiraCosta — and on the coursework, the community, and the people who shaped my college experience.
+            A reflection on my time at MiraCosta — and on the coursework, the community, and the people who shaped my college experience.
           </p>
 
           <div className="h1-3" style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
@@ -731,10 +731,10 @@ function DegreeSection() {
             marginBottom: 52,
           }}
         >
-          Three associate degrees
+          Academic foundation
           <br />
           <em style={{ fontStyle: "italic", fontWeight: 400, color: C.teal, fontSize: "0.82em" }}>
-            earned at MiraCosta
+            built at MiraCosta
           </em>
         </h2>
 
@@ -841,7 +841,7 @@ function DegreeSection() {
                 marginBottom: 16,
               }}
             >
-              Three associate degrees completed
+              Degrees completed
             </div>
             <div
               style={{
@@ -1782,7 +1782,7 @@ function ClosingSection() {
         </h2>
 
         <p style={{ fontSize: 17, color: "rgba(255, 255, 255, 0.82)", lineHeight: 1.85, maxWidth: 500, margin: "0 auto 52px", fontWeight: 300 }}>
-          Those three degrees were more than milestones. Earning them secured my admission to <strong style={{ color: CAL_POLY.gold }}>*Future College*</strong> — proof that the foundation built at MiraCosta was exactly the right one. The next chapter begins now.
+          That work was more than a milestone. It secured my admission to <strong style={{ color: CAL_POLY.gold }}>*Future College*</strong> — proof that the foundation built at MiraCosta was exactly the right one. The next chapter begins now.
         </p>
 
         <div style={{ marginBottom: 64 }}>

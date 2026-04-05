@@ -134,6 +134,38 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
+    const rootStyle = document.documentElement.style
+    let frame = 0
+
+    const syncHeaderHeight = () => {
+      const height = headerRef.current?.getBoundingClientRect().height ?? 0
+      rootStyle.setProperty('--site-header-height', `${Math.round(height)}px`)
+    }
+
+    const queueHeaderHeightSync = () => {
+      window.cancelAnimationFrame(frame)
+      frame = window.requestAnimationFrame(syncHeaderHeight)
+    }
+
+    queueHeaderHeightSync()
+
+    const resizeObserver = new ResizeObserver(queueHeaderHeightSync)
+
+    if (headerRef.current) {
+      resizeObserver.observe(headerRef.current)
+    }
+
+    window.addEventListener('resize', queueHeaderHeightSync)
+
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('resize', queueHeaderHeightSync)
+      resizeObserver.disconnect()
+      rootStyle.removeProperty('--site-header-height')
+    }
+  }, [])
+
+  useEffect(() => {
     const handlePointerDown = (event: MouseEvent) => {
       if (headerRef.current?.contains(event.target as Node)) {
         return
