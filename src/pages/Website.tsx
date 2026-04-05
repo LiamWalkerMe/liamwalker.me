@@ -219,6 +219,13 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
 
+function getWebsiteBodyParagraphs(body: string) {
+  return body
+    .split(/\n+/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+}
+
 function easeInOutCubic(value: number) {
   return value < 0.5 ? 4 * value * value * value : 1 - Math.pow(-2 * value + 2, 3) / 2;
 }
@@ -763,7 +770,11 @@ export default function Website() {
             <div className="website-history__copy">
               <p className="website-history__eyebrow">{activeVersion.subtitle}</p>
               <h3 className="website-display-subtitle">{activeVersion.title}</h3>
-              <p>{activeVersion.body}</p>
+              <div className="website-history__body">
+                {getWebsiteBodyParagraphs(activeVersion.body).map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
             </div>
           </article>
         </div>
