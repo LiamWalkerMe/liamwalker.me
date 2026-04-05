@@ -10,7 +10,7 @@
     "predev": "npm run images:generate",
     "prebuild": "npm run images:generate",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages-clean && gh-pages -d dist --no-history",
     "dev": "vite",
     "build": "npm run clean && tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir .ssr && node scripts/prerender.mjs",
     "lint": "eslint .",
