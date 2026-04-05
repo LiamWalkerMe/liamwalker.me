@@ -26,31 +26,27 @@ const HERO_STATS = [
   { val: "CS + Math", label: "transfer-ready foundation" },
 ];
 
-type DegreeCredential = {
+type DegreeSummary = {
   shortLabel: string;
   title: string;
-  subtitle: string;
   compactTitle?: string;
   accent: string;
 };
 
-const DEGREE_CREDENTIALS: ReadonlyArray<DegreeCredential> = [
+const DEGREE_SUMMARIES: ReadonlyArray<DegreeSummary> = [
   {
     shortLabel: "A.D.-T",
     title: "Computer Science",
-    subtitle: "Associate of Science for Transfer",
     accent: C.blue,
   },
   {
     shortLabel: "A.D.-T",
     title: "Mathematics",
-    subtitle: "Associate of Science for Transfer",
     accent: C.teal,
   },
   {
     shortLabel: "A.A.",
     title: "Liberal Arts",
-    subtitle: "Mathematics and Science",
     compactTitle: "Liberal Arts: Mathematics and Science",
     accent: C.gold,
   },
@@ -752,39 +748,6 @@ function DegreeSection() {
           for rigor, and liberal arts for breadth across mathematics and science.
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18, marginBottom: 32 }}>
-          {DEGREE_CREDENTIALS.map((degree, index) => (
-            <MiracostaCard key={degree.shortLabel} delay={index * 80}>
-              <div style={{ width: 3, height: 28, background: degree.accent, borderRadius: 2, marginBottom: 16 }} />
-              <div
-                style={{
-                  fontSize: 13,
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: degree.accent,
-                  marginBottom: 10,
-                }}
-              >
-                {degree.shortLabel}
-              </div>
-              <div
-                style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontSize: 24,
-                  fontWeight: 700,
-                  lineHeight: 1.1,
-                  color: C.navy,
-                  marginBottom: 8,
-                }}
-              >
-                {degree.title}
-              </div>
-              <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.75, margin: 0 }}>{degree.subtitle}</p>
-            </MiracostaCard>
-          ))}
-        </div>
-
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: 18, marginBottom: 32 }}>
           {DEGREE_HIGHLIGHTS.map((highlight) => (
             <MiracostaCard key={highlight.title} delay={highlight.delay}>
@@ -858,7 +821,7 @@ function DegreeSection() {
                 paddingBottom: 4,
               }}
             >
-              {DEGREE_CREDENTIALS.map((degree, index) => (
+              {DEGREE_SUMMARIES.map((degree, index) => (
                 <span
                   key={`${degree.shortLabel}-${degree.compactTitle ?? degree.title}`}
                   style={{ display: "inline-flex", alignItems: "baseline", gap: 8, flexShrink: 0 }}
@@ -867,7 +830,7 @@ function DegreeSection() {
                     {degree.shortLabel}
                   </span>
                   <span>{degree.compactTitle ?? degree.title}</span>
-                  {index < DEGREE_CREDENTIALS.length - 1 ? <span style={{ color: `${C.sky}66` }}>·</span> : null}
+                  {index < DEGREE_SUMMARIES.length - 1 ? <span style={{ color: `${C.sky}66` }}>·</span> : null}
                 </span>
               ))}
             </div>
@@ -885,6 +848,7 @@ function DegreeSection() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              alignSelf: "center",
               flexShrink: 0,
             }}
           >
