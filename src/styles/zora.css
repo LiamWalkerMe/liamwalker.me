@@ -1,0 +1,316 @@
+.zora-page {
+  background: #fff;
+}
+
+.zora-hero {
+  background: radial-gradient(rgb(56, 74, 166) 0%, rgb(22, 36, 102) 100%);
+  padding: clamp(56px, 7vw, 84px) 0;
+  text-align: center;
+}
+
+.zora-hero-logo {
+  width: min(920px, 74vw);
+  height: auto;
+  margin: 0 auto clamp(16px, 2.4vw, 28px);
+  display: block;
+  object-fit: cover;
+}
+
+.zora-hero-note {
+  color: #e8be8c;
+  font-size: clamp(16px, 1.6vw, 20px);
+  max-width: 900px;
+  margin: 50px auto;
+}
+
+.zora-hero-image {
+  width: min(800px, 80vw);
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+.zora-video-section {
+  background: #e8be8c;
+  padding: clamp(52px, 6vw, 72px) 0;
+}
+
+.zora-section-title {
+  text-align: center;
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 16px;
+  line-height: 1.05;
+  font-family: "Unbounded", "Figtree", system-ui, sans-serif;
+}
+
+.zora-bumper {
+  padding: clamp(52px, 6vw, 72px) 0;
+  text-align: center;
+}
+
+.zora-bumper-image {
+  width: min(1200px, 92vw);
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  border-radius: 30px;
+}
+
+.zora-issue {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  padding: clamp(56px, 6vw, 72px) 0;
+  overflow: hidden;
+  color: #ffffff;
+  background: #54171f;
+}
+
+.zora-issue-media {
+  position: absolute;
+  inset: -12%;
+  background-size: cover;
+  background-position: 50% 50%;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.zora-issue-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(140, 16, 16, 0.6);
+  z-index: 1;
+}
+
+.zora-issue-inner {
+  position: relative;
+  z-index: 2;
+  width: min(1200px, 92vw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: center;
+}
+
+.zora-issue-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.zora-issue.reverse .zora-issue-col:first-child {
+  order: 2;
+}
+
+.zora-issue.reverse .zora-issue-col:last-child {
+  order: 1;
+}
+
+.zora-issue-title {
+  font-size: clamp(30px, 3.4vw, 48px);
+  margin: 0;
+  text-align: center;
+  font-family: "Unbounded", "Figtree", system-ui, sans-serif;
+}
+
+.zora-issue-text {
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.7;
+  margin: 0;
+  text-align: center;
+}
+
+.zora-issue + .zora-issue {
+  margin-top: 24px;
+}
+
+.zora-issue.light,
+.zora-issue.dark {
+  color: #ffffff;
+}
+
+.zora-issue-text {
+  color: #ffffff;
+}
+
+.zora-team {
+  background:
+    radial-gradient(circle at top, rgba(178, 39, 65, 0.14), transparent 28%),
+    linear-gradient(180deg, #fff7f7 0%, #eef1ff 100%);
+  padding: clamp(52px, 6vw, 72px) 0;
+  text-align: center;
+}
+
+.zora-team-carousel {
+  position: relative;
+  overflow: hidden;
+  padding: 22px 18px 28px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 28px 60px rgba(44, 30, 79, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.zora-team-carousel .carousel-track {
+  gap: 0;
+  transition: transform 0.6s cubic-bezier(0.22, 0.8, 0.2, 1);
+}
+
+.zora-team-carousel .carousel-slide {
+  padding: 6px 58px;
+  box-sizing: border-box;
+}
+
+.zora-team-carousel .carousel-slide .zora-team-card {
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
+.zora-team-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(280px, 0.84fr);
+  gap: clamp(20px, 3vw, 32px);
+  align-items: center;
+  padding: clamp(20px, 3vw, 30px);
+  border-radius: 28px;
+  border: 1px solid rgba(127, 41, 89, 0.12);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 22px 46px rgba(48, 24, 61, 0.1);
+  text-align: left;
+}
+
+.zora-team-card__media {
+  width: 100%;
+  margin: 0;
+}
+
+.zora-team-card__body {
+  display: grid;
+  gap: 14px;
+  align-content: center;
+}
+
+.zora-team-card__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(178, 39, 65, 0.1);
+  color: #8b2440;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.zora-team-name {
+  margin: 0;
+  font-size: clamp(28px, 2.8vw, 44px);
+  line-height: 1.05;
+  font-family: "Unbounded", "Figtree", system-ui, sans-serif;
+  color: #1b2147;
+}
+
+.zora-team-role {
+  margin: 0;
+  max-width: 26ch;
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.45;
+  color: #6f2f4c;
+  font-weight: 600;
+}
+
+.zora-team-image {
+  width: 100%;
+  aspect-ratio: 4 / 4.35;
+  object-fit: cover;
+  border-radius: 22px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 18px 34px rgba(48, 24, 61, 0.12);
+}
+
+.zora-team .carousel-arrow {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(139, 36, 64, 0.18);
+  color: #1b2147;
+  box-shadow: 0 16px 34px rgba(48, 24, 61, 0.14);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.zora-team .carousel-arrow:hover {
+  transform: translateY(-50%) scale(1.04);
+  background: #ffffff;
+  box-shadow: 0 20px 40px rgba(48, 24, 61, 0.18);
+}
+
+.zora-team .carousel-arrow.left {
+  left: 14px;
+}
+
+.zora-team .carousel-arrow.right {
+  right: 14px;
+}
+
+.zora-team .carousel-dots {
+  margin-top: 20px;
+}
+
+.zora-team .carousel-dot {
+  width: 12px;
+  height: 12px;
+  background: rgba(139, 36, 64, 0.2);
+}
+
+.zora-team .carousel-dot.active {
+  width: 34px;
+  background: #8b2440;
+}
+
+@media (max-width: 900px) {
+  .zora-issue-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .zora-issue.reverse .zora-issue-col:first-child,
+  .zora-issue.reverse .zora-issue-col:last-child {
+    order: initial;
+  }
+
+  .zora-team-carousel .carousel-slide {
+    padding: 8px 0;
+  }
+
+  .zora-team-carousel {
+    padding: 18px 0 22px;
+  }
+
+  .zora-team-card {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 18px;
+    text-align: center;
+  }
+
+  .zora-team-card__body {
+    justify-items: center;
+  }
+
+  .zora-team-role {
+    max-width: none;
+  }
+
+  .zora-team-image {
+    aspect-ratio: 4 / 4.2;
+  }
+}
+
