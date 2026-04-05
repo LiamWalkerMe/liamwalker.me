@@ -1369,7 +1369,7 @@ function MajorPrepSection() {
               <em style={{ fontStyle: "italic", fontWeight: 400, color: C.teal, fontSize: "0.8em" }}>Coursework</em>
             </h2>
             <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.78, maxWidth: 460, fontWeight: 300, margin: "18px 0 0" }}>
-              The major-preparation classes at MiraCosta shaped the transfer path from both sides: mathematics for structure and rigor, and computer science for implementation, problem solving, and systems thinking.
+              The major-preparation classes at MiraCosta shaped the transfer path from both sides: mathematics for structure and rigor, and computer science for implementation, problem solving, and systems thinking. Click a tile to learn more about the course.
             </p>
           </div>
         </div>

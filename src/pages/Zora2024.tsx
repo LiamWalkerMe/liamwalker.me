@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { isArchivedPath } from '../config/archivedPages'
+import { useSectionParallax } from '../lib/useSectionParallax'
 
 const issues = [
   {
@@ -87,6 +88,7 @@ export default function Zora2024() {
   const [teamIndex, setTeamIndex] = useState(0)
   const teamCount = teamMembers.length
   const isArchived = isArchivedPath('/zora2024')
+  const { sectionRefs: issueSectionRefs, offsets: issueSectionOffsets } = useSectionParallax(issues.length, 60)
 
   const handleTeamMove = (dir: number) => {
     setTeamIndex((currentIndex) => (currentIndex + dir + teamCount) % teamCount)
@@ -132,12 +134,22 @@ export default function Zora2024() {
         </div>
       </section>
 
-      {issues.map((issue) => (
+      {issues.map((issue, index) => (
         <section
           key={issue.title}
+          ref={(node) => {
+            issueSectionRefs.current[index] = node
+          }}
           className={`zora-issue${issue.reverse ? ' reverse' : ''}${issue.lightText ? ' light' : ' dark'}`}
-          style={{ backgroundImage: `url(${issue.image})` }}
         >
+          <div
+            className="zora-issue-media"
+            style={{
+              backgroundImage: `url(${issue.image})`,
+              transform: `translate3d(0, ${issueSectionOffsets[index] ?? 0}px, 0) scale(1.09)`,
+            }}
+            aria-hidden="true"
+          />
           <div className="zora-issue-overlay" />
           <div className="zora-issue-inner">
             <div className="zora-issue-col">

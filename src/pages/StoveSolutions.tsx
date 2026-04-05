@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react'
 import Lightbox from '../components/Lightbox'
 import ResponsiveImage from '../components/ResponsiveImage'
 import { responsiveImages } from '../generated/responsiveImages'
+import { useSectionParallax } from '../lib/useSectionParallax'
 
 const introSections = [
   {
@@ -149,6 +150,7 @@ export default function StoveSolutions() {
   const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null)
   const [isPageContentRevealed, setIsPageContentRevealed] = useState(false)
   const [isLogoVideoVisible, setIsLogoVideoVisible] = useState(false)
+  const { sectionRefs: introSectionRefs, offsets: introSectionOffsets } = useSectionParallax(introSections.length, 54)
 
   useEffect(() => {
     const video = logoVideoRef.current
@@ -248,12 +250,22 @@ export default function StoveSolutions() {
           <p className="logo-video-credit">BY: MOLLY GLASS, KAYLA O&apos;NEAL, LILLY SWEANEY, AND LIAM WALKER.</p>
         </div>
       </section>
-      {introSections.map((section) => (
+      {introSections.map((section, index) => (
         <section
           key={section.title}
-          className={`stove-cover parallax fade-in ${pageContentRevealClass}`}
-          style={{ backgroundImage: `url(${section.image})` }}
+          ref={(node) => {
+            introSectionRefs.current[index] = node
+          }}
+          className={`stove-cover fade-in ${pageContentRevealClass}`}
         >
+          <div
+            className="stove-cover-media"
+            style={{
+              backgroundImage: `url(${section.image})`,
+              transform: `translate3d(0, ${introSectionOffsets[index] ?? 0}px, 0) scale(1.08)`,
+            }}
+            aria-hidden="true"
+          />
           <div className="stove-cover-overlay" />
           <div className={`container stove-cover-content ${section.reverse ? 'reverse' : ''}`}>
             <h1 className="stove-cover-title">{section.title}</h1>

@@ -4546,9 +4546,9 @@ img.image-fade-target.is-image-loaded {
 }
 
 .zora-hero-logo {
-  width: min(1000px, 80vw);
+  width: min(920px, 74vw);
   height: auto;
-  margin: 0 auto 0px;
+  margin: 0 auto clamp(16px, 2.4vw, 28px);
   display: block;
   object-fit: cover;
 }
@@ -4600,12 +4600,19 @@ img.image-fade-target.is-image-loaded {
   min-height: 70vh;
   display: flex;
   align-items: center;
-  background-size: cover;
-  background-position: 50% 50%;
-  background-attachment: scroll;
   padding: clamp(56px, 6vw, 72px) 0;
   overflow: hidden;
   color: #ffffff;
+  background: #54171f;
+}
+
+.zora-issue-media {
+  position: absolute;
+  inset: -12%;
+  background-size: cover;
+  background-position: 50% 50%;
+  will-change: transform;
+  pointer-events: none;
 }
 
 .zora-issue-overlay {
@@ -4679,7 +4686,7 @@ img.image-fade-target.is-image-loaded {
 .zora-team-carousel {
   position: relative;
   overflow: hidden;
-  padding: 28px 18px 36px;
+  padding: 22px 18px 28px;
   border-radius: 30px;
   border: 1px solid rgba(255, 255, 255, 0.82);
   background: rgba(255, 255, 255, 0.4);
@@ -4693,7 +4700,7 @@ img.image-fade-target.is-image-loaded {
 }
 
 .zora-team-carousel .carousel-slide {
-  padding: 10px 58px;
+  padding: 6px 58px;
   box-sizing: border-box;
 }
 
@@ -4705,9 +4712,9 @@ img.image-fade-target.is-image-loaded {
 .zora-team-card {
   display: grid;
   grid-template-columns: minmax(0, 1.04fr) minmax(280px, 0.84fr);
-  gap: clamp(24px, 4vw, 42px);
+  gap: clamp(20px, 3vw, 32px);
   align-items: center;
-  padding: clamp(24px, 4vw, 38px);
+  padding: clamp(20px, 3vw, 30px);
   border-radius: 28px;
   border: 1px solid rgba(127, 41, 89, 0.12);
   background: rgba(255, 255, 255, 0.96);
@@ -4759,7 +4766,7 @@ img.image-fade-target.is-image-loaded {
 
 .zora-team-image {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 4.35;
   object-fit: cover;
   border-radius: 22px;
   display: block;
@@ -4821,13 +4828,13 @@ img.image-fade-target.is-image-loaded {
   }
 
   .zora-team-carousel {
-    padding: 22px 0 28px;
+    padding: 18px 0 22px;
   }
 
   .zora-team-card {
     grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 22px;
+    gap: 16px;
+    padding: 18px;
     text-align: center;
   }
 
@@ -4840,7 +4847,7 @@ img.image-fade-target.is-image-loaded {
   }
 
   .zora-team-image {
-    aspect-ratio: 4 / 4.8;
+    aspect-ratio: 4 / 4.2;
   }
 }
 
@@ -5051,10 +5058,19 @@ img.image-fade-target.is-image-loaded {
   display: flex;
   align-items: center;
   color: #fff;
-  background-size: cover;
-  background-position: center;
   padding: 6vw;
   margin: 32px 0;
+  overflow: hidden;
+  background: #0f5f58;
+}
+
+.stove-cover-media {
+  position: absolute;
+  inset: -12%;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  pointer-events: none;
 }
 
 .stove-page-section {
@@ -5084,10 +5100,6 @@ img.image-fade-target.is-image-loaded {
     transition: none;
     transform: none;
   }
-}
-
-.stove-cover.parallax {
-  background-attachment: fixed;
 }
 
 .stove-cover-content {
@@ -5933,7 +5945,11 @@ img.image-fade-target.is-image-loaded {
     padding: 44px 0 52px;
   }
 
-  .zora-hero-logo,
+  .zora-hero-logo {
+    width: min(88vw, 760px);
+    margin-bottom: 18px;
+  }
+
   .zora-hero-image {
     width: min(100%, 92vw);
   }
@@ -5962,10 +5978,6 @@ img.image-fade-target.is-image-loaded {
   .stove-cover {
     min-height: auto;
     padding: 56px 0;
-  }
-
-  .stove-cover.parallax {
-    background-attachment: scroll;
   }
 
   .stove-cover-content {

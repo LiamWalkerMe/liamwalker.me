@@ -423,9 +423,11 @@ function WebsiteProcessStageList({ stageStrengths }: { stageStrengths: number[] 
 export default function Website() {
   const [activeVersionIndex, setActiveVersionIndex] = useState(0);
   const [isHistoryPaused, setIsHistoryPaused] = useState(false);
+  const [hasHistoryBeenViewed, setHasHistoryBeenViewed] = useState(false);
   const [isProcessPinned, setIsProcessPinned] = useState(false);
   const [processMetric, setProcessMetric] = useState<ProcessMetric>(emptyProcessMetric);
   const [processProgress, setProcessProgress] = useState(0);
+  const historySectionRef = useRef<HTMLElement | null>(null);
   const processSectionRef = useRef<HTMLElement | null>(null);
   const processStickyRef = useRef<HTMLDivElement | null>(null);
   const activeVersion = websiteVersions[activeVersionIndex];
@@ -435,7 +437,36 @@ export default function Website() {
   );
 
   useEffect(() => {
-    if (isHistoryPaused || websiteVersions.length < 2) {
+    const historySectionElement = historySectionRef.current;
+
+    if (!historySectionElement || hasHistoryBeenViewed) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0]?.isIntersecting) {
+          return;
+        }
+
+        setHasHistoryBeenViewed(true);
+        observer.disconnect();
+      },
+      {
+        threshold: 0.24,
+        rootMargin: "0px 0px -12% 0px",
+      }
+    );
+
+    observer.observe(historySectionElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasHistoryBeenViewed]);
+
+  useEffect(() => {
+    if (!hasHistoryBeenViewed || isHistoryPaused || websiteVersions.length < 2) {
       return;
     }
 
@@ -446,7 +477,7 @@ export default function Website() {
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [activeVersionIndex, isHistoryPaused]);
+  }, [activeVersionIndex, hasHistoryBeenViewed, isHistoryPaused]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(developmentProcessPinnedLayoutQuery);
@@ -709,6 +740,7 @@ export default function Website() {
 
       <section
         id="version-history"
+        ref={historySectionRef}
         className="website-history"
         onMouseEnter={() => setIsHistoryPaused(true)}
         onMouseLeave={() => setIsHistoryPaused(false)}
