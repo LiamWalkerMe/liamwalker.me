@@ -76,7 +76,7 @@ export default function Home() {
             </div>
 
             <div className="home-miracosta-promo__content fade-in">
-              <p className="home-miracosta-promo__eyebrow">THREE ASSOCIATE DEGREES</p>
+              <p className="home-miracosta-promo__eyebrow">MIRACOSTA JOURNEY</p>
               <h2 className="home-miracosta-promo__title">MiraCosta</h2>
               <Link className="button home-miracosta-promo__button" to="/miracosta" reloadDocument>
                 Learn More
