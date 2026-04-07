@@ -213,7 +213,7 @@
 
 .stove-cover-media {
   position: absolute;
-  inset: -12%;
+  inset: -18%;
   background-size: cover;
   background-position: center;
   will-change: transform;

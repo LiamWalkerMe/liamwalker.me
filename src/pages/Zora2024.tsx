@@ -84,11 +84,17 @@ const teamMembers = [
   },
 ]
 
+const ZORA_PARALLAX_OFFSET = 96
+const ZORA_PARALLAX_SCALE = 1.17
+
 export default function Zora2024() {
   const [teamIndex, setTeamIndex] = useState(0)
   const teamCount = teamMembers.length
   const isArchived = isArchivedPath('/zora2024')
-  const { sectionRefs: issueSectionRefs, offsets: issueSectionOffsets } = useSectionParallax(issues.length, 60)
+  const { sectionRefs: issueSectionRefs, offsets: issueSectionOffsets } = useSectionParallax(
+    issues.length,
+    ZORA_PARALLAX_OFFSET
+  )
 
   const handleTeamMove = (dir: number) => {
     setTeamIndex((currentIndex) => (currentIndex + dir + teamCount) % teamCount)
@@ -146,7 +152,7 @@ export default function Zora2024() {
             className="zora-issue-media"
             style={{
               backgroundImage: `url(${issue.image})`,
-              transform: `translate3d(0, ${issueSectionOffsets[index] ?? 0}px, 0) scale(1.09)`,
+              transform: `translate3d(0, ${issueSectionOffsets[index] ?? 0}px, 0) scale(${ZORA_PARALLAX_SCALE})`,
             }}
             aria-hidden="true"
           />

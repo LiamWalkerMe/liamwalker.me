@@ -143,6 +143,9 @@ const aboutTeamMembers = [
   },
 ]
 
+const STOVE_PARALLAX_OFFSET = 92
+const STOVE_PARALLAX_SCALE = 1.17
+
 export default function StoveSolutions() {
   const [slideIndex, setSlideIndex] = useState(0)
   const slideCount = conceptSlides.length
@@ -150,7 +153,10 @@ export default function StoveSolutions() {
   const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null)
   const [isPageContentRevealed, setIsPageContentRevealed] = useState(false)
   const [isLogoVideoVisible, setIsLogoVideoVisible] = useState(false)
-  const { sectionRefs: introSectionRefs, offsets: introSectionOffsets } = useSectionParallax(introSections.length, 54)
+  const { sectionRefs: introSectionRefs, offsets: introSectionOffsets } = useSectionParallax(
+    introSections.length,
+    STOVE_PARALLAX_OFFSET
+  )
 
   useEffect(() => {
     const video = logoVideoRef.current
@@ -262,7 +268,7 @@ export default function StoveSolutions() {
             className="stove-cover-media"
             style={{
               backgroundImage: `url(${section.image})`,
-              transform: `translate3d(0, ${introSectionOffsets[index] ?? 0}px, 0) scale(1.08)`,
+              transform: `translate3d(0, ${introSectionOffsets[index] ?? 0}px, 0) scale(${STOVE_PARALLAX_SCALE})`,
             }}
             aria-hidden="true"
           />

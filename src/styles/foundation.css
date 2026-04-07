@@ -645,6 +645,16 @@ img.image-fade-target.is-image-loaded {
   overflow: hidden;
 }
 
+.home-stove-cover__media {
+  position: absolute;
+  inset: -18%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  will-change: transform;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .home-stove-cover::before {
   content: "";
   position: absolute;
@@ -652,7 +662,7 @@ img.image-fade-target.is-image-loaded {
   background:
     radial-gradient(circle at center, rgba(15, 130, 119, 0.12), rgba(10, 111, 102, 0.62) 74%),
     linear-gradient(180deg, rgba(15, 130, 119, 0.14), rgba(10, 111, 102, 0.5));
-  z-index: 0;
+  z-index: 1;
 }
 
 .home-stove-cover::after {
@@ -666,12 +676,12 @@ img.image-fade-target.is-image-loaded {
   background-size: auto, 120px 120px, 120px 120px;
   opacity: 0.22;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 .home-stove-cover__content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   display: flex;
   align-items: center;
@@ -723,4 +733,3 @@ img.image-fade-target.is-image-loaded {
   font-size: clamp(44px, 5vw, 96px);
   margin: 0 0 12px;
 }
-

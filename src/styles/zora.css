@@ -71,7 +71,7 @@
 
 .zora-issue-media {
   position: absolute;
-  inset: -12%;
+  inset: -18%;
   background-size: cover;
   background-position: 50% 50%;
   will-change: transform;
@@ -313,4 +313,3 @@
     aspect-ratio: 4 / 4.2;
   }
 }
-

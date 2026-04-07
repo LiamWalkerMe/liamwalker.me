@@ -169,9 +169,12 @@ export default function Home() {
       <DeferredBackgroundSection
         className="home-stove-cover page-stack-gap-before"
         backgroundImageUrl="/assets/StoveSolutions/teamphoto.jpg"
-        style={{
+        backgroundClassName="home-stove-cover__media"
+        backgroundStyle={{
           backgroundPosition: 'center center',
         }}
+        parallaxOffset={92}
+        parallaxScale={1.17}
       >
         <div className="container home-stove-cover__content">
           <div className="home-stove-cover__copy fade-in">
