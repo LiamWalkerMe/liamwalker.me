@@ -80,10 +80,30 @@ const DEGREE_HIGHLIGHTS = [
 ];
 
 const SLIDES = [
-  { label: "Graduation Ceremony", caption: "Commencement · May 22nd 2026", sub: "FrontWave Arena - Oceanside" },
-  { label: "With Close Friends", caption: "Family", sub: "FrontWave Arena - Oceanside" },
-  { label: "Cap & Gown", caption: "Friends", sub: "FrontWave Arena - Oceanside" },
-  { label: "Family Celebration", caption: "Final day on campus", sub: "MiraCosta College - Oceanside" },
+  {
+    label: "Cap toss celebration on the lawn",
+    caption: "Cap Toss",
+    sub: "A graduation-day celebration in the garden",
+    imageSrc: "/assets/MiraCosta/Throwing.jpg",
+  },
+  {
+    label: "Walking together in caps and gowns",
+    caption: "Walking Into the Next Chapter",
+    sub: "A quiet moment between portraits after graduation",
+    imageSrc: "/assets/MiraCosta/WalkingTowards.jpg",
+  },
+  {
+    label: "Close-up of decorated graduation caps",
+    caption: "Decorated Caps",
+    sub: "Cal Poly and 'Oh, the Places You'll Go!' details",
+    imageSrc: "/assets/MiraCosta/Caps.png",
+  },
+  {
+    label: "Walking away across the lawn with friends",
+    caption: "Last Walk Across the Lawn",
+    sub: "Closing out the MiraCosta chapter together",
+    imageSrc: "/assets/MiraCosta/WalkingAway.jpg",
+  },
 ];
 
 interface CourseworkDetail {
@@ -403,34 +423,45 @@ function MiracostaEyebrow({ children }: { children: ReactNode }) {
 
 function MiracostaPhotoPlaceholder({
   label,
-  aspectRatio = "3/4",
+  src = GRADUATION_PLACEHOLDER_SRC,
+  aspectRatio,
+  preserveNaturalRatio = false,
+  borderRadius = 14,
+  showBorder = true,
+  background = "rgba(255,255,255,0.42)",
 }: {
   label: string;
+  src?: string;
   aspectRatio?: string;
+  preserveNaturalRatio?: boolean;
+  borderRadius?: number | string;
+  showBorder?: boolean;
+  background?: string;
 }) {
   return (
     <div
       style={{
-        aspectRatio,
-        background: "rgba(255,255,255,0.42)",
-        borderRadius: 14,
-        border: "1px solid rgba(255,255,255,0.8)",
+        background,
+        borderRadius,
+        border: showBorder ? "1px solid rgba(255,255,255,0.8)" : "none",
         position: "relative",
         overflow: "hidden",
         width: "100%",
-        height: "100%",
+        height: preserveNaturalRatio ? "auto" : "100%",
+        ...(preserveNaturalRatio ? null : { aspectRatio: aspectRatio ?? "3/4" }),
       }}
     >
       <img
-        src={GRADUATION_PLACEHOLDER_SRC}
+        src={src}
         alt={label}
         loading={label ? "eager" : "lazy"}
         decoding="async"
         style={{
           width: "100%",
-          height: "100%",
+          height: preserveNaturalRatio ? "auto" : "100%",
           display: "block",
-          objectFit: "cover",
+          objectFit: preserveNaturalRatio ? "contain" : "cover",
+          borderRadius: "inherit",
         }}
       />
     </div>
@@ -448,6 +479,14 @@ function MiracostaPageStyles() {
       @keyframes fadeUp   { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       @keyframes shimmer  { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+      @keyframes memoryMediaSwap {
+        from { opacity: 0; transform: scale(0.985); filter: blur(10px); }
+        to { opacity: 1; transform: scale(1); filter: blur(0); }
+      }
+      @keyframes memoryCopySwap {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
       .reveal, .h1-1, .h1-2, .h1-3 {
         opacity: 0;
         transform: translateY(28px);
@@ -472,6 +511,15 @@ function MiracostaPageStyles() {
         animation-play-state: paused;
       }
       .grad-text.is-in-view-active { animation-play-state: running; }
+      .memory-slide-media {
+        animation: memoryMediaSwap 0.52s cubic-bezier(0.22,1,0.36,1) both;
+        transform-origin: center center;
+        will-change: opacity, transform, filter;
+      }
+      .memory-slide-copy {
+        animation: memoryCopySwap 0.42s cubic-bezier(0.22,1,0.36,1) both;
+        will-change: opacity, transform;
+      }
 
       .coursework-overlay {
         position: fixed;
@@ -867,6 +915,7 @@ function DegreeSection() {
 function MemoriesSlideshow() {
   const [active, setActive] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const activeSlide = SLIDES[active];
 
   const startTimer = useCallback(() => {
     if (timerRef.current) {
@@ -897,17 +946,25 @@ function MemoriesSlideshow() {
   const next = (active + 1) % SLIDES.length;
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, alignItems: "start" }}>
-      <div>
-        <div
-          style={{
-            borderRadius: 20,
-            overflow: "hidden",
-            boxShadow: "0 20px 60px rgba(13,59,110,0.14)",
-            position: "relative",
-          }}
-        >
-          <MiracostaPhotoPlaceholder label={SLIDES[active].label} aspectRatio="4/5" />
+    <div style={{ maxWidth: 720, margin: "0 auto" }}>
+      <div
+        style={{
+          borderRadius: 20,
+          border: "1px solid rgba(255,255,255,0.82)",
+          overflow: "hidden",
+          boxShadow: "0 20px 60px rgba(13,59,110,0.14)",
+          position: "relative",
+        }}
+      >
+        <div key={activeSlide.imageSrc} className="memory-slide-media">
+          <MiracostaPhotoPlaceholder
+            label={activeSlide.label}
+            src={activeSlide.imageSrc}
+            preserveNaturalRatio
+            borderRadius="inherit"
+            showBorder={false}
+            background="transparent"
+          />
           <div
             style={{
               position: "absolute",
@@ -926,117 +983,76 @@ function MemoriesSlideshow() {
             {active + 1} / {SLIDES.length}
           </div>
         </div>
-
-        <div style={{ marginTop: 20, paddingLeft: 4 }}>
-          <div
-            style={{
-              fontFamily: "'Fraunces', serif",
-              fontSize: 20,
-              fontWeight: 700,
-              color: C.navy,
-              marginBottom: 4,
-            }}
-          >
-            {SLIDES[active].caption}
-          </div>
-          <div style={{ fontSize: 13, color: C.muted, letterSpacing: "0.04em" }}>{SLIDES[active].sub}</div>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 20 }}>
-          {([
-            ["←", previous],
-            ["→", next],
-          ] as [string, number][]).map(([label, index]) => (
-            <button
-              key={label}
-              onClick={() => goTo(index)}
-              style={{
-                width: 42,
-                height: 42,
-                borderRadius: "50%",
-                border: `1.5px solid ${C.navy}30`,
-                background: "rgba(255,255,255,0.7)",
-                cursor: "pointer",
-                fontSize: 15,
-                color: C.navy,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "background 0.2s, border-color 0.2s",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.background = C.white;
-                e.currentTarget.style.borderColor = `${C.navy}66`;
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.7)";
-                e.currentTarget.style.borderColor = `${C.navy}30`;
-              }}
-            >
-              {label}
-            </button>
-          ))}
-
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginLeft: 4 }}>
-            {SLIDES.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goTo(index)}
-                style={{
-                  width: index === active ? 20 : 8,
-                  height: 8,
-                  borderRadius: 100,
-                  border: "none",
-                  background: index === active ? C.navy : `${C.navy}30`,
-                  cursor: "pointer",
-                  padding: 0,
-                  transition: "all 0.35s cubic-bezier(0.16,1,0.3,1)",
-                }}
-              />
-            ))}
-          </div>
-        </div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        {SLIDES.map((slide, index) => (
+      <div key={activeSlide.caption} className="memory-slide-copy" style={{ marginTop: 20, paddingLeft: 4 }}>
+        <div
+          style={{
+            fontFamily: "'Fraunces', serif",
+            fontSize: 20,
+            fontWeight: 700,
+            color: C.navy,
+            marginBottom: 4,
+          }}
+        >
+          {activeSlide.caption}
+        </div>
+        <div style={{ fontSize: 13, color: C.muted, letterSpacing: "0.04em" }}>{activeSlide.sub}</div>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 20, flexWrap: "wrap" }}>
+        {([
+          ["←", previous],
+          ["→", next],
+        ] as [string, number][]).map(([label, index]) => (
           <button
-            key={index}
+            key={label}
             onClick={() => goTo(index)}
             style={{
-              display: "flex",
-              gap: 14,
-              alignItems: "center",
-              background: index === active ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.4)",
-              border: `1.5px solid ${index === active ? `${C.navy}30` : "rgba(255,255,255,0.6)"}`,
-              borderRadius: 14,
-              padding: "12px 16px",
+              width: 42,
+              height: 42,
+              borderRadius: "50%",
+              border: `1.5px solid ${C.navy}30`,
+              background: "rgba(255,255,255,0.7)",
               cursor: "pointer",
-              transition: "all 0.25s",
-              textAlign: "left",
-              boxShadow: index === active ? "0 4px 20px rgba(13,59,110,0.08)" : "none",
+              fontSize: 15,
+              color: C.navy,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "background 0.2s, border-color 0.2s",
             }}
             onMouseOver={(e) => {
-              if (index !== active) {
-                e.currentTarget.style.background = "rgba(255,255,255,0.65)";
-              }
+              e.currentTarget.style.background = C.white;
+              e.currentTarget.style.borderColor = `${C.navy}66`;
             }}
             onMouseOut={(e) => {
-              if (index !== active) {
-                e.currentTarget.style.background = "rgba(255,255,255,0.4)";
-              }
+              e.currentTarget.style.background = "rgba(255,255,255,0.7)";
+              e.currentTarget.style.borderColor = `${C.navy}30`;
             }}
           >
-            <div style={{ width: 52, height: 52, borderRadius: 10, overflow: "hidden", flexShrink: 0 }}>
-              <MiracostaPhotoPlaceholder label="" aspectRatio="1" />
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: C.navy, marginBottom: 2 }}>{slide.caption}</div>
-              <div style={{ fontSize: 12, color: C.muted }}>{slide.sub}</div>
-            </div>
-            {index === active && <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.teal, flexShrink: 0 }} />}
+            {label}
           </button>
         ))}
+
+        <div style={{ display: "flex", alignItems: "center", gap: 6, marginLeft: 4 }}>
+          {SLIDES.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goTo(index)}
+              style={{
+                width: index === active ? 20 : 8,
+                height: 8,
+                borderRadius: 100,
+                border: "none",
+                background: index === active ? C.navy : `${C.navy}30`,
+                cursor: "pointer",
+                padding: 0,
+                transition: "all 0.35s cubic-bezier(0.16,1,0.3,1)",
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -1746,12 +1762,12 @@ function ClosingSection() {
         </h2>
 
         <p style={{ fontSize: 17, color: "rgba(255, 255, 255, 0.82)", lineHeight: 1.85, maxWidth: 500, margin: "0 auto 52px", fontWeight: 300 }}>
-          That work was more than a milestone. It secured my admission to <strong style={{ color: CAL_POLY.gold }}>*Future College*</strong> — proof that the foundation built at MiraCosta was exactly the right one. The next chapter begins now.
+          That work was more than a milestone. It secured my admission to <strong style={{ color: CAL_POLY.gold }}>Cal Poly SLO.</strong>  The foundation that was built at MiraCosta was instrumental in my admission to Cal Poly.
         </p>
 
         <div style={{ marginBottom: 64 }}>
           <a
-            href="/future-college"
+            href="/cal-poly-slo"
             className="button"
             style={{
               "--button-bg": CAL_POLY.gold,
@@ -1764,7 +1780,7 @@ function ClosingSection() {
               paddingInline: 28,
             } as CSSProperties}
           >
-            Continue to *Future College*
+            Continue to Cal Poly SLO
           </a>
         </div>
 

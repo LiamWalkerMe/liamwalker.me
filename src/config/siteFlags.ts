@@ -1,5 +1,5 @@
 export const siteFlags = {
-  miracosta: true,
+  miracosta: false,
   website: false,
 } as const
 
