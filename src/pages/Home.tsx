@@ -67,7 +67,7 @@ export default function Home() {
               <div className="home-miracosta-promo__panel-frame">
                 <img
                   className="home-miracosta-promo__panel-image"
-                  src="/assets/New/placeholder.png"
+                  src="/assets/MiraCosta/Throwing.jpg"
                   alt=""
                   loading="lazy"
                   decoding="async"
@@ -87,7 +87,7 @@ export default function Home() {
               <div className="home-miracosta-promo__panel-frame">
                 <img
                   className="home-miracosta-promo__panel-image"
-                  src="/assets/New/placeholder.png"
+                  src="/assets/MiraCosta/WalkingTowards.jpg"
                   alt=""
                   loading="lazy"
                   decoding="async"
