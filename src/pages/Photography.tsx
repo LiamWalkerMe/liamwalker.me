@@ -9,6 +9,7 @@ type GalleryImage = {
   displaySrc: string
   width?: number
   height?: number
+  orientation: 'portrait' | 'landscape'
 }
 type Tile = { images: GalleryImage[] }
 type RailMetric = {
@@ -25,19 +26,24 @@ const layoutTokenSizes: Record<PhotoLayoutToken, number> = {
   stack: 2,
 }
 const pinnedLayoutQuery = '(min-width: 860px) and (prefers-reduced-motion: no-preference)'
-const tileRevealFocus = 0.62
+const tileRevealFocus = 0.74
+const tileRevealDuration = 0.18
+const openingTileRevealDuration = 0.06
 const optimizedImageByOriginalSrc = new Map<string, (typeof homePhotographyImageAssets)[number]>(
   homePhotographyImageAssets.map((asset) => [asset.originalSrc, asset])
 )
 
 function getGalleryImage(src: string): GalleryImage {
   const optimizedImage = optimizedImageByOriginalSrc.get(src)
+  const width = optimizedImage?.width
+  const height = optimizedImage?.height
 
   return {
     originalSrc: src,
     displaySrc: optimizedImage?.thumbSrc ?? src,
-    width: optimizedImage?.width,
-    height: optimizedImage?.height,
+    width,
+    height,
+    orientation: optimizedImage?.orientation ?? (height && width && height > width ? 'portrait' : 'landscape'),
   }
 }
 
@@ -82,6 +88,7 @@ function PhotographyFrame({
   isPriority,
   width,
   height,
+  orientation,
   onOpen,
 }: {
   src: string
@@ -90,6 +97,7 @@ function PhotographyFrame({
   isPriority: boolean
   width?: number
   height?: number
+  orientation: GalleryImage['orientation']
   onOpen: () => void
 }) {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -97,7 +105,7 @@ function PhotographyFrame({
   return (
     <button
       type="button"
-      className={`photography-rail-frame ${isLoaded ? 'is-loaded' : ''}`}
+      className={`photography-rail-frame photography-rail-frame--${orientation} ${isLoaded ? 'is-loaded' : ''}`}
       onClick={onOpen}
       aria-label={ariaLabel}
     >
@@ -136,6 +144,7 @@ export default function Photography() {
           locations: section.locations ?? '',
           note: section.note ?? '',
           images,
+          imageCount: tiles.reduce((total, tile) => total + tile.images.length, 0),
           tiles,
         }
       }),
@@ -338,8 +347,10 @@ export default function Photography() {
           }
 
           const tileCenterProgress = metric.tileCenterProgresses[tileIndex] ?? 0
-          const tileRevealStart = Math.max(0, tileCenterProgress - 0.18)
-          const tileReveal = clamp((easedRevealProgress - tileRevealStart) / 0.18, 0, 1)
+          const revealDuration = tileCenterProgress <= 0 ? openingTileRevealDuration : tileRevealDuration
+          const tileRevealProgress = tileCenterProgress <= 0 ? revealProgress : easedRevealProgress
+          const tileRevealStart = Math.max(0, tileCenterProgress - revealDuration)
+          const tileReveal = clamp((tileRevealProgress - tileRevealStart) / revealDuration, 0, 1)
 
           tile.style.opacity = String(0.18 + tileReveal * 0.82)
           tile.style.transform = `translate3d(0, ${Math.round((1 - tileReveal) * 42)}px, 0) scale(${0.9 + tileReveal * 0.1})`
@@ -400,7 +411,7 @@ export default function Photography() {
           }
           const imagesBeforeSection = gallerySections
             .slice(0, sectionIndex)
-            .reduce((total, gallerySection) => total + gallerySection.images.length, 0)
+            .reduce((total, gallerySection) => total + gallerySection.imageCount, 0)
 
           return (
             <section
@@ -436,7 +447,9 @@ export default function Photography() {
                       </div>
                       <div className="photography-rail-section__meta">
                         {section.locations ? <span>{section.locations}</span> : null}
-                        <span>{section.images.length} frames</span>
+                        <span>
+                          {section.imageCount} {section.imageCount === 1 ? 'frame' : 'frames'}
+                        </span>
                       </div>
                       {section.note ? <p className="photography-rail-section__note">{section.note}</p> : null}
                     </div>
@@ -483,6 +496,7 @@ export default function Photography() {
                                     isPriority={imageGlobalIndex < priorityImageCount}
                                     width={img.width}
                                     height={img.height}
+                                    orientation={img.orientation}
                                     onOpen={() =>
                                       setLightboxImage({
                                         src: img.originalSrc,

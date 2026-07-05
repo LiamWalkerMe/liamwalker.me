@@ -11,8 +11,8 @@
         {
       "enabled": true,
       "title": "Budapest",
-      "locations": "Buda Castle | Fisherman's Bastion | Parliament ",
-      "note": "A city of bridges, hills, and a river that cuts through the middle of it all.",
+      "locations": "Hungarian Parliament | Fisherman's Bastion | Danube waterfront | Historic streets",
+      "note": "Grand civic buildings, warm evening light, and hilltop views across the Danube.",
       "layout": ["single", "stack", "single", "single", "single", "single", "single", "single"],
       "images": [
         "/assets/Photography/Budapest/Budapest1.jpg",
@@ -30,8 +30,8 @@
     {
       "enabled": true,
       "title": "Copenhagen",
-      "locations": "Nyhavn | Tivoli Gardens",
-      "note": "A city of bridges, hills, and a river that cuts through the middle of it all.",
+      "locations": "Nyhavn | Harborfront | Tivoli Gardens | Historic brick streets",
+      "note": "Bright harbor color, garden paths, waterfront walks, and old facades in clean northern light.",
       "layout": ["stack", "single", "single", "single", "single", "single", "single"],
       "images": [
         "/assets/Photography/Copenhagen/Copenhagen1.jpeg",
@@ -47,8 +47,8 @@
     {
       "enabled": true,
       "title": "Japan",
-      "locations": "Buda Castle | Fisherman's Bastion | Parliament ",
-      "note": "A city of bridges, hills, and a river that cuts through the middle of it all.",
+      "locations": "Nara | Kyoto | Tokyo",
+      "note": "Deer parks, temple streets, city views, and quiet shrine paths threaded through the trees.",
       "layout": ["single", "stack", "single", "single", "single", "single", "single", "stack", "single"],
       "images": [
         "/assets/Photography/Japan/Japan1.jpeg",
@@ -70,7 +70,7 @@
       "enabled": true,
       "title": "Italy",
       "locations": "Rome | Florence | Riomaggiore | Lake Como | Venice",
-      "note": "Warm coastlines, quiet canals, and the kind of streets that reward wandering without a plan.",
+      "note": "Coastal villages, Lake Como gardens, Roman ruins, and narrow streets that reward wandering without a plan.",
       "layout": ["single", "stack", "single", "single", "single", "stack", "single", "single", "stack", "single", "single", "single", "single"],
       "images": [
         "/assets/Photography/Italy/Italy1.jpg",
@@ -93,8 +93,8 @@
     {
       "enabled": true,
       "title": "LA",
-      "locations": "West Hollywood | Peterson Automotive Museum | Erewhon | Griffith",
-      "note": "Architecture, neon, and city light stitched together into one long evening walk.",
+      "locations": "West Hollywood | Petersen Automotive Museum | Erewhon | Griffith Observatory",
+      "note": "Street signs, museum interiors, market aisles, city overlooks, and Los Angeles after dark.",
       "layout": ["single", "single", "stack", "single", "stack", "stack", "stack", "stack"],
       "images": [
         "/assets/Photography/LA/LA12.jpg",
@@ -115,8 +115,8 @@
     {
       "enabled": true,
       "title": "Lake Tahoe",
-      "locations": "Lake View",
-      "note": "Cold air, reflective water, and a slower rhythm once the sun starts to drop.",
+      "locations": "Mountain roads | Lake Tahoe shoreline | Pine forests | Docks at dusk",
+      "note": "Open roads, pine trees, reflective water, and a slower rhythm once the sun starts to drop.",
       "layout": ["stack", "single", "stack", "single", "single"],
       "images": [
         "/assets/Photography/Tahoe/LakeTahoe15.jpg",

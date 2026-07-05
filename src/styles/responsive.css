@@ -392,6 +392,90 @@
     width: min(40vw, 175px);
   }
 
+  .home-photography-promo__contact-sheet--layout-1 .home-photography-promo__photo-card--0 {
+    left: 4%;
+    top: 17%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-1 .home-photography-promo__photo-card--1 {
+    left: auto;
+    right: 1%;
+    top: 1%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-1 .home-photography-promo__photo-card--2 {
+    right: 0;
+    top: auto;
+    bottom: 17%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-1 .home-photography-promo__photo-card--3 {
+    left: 34%;
+    bottom: 1%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-1 .home-photography-promo__photo-card--4 {
+    right: auto;
+    left: 1%;
+    bottom: 3%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-2 .home-photography-promo__photo-card--0 {
+    left: auto;
+    right: 5%;
+    top: 10%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-2 .home-photography-promo__photo-card--1 {
+    left: 4%;
+    top: 4%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-2 .home-photography-promo__photo-card--2 {
+    right: auto;
+    left: 26%;
+    top: auto;
+    bottom: 2%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-2 .home-photography-promo__photo-card--3 {
+    left: auto;
+    right: 0;
+    bottom: 8%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-2 .home-photography-promo__photo-card--4 {
+    right: auto;
+    left: 3%;
+    bottom: 0;
+  }
+
+  .home-photography-promo__contact-sheet--layout-3 .home-photography-promo__photo-card--0 {
+    left: 11%;
+    top: auto;
+    bottom: 13%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-3 .home-photography-promo__photo-card--1 {
+    left: 0;
+    top: 2%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-3 .home-photography-promo__photo-card--2 {
+    right: 1%;
+    top: 14%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-3 .home-photography-promo__photo-card--3 {
+    left: 1%;
+    bottom: 2%;
+  }
+
+  .home-photography-promo__contact-sheet--layout-3 .home-photography-promo__photo-card--4 {
+    right: 8%;
+    bottom: 0;
+  }
+
   .gallery {
     grid-template-columns: 1fr;
   }

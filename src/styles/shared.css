@@ -416,6 +416,138 @@
   animation-delay: 280ms;
 }
 
+.home-photography-promo__contact-sheet--layout-1 .home-photography-promo__photo-card--0 {
+  --rotate: 3deg;
+  --enter-x: -22px;
+  --image-enter-x: -24px;
+  left: 8%;
+  top: 18%;
+  width: clamp(280px, 30vw, 430px);
+}
+
+.home-photography-promo__contact-sheet--layout-1 .home-photography-promo__photo-card--1 {
+  --rotate: -7deg;
+  --enter-x: 22px;
+  --image-enter-x: 22px;
+  left: auto;
+  right: 9%;
+  top: 3%;
+}
+
+.home-photography-promo__contact-sheet--layout-1 .home-photography-promo__photo-card--2 {
+  --rotate: 8deg;
+  --enter-x: -18px;
+  --image-enter-x: -18px;
+  right: 2%;
+  top: auto;
+  bottom: 17%;
+}
+
+.home-photography-promo__contact-sheet--layout-1 .home-photography-promo__photo-card--3 {
+  --rotate: -5deg;
+  --enter-x: 18px;
+  --image-enter-x: 18px;
+  left: 42%;
+  bottom: 2%;
+}
+
+.home-photography-promo__contact-sheet--layout-1 .home-photography-promo__photo-card--4 {
+  --rotate: 9deg;
+  --enter-x: -18px;
+  --image-enter-x: -18px;
+  right: auto;
+  left: 0;
+  bottom: 3%;
+}
+
+.home-photography-promo__contact-sheet--layout-2 .home-photography-promo__photo-card--0 {
+  --rotate: -4deg;
+  --enter-x: 22px;
+  --image-enter-x: 22px;
+  left: auto;
+  right: 11%;
+  top: 9%;
+  width: clamp(275px, 30vw, 420px);
+}
+
+.home-photography-promo__contact-sheet--layout-2 .home-photography-promo__photo-card--1 {
+  --rotate: 6deg;
+  --enter-x: -20px;
+  --image-enter-x: -20px;
+  left: 7%;
+  top: 12%;
+}
+
+.home-photography-promo__contact-sheet--layout-2 .home-photography-promo__photo-card--2 {
+  --rotate: -9deg;
+  --enter-x: -24px;
+  --image-enter-x: -24px;
+  right: auto;
+  left: 31%;
+  top: auto;
+  bottom: 1%;
+}
+
+.home-photography-promo__contact-sheet--layout-2 .home-photography-promo__photo-card--3 {
+  --rotate: 7deg;
+  --enter-x: 20px;
+  --image-enter-x: 20px;
+  left: auto;
+  right: 0;
+  bottom: 5%;
+}
+
+.home-photography-promo__contact-sheet--layout-2 .home-photography-promo__photo-card--4 {
+  --rotate: -6deg;
+  --enter-x: 18px;
+  --image-enter-x: 18px;
+  right: auto;
+  left: 2%;
+  bottom: 0;
+}
+
+.home-photography-promo__contact-sheet--layout-3 .home-photography-promo__photo-card--0 {
+  --rotate: 2deg;
+  --enter-x: -18px;
+  --image-enter-x: -18px;
+  left: 18%;
+  top: auto;
+  bottom: 11%;
+  width: clamp(285px, 31vw, 445px);
+}
+
+.home-photography-promo__contact-sheet--layout-3 .home-photography-promo__photo-card--1 {
+  --rotate: -5deg;
+  --enter-x: -22px;
+  --image-enter-x: -22px;
+  left: 2%;
+  top: 3%;
+}
+
+.home-photography-promo__contact-sheet--layout-3 .home-photography-promo__photo-card--2 {
+  --rotate: 7deg;
+  --enter-x: 24px;
+  --image-enter-x: 24px;
+  right: 3%;
+  top: 15%;
+}
+
+.home-photography-promo__contact-sheet--layout-3 .home-photography-promo__photo-card--3 {
+  --rotate: -8deg;
+  --enter-x: -18px;
+  --image-enter-x: -18px;
+  left: 0;
+  bottom: 3%;
+}
+
+.home-photography-promo__contact-sheet--layout-3 .home-photography-promo__photo-card--4 {
+  --rotate: 5deg;
+  --enter-x: 18px;
+  --image-enter-x: 18px;
+  right: 12%;
+  bottom: 0;
+}
+
 .home-photography-promo__photo-glow {
   position: absolute;
   inset: -18%;

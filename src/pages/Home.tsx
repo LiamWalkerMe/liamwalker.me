@@ -26,6 +26,7 @@ const homePhotographyImages = photoSections.flatMap((section) =>
 )
 
 const homePhotographyCycleMs = 3600
+const homePhotographyLayoutCount = 4
 const homePhotographyImagesByOrientation = {
   landscape: homePhotographyImages.filter((image) => image.orientation === 'landscape'),
   portrait: homePhotographyImages.filter((image) => image.orientation === 'portrait'),
@@ -33,22 +34,44 @@ const homePhotographyImagesByOrientation = {
 const homePhotographyPreloadWarmupCount = 16
 
 type HomePhotographyImage = (typeof homePhotographyImages)[number]
+type HomePhotographyFeature = {
+  images: HomePhotographyImage[]
+  layout: number
+}
 
 function getHomePhotographyPool(orientation: HomePhotoOrientation) {
   const orientationPool = homePhotographyImagesByOrientation[orientation]
   return orientationPool.length ? orientationPool : homePhotographyImages
 }
 
-function getInitialHomePhotographyFeature() {
+function getRandomHomePhotographyLayout(previousLayout = -1) {
+  if (homePhotographyLayoutCount <= 1) {
+    return 0
+  }
+
+  const layouts = Array.from({ length: homePhotographyLayoutCount }, (_, index) => index).filter(
+    (layout) => layout !== previousLayout
+  )
+  return layouts[Math.floor(Math.random() * layouts.length)] ?? 0
+}
+
+function getInitialHomePhotographyImages() {
   return homePhotographySlotOrientations.map((orientation, slot) => {
     const pool = getHomePhotographyPool(orientation)
     return pool[slot % pool.length]
   }).filter(Boolean)
 }
 
-function getRandomHomePhotographyFeature(previousFeature: HomePhotographyImage[] = []) {
+function getInitialHomePhotographyFeature(): HomePhotographyFeature {
+  return {
+    images: getInitialHomePhotographyImages(),
+    layout: 0,
+  }
+}
+
+function getRandomHomePhotographyImages(previousImages: HomePhotographyImage[] = []) {
   const usedImageIds = new Set<string>()
-  const previousImageIds = new Set(previousFeature.map((image) => image.id))
+  const previousImageIds = new Set(previousImages.map((image) => image.id))
 
   return homePhotographySlotOrientations.map((orientation) => {
     const pool = getHomePhotographyPool(orientation)
@@ -147,9 +170,12 @@ export default function Home() {
       isPreparingFeature = true
 
       setHomePhotographyFeature((currentFeature) => {
-        const nextFeature = getRandomHomePhotographyFeature(currentFeature)
+        const nextFeature: HomePhotographyFeature = {
+          images: getRandomHomePhotographyImages(currentFeature.images),
+          layout: getRandomHomePhotographyLayout(currentFeature.layout),
+        }
 
-        preloadHomePhotographyFeature(nextFeature).then(() => {
+        preloadHomePhotographyFeature(nextFeature.images).then(() => {
           if (!isCurrent) {
             return
           }
@@ -295,9 +321,11 @@ export default function Home() {
           <div className="home-photography-promo__showcase fade-in" aria-hidden="true">
             <div className="home-photography-promo__orb home-photography-promo__orb--one" />
             <div className="home-photography-promo__orb home-photography-promo__orb--two" />
-            <div className="home-photography-promo__contact-sheet">
-              {homePhotographyFeature.map((image, slot) => (
-                <HomePhotographyCard key={`${slot}-${image.id}`} image={image} slot={slot} />
+            <div
+              className={`home-photography-promo__contact-sheet home-photography-promo__contact-sheet--layout-${homePhotographyFeature.layout}`}
+            >
+              {homePhotographyFeature.images.map((image, slot) => (
+                <HomePhotographyCard key={`${homePhotographyFeature.layout}-${slot}-${image.id}`} image={image} slot={slot} />
               ))}
             </div>
           </div>
