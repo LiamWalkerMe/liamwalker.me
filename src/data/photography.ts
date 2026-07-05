@@ -1,78 +1,20 @@
-export const photoSections = [
-  {
-    title: 'Italy',
-    images: [
-      '/assets/Photography/Italy/Italy1.jpg',
-      '/assets/Photography/Italy/Italy2.jpg',
-      '/assets/Photography/Italy/Italy3.jpg',
-      '/assets/Photography/Italy/Italy4.jpg',
-      '/assets/Photography/Italy/Italy5.jpg',
-      '/assets/Photography/Italy/Italy6.jpg',
-      '/assets/Photography/Italy/Italy7.jpg',
-      '/assets/Photography/Italy/Italy8.jpeg',
-      '/assets/Photography/Italy/Italy9.jpg',
-      '/assets/Photography/Italy/Italy10.jpg',
-      '/assets/Photography/Italy/Italy11.jpg',
-      '/assets/Photography/Italy/Italy12.jpg',
-      '/assets/Photography/Italy/Italy13.jpg',
-      '/assets/Photography/Italy/Italy14.jpg',
-      '/assets/Photography/Italy/Italy15.jpg',
-    ],
-  },
-  {
-    title: 'LA',
-    images: [
-      '/assets/Photography/LA/LA12.jpg',
-      '/assets/Photography/LA/LA3.jpg',
-      '/assets/Photography/LA/LA4.jpg',
-      '/assets/Photography/LA/LA6.jpg',
-      '/assets/Photography/LA/LA5.jpg',
-      '/assets/Photography/LA/LA1.jpg',
-      '/assets/Photography/LA/LA2.jpg',
-      '/assets/Photography/LA/LA10.jpg',
-      '/assets/Photography/LA/LA11.jpg',
-      '/assets/Photography/LA/LA13.jpg',
-      '/assets/Photography/LA/LA14.jpg',
-      '/assets/Photography/LA/LA15.jpg',
-      '/assets/Photography/LA/LA16.jpg',
-    ],
-  },
-  {
-    title: 'Lake Tahoe',
-    images: [
-      '/assets/Photography/Tahoe/LakeTahoe15.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe1.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe5.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe2.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe3.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe6.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe7.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe9.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe10.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe11.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe12.jpg',
-      '/assets/Photography/Tahoe/LakeTahoe8.jpg',
-    ],
-  },
-  {
-    title: 'Imperial Sand Dunes',
-    images: [
-      '/assets/Photography/Dunes/SandDunes1.jpg',
-      '/assets/Photography/Dunes/SandDunes4.jpg',
-      '/assets/Photography/Dunes/SandDunes2.jpg',
-      '/assets/Photography/Dunes/SandDunes5.jpg',
-      '/assets/Photography/Dunes/SandDunes6.jpg',
-    ],
-  },
-  {
-    title: 'Mount Laguna',
-    images: [
-      '/assets/Photography/Laguna/MountLaguna5.jpg',
-      '/assets/Photography/Laguna/MountLaguna6.jpg',
-      '/assets/Photography/Laguna/MountLaguna3.jpg',
-      '/assets/Photography/Laguna/MountLaguna8.jpg',
-      '/assets/Photography/Laguna/MountLaguna4.jpg',
-      '/assets/Photography/Laguna/MountLaguna1.jpg',
-    ],
-  },
-]
+import photographyConfig from './photography.collections.json'
+
+export type PhotoLayoutToken = 'single' | 'stack'
+
+export type PhotoSection = {
+  enabled?: boolean
+  title: string
+  locations?: string
+  note?: string
+  layout?: PhotoLayoutToken[]
+  images: string[]
+}
+
+type PhotographyConfig = {
+  collections: PhotoSection[]
+}
+
+const config = photographyConfig as PhotographyConfig
+
+export const photoSections = config.collections.filter((section) => section.enabled !== false)

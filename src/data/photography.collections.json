@@ -1,0 +1,132 @@
+{
+  "editingGuide": [
+    "Add image files under public/assets/Photography/YourFolder/.",
+    "Add a new collection by copying one object in collections.",
+    "Use public paths for images, for example /assets/Photography/Italy/Italy1.jpg.",
+    "The layout list repeats across the images. Use single for one tall image tile, or stack for two images in one tile.",
+    "Keep enabled set to true to show a collection, or false to hide it without deleting it."
+  ],
+  "collections": [
+
+        {
+      "enabled": true,
+      "title": "Budapest",
+      "locations": "Buda Castle | Fisherman's Bastion | Parliament ",
+      "note": "A city of bridges, hills, and a river that cuts through the middle of it all.",
+      "layout": ["single", "stack", "single", "single", "single", "single", "single", "single"],
+      "images": [
+        "/assets/Photography/Budapest/Budapest1.jpg",
+        "/assets/Photography/Budapest/Budapest2.jpg",
+        "/assets/Photography/Budapest/Budapest3.jpg",
+        "/assets/Photography/Budapest/Budapest4.jpg",
+        "/assets/Photography/Budapest/Budapest5.jpg",
+        "/assets/Photography/Budapest/Budapest6.jpg",
+        "/assets/Photography/Budapest/Budapest7.jpg",
+        "/assets/Photography/Budapest/Budapest8.jpg",
+        "/assets/Photography/Budapest/Budapest9.jpg",
+        "/assets/Photography/Budapest/Budapest10.jpg"
+      ]
+    },
+    {
+      "enabled": true,
+      "title": "Copenhagen",
+      "locations": "Nyhavn | Tivoli Gardens",
+      "note": "A city of bridges, hills, and a river that cuts through the middle of it all.",
+      "layout": ["stack", "single", "single", "single", "single", "single", "single"],
+      "images": [
+        "/assets/Photography/Copenhagen/Copenhagen1.jpeg",
+        "/assets/Photography/Copenhagen/Copenhagen2.jpeg",
+        "/assets/Photography/Copenhagen/Copenhagen3.jpeg",
+        "/assets/Photography/Copenhagen/Copenhagen4.jpeg",
+        "/assets/Photography/Copenhagen/Copenhagen5.jpeg",
+        "/assets/Photography/Copenhagen/Copenhagen6.jpeg",
+        "/assets/Photography/Copenhagen/Copenhagen7.jpeg",
+        "/assets/Photography/Copenhagen/Copenhagen8.jpeg"
+      ]
+    },
+    {
+      "enabled": true,
+      "title": "Japan",
+      "locations": "Buda Castle | Fisherman's Bastion | Parliament ",
+      "note": "A city of bridges, hills, and a river that cuts through the middle of it all.",
+      "layout": ["single", "stack", "single", "single", "single", "single", "single", "stack", "single"],
+      "images": [
+        "/assets/Photography/Japan/Japan1.jpeg",
+        "/assets/Photography/Japan/Japan2.jpeg",
+        "/assets/Photography/Japan/Japan3.jpeg",
+        "/assets/Photography/Japan/Japan4.jpeg",
+        "/assets/Photography/Japan/Japan5.jpeg",
+        "/assets/Photography/Japan/Japan6.jpg",
+        "/assets/Photography/Japan/Japan7.jpg",
+        "/assets/Photography/Japan/Japan8.jpg",
+        "/assets/Photography/Japan/Japan9.jpg",
+        "/assets/Photography/Japan/Japan10.jpeg",
+        "/assets/Photography/Japan/Japan11.jpg",
+        "/assets/Photography/Japan/Japan12.jpeg",
+        "/assets/Photography/Japan/Japan13.jpeg"
+      ]
+    },
+    {
+      "enabled": true,
+      "title": "Italy",
+      "locations": "Rome | Florence | Riomaggiore | Lake Como | Venice",
+      "note": "Warm coastlines, quiet canals, and the kind of streets that reward wandering without a plan.",
+      "layout": ["single", "stack", "single", "single", "single", "stack", "single", "single", "stack", "single", "single", "single", "single"],
+      "images": [
+        "/assets/Photography/Italy/Italy1.jpg",
+        "/assets/Photography/Italy/Italy2.jpg",
+        "/assets/Photography/Italy/Italy3.jpg",
+        "/assets/Photography/Italy/Italy4.jpg",
+        "/assets/Photography/Italy/Italy5.jpg",
+        "/assets/Photography/Italy/Italy6.jpg",
+        "/assets/Photography/Italy/Italy7.jpg",
+        "/assets/Photography/Italy/Italy8.jpeg",
+        "/assets/Photography/Italy/Italy9.jpg",
+        "/assets/Photography/Italy/Italy10.jpg",
+        "/assets/Photography/Italy/Italy11.jpg",
+        "/assets/Photography/Italy/Italy12.jpg",
+        "/assets/Photography/Italy/Italy13.jpg",
+        "/assets/Photography/Italy/Italy14.jpg",
+        "/assets/Photography/Italy/Italy15.jpg"
+      ]
+    },
+    {
+      "enabled": true,
+      "title": "LA",
+      "locations": "West Hollywood | Peterson Automotive Museum | Erewhon | Griffith",
+      "note": "Architecture, neon, and city light stitched together into one long evening walk.",
+      "layout": ["single", "single", "stack", "single", "stack", "stack", "stack", "stack"],
+      "images": [
+        "/assets/Photography/LA/LA12.jpg",
+        "/assets/Photography/LA/LA3.jpg",
+        "/assets/Photography/LA/LA4.jpg",
+        "/assets/Photography/LA/LA6.jpg",
+        "/assets/Photography/LA/LA5.jpg",
+        "/assets/Photography/LA/LA1.jpg",
+        "/assets/Photography/LA/LA2.jpg",
+        "/assets/Photography/LA/LA10.jpg",
+        "/assets/Photography/LA/LA11.jpg",
+        "/assets/Photography/LA/LA13.jpg",
+        "/assets/Photography/LA/LA14.jpg",
+        "/assets/Photography/LA/LA15.jpg",
+        "/assets/Photography/LA/LA16.jpg"
+      ]
+    },
+    {
+      "enabled": true,
+      "title": "Lake Tahoe",
+      "locations": "Lake View",
+      "note": "Cold air, reflective water, and a slower rhythm once the sun starts to drop.",
+      "layout": ["stack", "single", "stack", "single", "single"],
+      "images": [
+        "/assets/Photography/Tahoe/LakeTahoe15.jpg",
+        "/assets/Photography/Tahoe/LakeTahoe1.jpg",
+        "/assets/Photography/Tahoe/LakeTahoe5.jpg",
+        "/assets/Photography/Tahoe/LakeTahoe2.jpg",
+        "/assets/Photography/Tahoe/LakeTahoe3.jpg",
+        "/assets/Photography/Tahoe/LakeTahoe6.jpg",
+        "/assets/Photography/Tahoe/LakeTahoe7.jpg"
+      ]
+    }
+  ]
+}

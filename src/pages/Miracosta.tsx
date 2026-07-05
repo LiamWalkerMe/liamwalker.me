@@ -22,8 +22,8 @@ const CAL_POLY = {
 
 const HERO_STATS = [
   { val: "3", label: "associate degrees" },
-  { val: "2 Years", label: "of coursework" },
-  { val: "CS + Math", label: "transfer-ready foundation" },
+  { val: "2 Years", label: "of classes, projects, and late nights" },
+  { val: "CS + Math", label: "ready for the next step" },
 ];
 
 type DegreeSummary = {
@@ -55,25 +55,25 @@ const DEGREE_SUMMARIES: ReadonlyArray<DegreeSummary> = [
 const DEGREE_HIGHLIGHTS = [
   {
     title: "Core CS Foundations",
-    body: "Data structures, algorithms, computer architecture, and discrete mathematics, C++, Java — were the foundation of my technical education.",
+    body: "Java, C++, data structures, algorithms, computer architecture, and discrete math gave me the base I kept coming back to.",
     color: C.blue,
     delay: 0,
   },
   {
     title: "Applied Mathematics",
-    body: "Calculus through Linear Algebra gave me a deeper intuition for computation, modeling, and the mechanics behind modern software systems.",
+    body: "Calculus, differential equations, and linear algebra helped the theory click: how systems behave, how models fit together, and why careful reasoning matters.",
     color: C.teal,
     delay: 80,
   },
   {
     title: "Transfer Pathway",
-    body: "The transfer-focused degrees strengthened my CSU pathway while the broader liberal arts work deepened the math and science foundation behind it.",
+    body: "The transfer degrees kept the goal clear, while the liberal arts work rounded out the math and science background behind it.",
     color: C.gold,
     delay: 160,
   },
   {
     title: "Campus Environment",
-    body: "MiraCosta's Oceanside campus provided a focused and resource-rich setting — faculty office hours, peer tutoring, and dedicated study spaces that supported serious academic work.",
+    body: "The Oceanside campus made it easier to stay in the work: office hours, tutoring, study spaces, and classmates trying to solve the same hard problems.",
     color: "#9b6b9b",
     delay: 240,
   },
@@ -82,26 +82,18 @@ const DEGREE_HIGHLIGHTS = [
 const SLIDES = [
   {
     label: "Cap toss celebration on the lawn",
-    caption: "Cap Toss",
-    sub: "A graduation-day celebration in the garden",
     imageSrc: "/assets/MiraCosta/Throwing.jpg",
   },
   {
     label: "Walking together in caps and gowns",
-    caption: "Walking Into the Next Chapter",
-    sub: "A quiet moment between portraits after graduation",
     imageSrc: "/assets/MiraCosta/WalkingTowards.jpg",
   },
   {
     label: "Close-up of decorated graduation caps",
-    caption: "Decorated Caps",
-    sub: "Cal Poly and 'Oh, the Places You'll Go!' details",
     imageSrc: "/assets/MiraCosta/Caps.png",
   },
   {
     label: "Walking away across the lawn with friends",
-    caption: "Last Walk Across the Lawn",
-    sub: "Closing out the MiraCosta chapter together",
     imageSrc: "/assets/MiraCosta/WalkingAway.jpg",
   },
 ];
@@ -606,7 +598,7 @@ function HeroSection() {
             }}
           >
             <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.teal }} />
-            MIRACOSTA JOURNEY
+            TRANSFER JOURNEY
           </div>
 
           <h1
@@ -623,9 +615,8 @@ function HeroSection() {
           >
             <span className="grad-text">MiraCosta</span>
             <br />
-            <em style={{ fontStyle: "italic", fontWeight: 400, color: C.blue, fontSize: "0.88em" }}>A foundation</em>
+            <em style={{ fontStyle: "italic", fontWeight: 400, color: C.blue, fontSize: "0.88em" }}>Community College</em>
             <br />
-            <span>built to last.</span>
           </h1>
 
           <p
@@ -639,7 +630,7 @@ function HeroSection() {
               margin: "0 auto 44px",
             }}
           >
-            A reflection on my time at MiraCosta — and on the coursework, the community, and the people who shaped my college experience.
+            A look back at the classes, friends, professors, and long study days that helped me grow into the next chapter.
           </p>
 
           <div className="h1-3" style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
@@ -675,7 +666,7 @@ function HeroSection() {
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              Read My Story
+              Start Here
             </a>
             <a
               href="#memories"
@@ -775,10 +766,10 @@ function DegreeSection() {
             marginBottom: 52,
           }}
         >
-          Academic foundation
+          What I built
           <br />
           <em style={{ fontStyle: "italic", fontWeight: 400, color: C.teal, fontSize: "0.82em" }}>
-            built at MiraCosta
+            at MiraCosta
           </em>
         </h2>
 
@@ -792,8 +783,8 @@ function DegreeSection() {
             fontWeight: 300,
           }}
         >
-          The degrees reflected the same throughline from different angles: computer science for implementation, mathematics
-          for rigor, and liberal arts for breadth across mathematics and science.
+          My time at MiraCosta came together through three overlapping paths: computer science taught me to build, math taught
+          me to reason carefully, and liberal arts kept the science and bigger picture in view.
         </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: 18, marginBottom: 32 }}>
@@ -840,7 +831,7 @@ function DegreeSection() {
                 marginBottom: 10,
               }}
             >
-              Conferred — Spring 2026
+              Completed Spring 2026
             </div>
             <div
               style={{
@@ -914,8 +905,10 @@ function DegreeSection() {
 
 function MemoriesSlideshow() {
   const [active, setActive] = useState(0);
+  const [renderedActive, setRenderedActive] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const activeSlide = SLIDES[active];
+  const renderedSlide = SLIDES[renderedActive];
 
   const startTimer = useCallback(() => {
     if (timerRef.current) {
@@ -937,6 +930,39 @@ function MemoriesSlideshow() {
     };
   }, [startTimer]);
 
+  useEffect(() => {
+    SLIDES.forEach((slide) => {
+      const image = new Image();
+      image.src = slide.imageSrc;
+    });
+  }, []);
+
+  useEffect(() => {
+    let isCurrent = true;
+    let frameId: number | undefined;
+    const image = new Image();
+
+    const revealLoadedImage = () => {
+      if (isCurrent) {
+        setRenderedActive(active);
+      }
+    };
+
+    image.onload = revealLoadedImage;
+    image.src = activeSlide.imageSrc;
+
+    if (image.complete) {
+      frameId = window.requestAnimationFrame(revealLoadedImage);
+    }
+
+    return () => {
+      isCurrent = false;
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
+      }
+    };
+  }, [active, activeSlide.imageSrc]);
+
   const goTo = (index: number) => {
     setActive(index);
     startTimer();
@@ -946,7 +972,7 @@ function MemoriesSlideshow() {
   const next = (active + 1) % SLIDES.length;
 
   return (
-    <div style={{ maxWidth: 720, margin: "0 auto" }}>
+    <div style={{ maxWidth: 860, margin: "0 auto" }}>
       <div
         style={{
           borderRadius: 20,
@@ -956,11 +982,11 @@ function MemoriesSlideshow() {
           position: "relative",
         }}
       >
-        <div key={activeSlide.imageSrc} className="memory-slide-media">
+        <div key={renderedSlide.imageSrc} className="memory-slide-media">
           <MiracostaPhotoPlaceholder
-            label={activeSlide.label}
-            src={activeSlide.imageSrc}
-            preserveNaturalRatio
+            label={renderedSlide.label}
+            src={renderedSlide.imageSrc}
+            aspectRatio="3 / 2"
             borderRadius="inherit"
             showBorder={false}
             background="transparent"
@@ -980,24 +1006,9 @@ function MemoriesSlideshow() {
               letterSpacing: "0.06em",
             }}
           >
-            {active + 1} / {SLIDES.length}
+            {renderedActive + 1} / {SLIDES.length}
           </div>
         </div>
-      </div>
-
-      <div key={activeSlide.caption} className="memory-slide-copy" style={{ marginTop: 20, paddingLeft: 4 }}>
-        <div
-          style={{
-            fontFamily: "'Fraunces', serif",
-            fontSize: 20,
-            fontWeight: 700,
-            color: C.navy,
-            marginBottom: 4,
-          }}
-        >
-          {activeSlide.caption}
-        </div>
-        <div style={{ fontSize: 13, color: C.muted, letterSpacing: "0.04em" }}>{activeSlide.sub}</div>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 20, flexWrap: "wrap" }}>
@@ -1079,45 +1090,15 @@ function MemoriesSection() {
             marginBottom: 16,
           }}
         >
-          The moments that
+          The moments I'll remember.
           <br />
-          <em style={{ fontStyle: "italic", fontWeight: 400, color: "#9b6b9b", fontSize: "0.82em" }}>define the chapter.</em>
         </h2>
         <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.8, maxWidth: 500, marginBottom: 52, fontWeight: 300 }}>
-          Two years of work celebrated in a single afternoon — surrounded by the people who made every late night and early morning worthwhile.
+          After two years of assignments, exams, and late-night study sessions, graduation felt like a deep breath with the people who helped me get there.
         </p>
 
         <MemoriesSlideshow />
 
-        <div style={{ marginTop: 40 }}>
-          <MiracostaCard style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
-            <div
-              style={{
-                width: 3,
-                minHeight: 56,
-                background: `linear-gradient(to bottom, ${C.teal}, #9b6b9b)`,
-                borderRadius: 2,
-                flexShrink: 0,
-              }}
-            />
-            <div style={{ flex: 1, minWidth: 220 }}>
-              <div
-                style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontWeight: 700,
-                  fontSize: 18,
-                  color: C.navy,
-                  marginBottom: 10,
-                }}
-              >
-                Family & Support System
-              </div>
-              <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.8, margin: 0 }}>
-                To my friends who joined me in late-night study sessions, . I am extremely grateful for the investment my family makes in education.
-              </p>
-            </div>
-          </MiracostaCard>
-        </div>
       </div>
     </MiracostaSection>
   );
@@ -1348,9 +1329,6 @@ function MajorPrepSection() {
               <br />
               <em style={{ fontStyle: "italic", fontWeight: 400, color: C.teal, fontSize: "0.8em" }}>Coursework</em>
             </h2>
-            <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.78, maxWidth: 460, fontWeight: 300, margin: "18px 0 0" }}>
-              The major-preparation classes at MiraCosta shaped the transfer path from both sides: mathematics for structure and rigor, and computer science for implementation, problem solving, and systems thinking. Click a tile to learn more about the course.
-            </p>
           </div>
         </div>
 
@@ -1632,11 +1610,8 @@ function ClubsSection() {
         >
           Beyond the classroom
           <br />
-          <em style={{ fontStyle: "italic", fontWeight: 400, color: C.blue, fontSize: "0.82em" }}>an educational community</em>
+          <em style={{ fontStyle: "italic", fontWeight: 400, color: C.blue, fontSize: "0.82em" }}>learning got more real</em>
         </h2>
-        <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.8, maxWidth: 500, marginBottom: 52, fontWeight: 300 }}>
-          Student involvement was where academic ambition met real collaboration — clubs that sharpened technical skills and the ability to work, build, and lead alongside others.
-        </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 18 }}>
           <ClubCard
@@ -1650,7 +1625,7 @@ function ClubsSection() {
             role="Member"
             color={CAL_POLY.green}
             bg={`${CAL_POLY.lightGreen}2e`}
-            desc="Examined how computer science intersects with ethics, accessibility, and real-world impact — reinforcing that software is a tool for meaningful change, not just technical output."
+            desc="Talked through the human side of software: ethics, accessibility, and the responsibility that comes with building tools people might actually use."
             delay={0}
           />
           <ClubCard
@@ -1670,7 +1645,7 @@ function ClubsSection() {
             role="Member"
             color={CAL_POLY.gold}
             bg={`${CAL_POLY.gold}18`}
-            desc="Combined design thinking and logic using Godot — contributing to game jams, design documents, and peer critiques in a collaborative environment that encouraged creative confidence."
+            desc="Used Godot, game jams, design docs, and peer critique to practice the mix of logic and creative judgment that game work demands."
             delay={80}
           />
           <ClubCard
@@ -1685,7 +1660,7 @@ function ClubsSection() {
             role="Member"
             color={C.blue}
             bg={`${C.sky}72`}
-            desc="A hands-on creative space for discussing film, sharing projects, and building portfolios — contributing ideas, giving feedback, and applying storytelling principles to future career goals."
+            desc="A creative reset: discussing films, sharing projects, giving feedback, and thinking more intentionally about storytelling."
             delay={160}
           />
         </div>
@@ -1762,12 +1737,11 @@ function ClosingSection() {
         </h2>
 
         <p style={{ fontSize: 17, color: "rgba(255, 255, 255, 0.82)", lineHeight: 1.85, maxWidth: 500, margin: "0 auto 52px", fontWeight: 300 }}>
-          That work was more than a milestone. It secured my admission to <strong style={{ color: CAL_POLY.gold }}>Cal Poly SLO.</strong>  The foundation that was built at MiraCosta was instrumental in my admission to Cal Poly.
+          My Cal Poly SLO chapter is coming soon. For now, this page closes out the MiraCosta foundation that helped make that next step possible.
         </p>
 
         <div style={{ marginBottom: 64 }}>
-          <a
-            href="/cal-poly-slo"
+          <span
             className="button"
             style={{
               "--button-bg": CAL_POLY.gold,
@@ -1780,8 +1754,8 @@ function ClosingSection() {
               paddingInline: 28,
             } as CSSProperties}
           >
-            Continue to Cal Poly SLO
-          </a>
+            Cal Poly SLO Coming Soon
+          </span>
         </div>
 
         <div

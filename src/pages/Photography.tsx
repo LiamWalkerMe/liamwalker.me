@@ -1,9 +1,16 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Maximize2 } from 'lucide-react'
 import Lightbox from '../components/Lightbox'
-import { photoSections } from '../data/photography'
+import { photoSections, type PhotoLayoutToken } from '../data/photography'
+import { homePhotographyImageAssets } from '../generated/homePhotographyImages'
 
-type Tile = { images: string[] }
+type GalleryImage = {
+  originalSrc: string
+  displaySrc: string
+  width?: number
+  height?: number
+}
+type Tile = { images: GalleryImage[] }
 type RailMetric = {
   overflow: number
   scrollSpan: number
@@ -12,76 +19,29 @@ type RailMetric = {
 }
 
 const defaultRailPattern = [1, 2, 1, 1]
+const priorityImageCount = 8
+const layoutTokenSizes: Record<PhotoLayoutToken, number> = {
+  single: 1,
+  stack: 2,
+}
 const pinnedLayoutQuery = '(min-width: 860px) and (prefers-reduced-motion: no-preference)'
 const tileRevealFocus = 0.62
+const optimizedImageByOriginalSrc = new Map<string, (typeof homePhotographyImageAssets)[number]>(
+  homePhotographyImageAssets.map((asset) => [asset.originalSrc, asset])
+)
 
-const sectionOrder: Record<string, number[]> = {
-  Italy: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-  LA: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-  'Lake Tahoe': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-  'Imperial Sand Dunes': [0, 1, 2, 3, 4],
-  'Mount Laguna': [0, 2, 1, 3, 5, 4],
-}
+function getGalleryImage(src: string): GalleryImage {
+  const optimizedImage = optimizedImageByOriginalSrc.get(src)
 
-const layoutBySection: Record<string, number[][]> = {
-  Italy: [
-    [1, 2, 1, 1],
-    [1, 2, 1, 1],
-    [2, 1, 1, 1],
-  ],
-  LA: [
-    [1, 1, 2, 1],
-    [2, 2, 2, 2],
-  ],
-  'Lake Tahoe': [
-    [2, 1, 2, 1],
-    [1, 2, 2, 1],
-  ],
-  'Imperial Sand Dunes': [[1, 1, 2, 1]],
-  'Mount Laguna': [[2, 1, 2, 1]],
-}
-
-const sectionDetails: Record<
-  string,
-  {
-    eyebrow: string
-    locations: string
-    note: string
+  return {
+    originalSrc: src,
+    displaySrc: optimizedImage?.thumbSrc ?? src,
+    width: optimizedImage?.width,
+    height: optimizedImage?.height,
   }
-> = {
-  Italy: {
-    eyebrow: 'Collection 01',
-    locations: 'Rome | Florence | Riomaggiore | Lake Como | Venice',
-    note: 'Warm coastlines, quiet canals, and the kind of streets that reward wandering without a plan.',
-  },
-  LA: {
-    eyebrow: 'Collection 02',
-    locations: 'West Hollywood | Peterson Automotive Museum | Erewhon | Griffith',
-    note: 'Architecture, neon, and city light stitched together into one long evening walk.',
-  },
-  'Lake Tahoe': {
-    eyebrow: 'Collection 03',
-    locations: 'Lake View',
-    note: 'Cold air, reflective water, and a slower rhythm once the sun starts to drop.',
-  },
-  'Imperial Sand Dunes': {
-    eyebrow: 'Collection 04',
-    locations: 'Sunrise Ridges | Wind Lines | Golden Hour',
-    note: 'A smaller set built around shape, color, and the way the dunes change every few minutes.',
-  },
-  'Mount Laguna': {
-    eyebrow: 'Collection 05',
-    locations: 'Desert View | Pine Forest | Sunset Overlook',
-    note: 'The last chapter leans quieter, with softer light and longer shadows through the trees.',
-  },
 }
 
-function reorderImages(images: string[], order?: number[]) {
-  if (!order?.length) return images
-  return order.map((index) => images[index]).filter(Boolean)
-}
-
-function buildTilesWithPattern(images: string[], pattern: number[]): Tile[] {
+function buildTilesWithPattern(images: GalleryImage[], pattern: number[]): Tile[] {
   const tiles: Tile[] = []
   let i = 0
   while (i < images.length) {
@@ -94,23 +54,13 @@ function buildTilesWithPattern(images: string[], pattern: number[]): Tile[] {
   return tiles
 }
 
-function buildTilesFromLayout(images: string[], layout?: number[][]): Tile[] {
-  if (!layout?.length) {
-    return buildTilesWithPattern(images, defaultRailPattern)
-  }
-  const tiles: Tile[] = []
-  let i = 0
-  for (const slide of layout) {
-    for (const size of slide) {
-      if (i >= images.length) break
-      tiles.push({ images: images.slice(i, i + size) })
-      i += size
-    }
-  }
-  if (i < images.length) {
-    tiles.push(...buildTilesWithPattern(images.slice(i), defaultRailPattern))
-  }
-  return tiles
+function getLayoutPattern(layout?: PhotoLayoutToken[]): number[] {
+  const pattern = layout?.map((token) => layoutTokenSizes[token]).filter(Boolean) ?? []
+  return pattern.length ? pattern : defaultRailPattern
+}
+
+function buildTilesFromLayout(images: GalleryImage[], layout?: PhotoLayoutToken[]): Tile[] {
+  return buildTilesWithPattern(images, getLayoutPattern(layout))
 }
 
 function clamp(value: number, min: number, max: number) {
@@ -125,39 +75,97 @@ function toSectionId(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 }
 
+function PhotographyFrame({
+  src,
+  alt,
+  ariaLabel,
+  isPriority,
+  width,
+  height,
+  onOpen,
+}: {
+  src: string
+  alt: string
+  ariaLabel: string
+  isPriority: boolean
+  width?: number
+  height?: number
+  onOpen: () => void
+}) {
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  return (
+    <button
+      type="button"
+      className={`photography-rail-frame ${isLoaded ? 'is-loaded' : ''}`}
+      onClick={onOpen}
+      aria-label={ariaLabel}
+    >
+      <span className="photography-rail-frame__loader" aria-hidden="true">
+        Developing
+      </span>
+      <img
+        src={src}
+        alt={alt}
+        loading={isPriority ? 'eager' : 'lazy'}
+        decoding="async"
+        fetchPriority={isPriority ? 'high' : 'auto'}
+        width={width}
+        height={height}
+        data-skip-image-fade="true"
+        onLoad={() => setIsLoaded(true)}
+        onError={() => setIsLoaded(true)}
+      />
+      <span className="photography-rail-frame__icon" aria-hidden="true">
+        <Maximize2 size={16} />
+      </span>
+    </button>
+  )
+}
+
 export default function Photography() {
   const gallerySections = useMemo(
     () =>
-      photoSections.map((section, sectionIndex) => {
-        const orderedImages = reorderImages(section.images, sectionOrder[section.title])
-        const tiles = buildTilesFromLayout(orderedImages, layoutBySection[section.title])
-        const details = sectionDetails[section.title]
+      photoSections.map((section) => {
+        const images = section.images.map(getGalleryImage)
+        const tiles = buildTilesFromLayout(images, section.layout)
 
         return {
           id: toSectionId(section.title),
           title: section.title,
-          eyebrow: details?.eyebrow ?? `Collection ${String(sectionIndex + 1).padStart(2, '0')}`,
-          locations: details?.locations ?? '',
-          note: details?.note ?? '',
-          images: orderedImages,
+          locations: section.locations ?? '',
+          note: section.note ?? '',
+          images,
           tiles,
         }
       }),
     []
   )
+  const priorityImageSources = useMemo(
+    () => gallerySections.flatMap((section) => section.images.map((image) => image.displaySrc)).slice(0, priorityImageCount),
+    [gallerySections]
+  )
 
   const [sectionMetrics, setSectionMetrics] = useState<RailMetric[]>(() =>
     gallerySections.map(() => ({ overflow: 0, scrollSpan: 0, stickyHeight: 0, tileCenterProgresses: [] }))
   )
-  const [sectionProgresses, setSectionProgresses] = useState(() => gallerySections.map(() => 0))
-  const [sectionRevealProgresses, setSectionRevealProgresses] = useState(() => gallerySections.map(() => 0))
   const [isPinnedLayout, setIsPinnedLayout] = useState(false)
   const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null)
   const sectionRefs = useRef<Array<HTMLElement | null>>([])
   const stickyRefs = useRef<Array<HTMLDivElement | null>>([])
+  const copyRefs = useRef<Array<HTMLDivElement | null>>([])
   const viewportRefs = useRef<Array<HTMLDivElement | null>>([])
   const railRefs = useRef<Array<HTMLDivElement | null>>([])
   const tileRefs = useRef<Array<Array<HTMLElement | null>>>([])
+  const revealProgressesRef = useRef<number[]>(gallerySections.map(() => 0))
+
+  useEffect(() => {
+    priorityImageSources.forEach((src) => {
+      const image = new Image()
+      image.decoding = 'async'
+      image.src = src
+    })
+  }, [priorityImageSources])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(pinnedLayoutQuery)
@@ -262,44 +270,80 @@ export default function Photography() {
   }, [gallerySections, isPinnedLayout])
 
   useEffect(() => {
+    const resetGalleryMotionStyles = () => {
+      railRefs.current.forEach((rail) => {
+        if (rail) {
+          rail.style.transform = ''
+        }
+      })
+
+      copyRefs.current.forEach((copy) => {
+        if (copy) {
+          copy.style.opacity = ''
+          copy.style.transform = ''
+        }
+      })
+
+      tileRefs.current.forEach((tiles) => {
+        tiles?.forEach((tile) => {
+          if (tile) {
+            tile.style.opacity = ''
+            tile.style.transform = ''
+          }
+        })
+      })
+    }
+
     if (!isPinnedLayout) {
-      setSectionProgresses(gallerySections.map(() => 0))
-      setSectionRevealProgresses(gallerySections.map(() => 0))
+      revealProgressesRef.current = gallerySections.map(() => 0)
+      resetGalleryMotionStyles()
       return undefined
     }
 
     let frameId = 0
 
     const updateProgress = () => {
-      const measuredProgresses = gallerySections.map((_, sectionIndex) => {
+      gallerySections.forEach((_, sectionIndex) => {
         const section = sectionRefs.current[sectionIndex]
-        const scrollSpan = sectionMetrics[sectionIndex]?.scrollSpan ?? 0
+        const metric = sectionMetrics[sectionIndex]
+        const scrollSpan = metric?.scrollSpan ?? 0
 
         if (!section || scrollSpan <= 0) {
-          return 0
+          return
         }
 
         const { top } = section.getBoundingClientRect()
-        return clamp(-top / scrollSpan, 0, 1)
-      })
+        const progress = clamp(-top / scrollSpan, 0, 1)
+        const revealProgress = Math.max(revealProgressesRef.current[sectionIndex] ?? 0, progress)
+        revealProgressesRef.current[sectionIndex] = revealProgress
 
-      setSectionProgresses((previousProgresses) => {
-        const hasChanged =
-          previousProgresses.length !== measuredProgresses.length ||
-          previousProgresses.some((value, sectionIndex) => Math.abs(value - measuredProgresses[sectionIndex]) > 0.002)
+        const rail = railRefs.current[sectionIndex]
+        if (rail) {
+          rail.style.transform = `translate3d(${-metric.overflow * easeInOutCubic(progress)}px, 0, 0)`
+        }
 
-        return hasChanged ? measuredProgresses : previousProgresses
-      })
+        const copy = copyRefs.current[sectionIndex]
+        if (copy) {
+          const copyReveal = clamp(progress / 0.18, 0, 1)
+          copy.style.opacity = String(0.42 + copyReveal * 0.58)
+          copy.style.transform = `translate3d(0, ${Math.round((1 - copyReveal) * 32)}px, 0)`
+        }
 
-      setSectionRevealProgresses((previousProgresses) => {
-        const nextProgresses = measuredProgresses.map((value, sectionIndex) =>
-          Math.max(previousProgresses[sectionIndex] ?? 0, value)
-        )
-        const hasChanged =
-          previousProgresses.length !== nextProgresses.length ||
-          previousProgresses.some((value, sectionIndex) => Math.abs(value - nextProgresses[sectionIndex]) > 0.002)
+        const easedRevealProgress = easeInOutCubic(revealProgress)
+        const tiles = tileRefs.current[sectionIndex] ?? []
 
-        return hasChanged ? nextProgresses : previousProgresses
+        tiles.forEach((tile, tileIndex) => {
+          if (!tile) {
+            return
+          }
+
+          const tileCenterProgress = metric.tileCenterProgresses[tileIndex] ?? 0
+          const tileRevealStart = Math.max(0, tileCenterProgress - 0.18)
+          const tileReveal = clamp((easedRevealProgress - tileRevealStart) / 0.18, 0, 1)
+
+          tile.style.opacity = String(0.18 + tileReveal * 0.82)
+          tile.style.transform = `translate3d(0, ${Math.round((1 - tileReveal) * 42)}px, 0) scale(${0.9 + tileReveal * 0.1})`
+        })
       })
 
       frameId = 0
@@ -324,6 +368,8 @@ export default function Photography() {
       if (frameId !== 0) {
         window.cancelAnimationFrame(frameId)
       }
+
+      resetGalleryMotionStyles()
     }
   }, [gallerySections, isPinnedLayout, sectionMetrics])
 
@@ -352,12 +398,9 @@ export default function Photography() {
             stickyHeight: 0,
             tileCenterProgresses: [],
           }
-          const progress = sectionProgresses[sectionIndex] ?? 0
-          const revealProgress = sectionRevealProgresses[sectionIndex] ?? progress
-          const easedProgress = isPinnedLayout ? easeInOutCubic(progress) : 1
-          const easedRevealProgress = isPinnedLayout ? easeInOutCubic(revealProgress) : 1
-          const railTranslate = isPinnedLayout ? -metric.overflow * easedProgress : 0
-          const copyReveal = isPinnedLayout ? clamp(progress / 0.18, 0, 1) : 1
+          const imagesBeforeSection = gallerySections
+            .slice(0, sectionIndex)
+            .reduce((total, gallerySection) => total + gallerySection.images.length, 0)
 
           return (
             <section
@@ -376,17 +419,15 @@ export default function Photography() {
                 ref={(node) => {
                   stickyRefs.current[sectionIndex] = node
                 }}
-                >
-                  <div className="photography-rail-section__panel">
+              >
+                <div className="photography-rail-section__panel">
                   <div className="photography-rail-section__content">
                     <div
                       className="photography-rail-section__copy"
-                      style={{
-                        opacity: 0.42 + copyReveal * 0.58,
-                        transform: `translate3d(0, ${Math.round((1 - copyReveal) * 32)}px, 0)`,
+                      ref={(node) => {
+                        copyRefs.current[sectionIndex] = node
                       }}
                     >
-                      <span className="photography-rail-section__eyebrow">{section.eyebrow}</span>
                       <div className="photography-rail-section__headline">
                         <h2 className="photography-rail-section__title">{section.title}</h2>
                         <span className="photography-rail-section__arrow" aria-hidden="true">
@@ -394,10 +435,10 @@ export default function Photography() {
                         </span>
                       </div>
                       <div className="photography-rail-section__meta">
-                        <span>{section.locations}</span>
+                        {section.locations ? <span>{section.locations}</span> : null}
                         <span>{section.images.length} frames</span>
                       </div>
-                      <p className="photography-rail-section__note">{section.note}</p>
+                      {section.note ? <p className="photography-rail-section__note">{section.note}</p> : null}
                     </div>
 
                     <div
@@ -411,13 +452,8 @@ export default function Photography() {
                         ref={(node) => {
                           railRefs.current[sectionIndex] = node
                         }}
-                        style={isPinnedLayout ? { transform: `translate3d(${railTranslate}px, 0, 0)` } : undefined}
                       >
                         {section.tiles.map((tile, tileIndex) => {
-                          const tileCenterProgress = metric.tileCenterProgresses[tileIndex] ?? 0
-                          const tileRevealStart = Math.max(0, tileCenterProgress - 0.18)
-                          const tileReveal = isPinnedLayout ? clamp((easedRevealProgress - tileRevealStart) / 0.18, 0, 1) : 1
-
                           return (
                             <article
                               className={`photography-rail-tile ${
@@ -430,36 +466,30 @@ export default function Photography() {
                                 tileRefs.current[sectionIndex] ??= []
                                 tileRefs.current[sectionIndex][tileIndex] = node
                               }}
-                              style={{
-                                opacity: 0.18 + tileReveal * 0.82,
-                                transform: `translate3d(0, ${Math.round((1 - tileReveal) * 42)}px, 0) scale(${0.9 + tileReveal * 0.1})`,
-                              }}
                             >
                               {tile.images.map((img, imageIndex) => {
-                                const frameReveal = isPinnedLayout ? clamp(tileReveal - imageIndex * 0.08, 0, 1) : 1
+                                const imagesBeforeTile = section.tiles
+                                  .slice(0, tileIndex)
+                                  .reduce((total, currentTile) => total + currentTile.images.length, 0)
+                                const imageGlobalIndex = imagesBeforeSection + imagesBeforeTile + imageIndex
+                                const imageNumber = imagesBeforeTile + imageIndex + 1
 
                                 return (
-                                  <button
-                                    type="button"
-                                    key={img}
-                                    className="photography-rail-frame"
-                                    onClick={() =>
+                                  <PhotographyFrame
+                                    key={img.originalSrc}
+                                    src={img.displaySrc}
+                                    alt={`${section.title} photograph`}
+                                    ariaLabel={`View ${section.title} photograph ${imageNumber} full screen`}
+                                    isPriority={imageGlobalIndex < priorityImageCount}
+                                    width={img.width}
+                                    height={img.height}
+                                    onOpen={() =>
                                       setLightboxImage({
-                                        src: img,
-                                        alt: `${section.title} photograph ${imageIndex + 1}`,
+                                        src: img.originalSrc,
+                                        alt: `${section.title} photograph ${imageNumber}`,
                                       })
                                     }
-                                    aria-label={`View ${section.title} photograph ${imageIndex + 1} full screen`}
-                                    style={{
-                                      opacity: 0.4 + frameReveal * 0.6,
-                                      filter: `saturate(${0.78 + frameReveal * 0.22}) brightness(${0.9 + frameReveal * 0.1})`,
-                                    }}
-                                  >
-                                    <img src={img} alt={`${section.title} photograph`} loading="lazy" decoding="async" />
-                                    <span className="photography-rail-frame__icon" aria-hidden="true">
-                                      <Maximize2 size={16} />
-                                    </span>
-                                  </button>
+                                  />
                                 )
                               })}
                             </article>

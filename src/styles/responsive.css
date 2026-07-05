@@ -63,6 +63,28 @@
     justify-content: center;
   }
 
+  .home-photography-promo__inner {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    min-height: auto;
+    padding: 56px 0;
+  }
+
+  .home-photography-promo__copy {
+    justify-items: center;
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .home-photography-promo__showcase {
+    min-height: clamp(360px, 66vw, 500px);
+  }
+
+  .home-photography-promo__contact-sheet {
+    max-width: min(100%, 680px);
+    height: clamp(360px, 66vw, 500px);
+  }
+
   .brand {
     min-width: 0;
     font-size: 15px;
@@ -315,6 +337,58 @@
     background-position: center top;
   }
 
+  .home-photography-promo__inner {
+    gap: 18px;
+    padding: 50px 0 46px;
+  }
+
+  .home-photography-promo__title {
+    font-size: clamp(48px, 16vw, 68px);
+  }
+
+  .home-photography-promo__button.button {
+    width: 100%;
+    max-width: 220px;
+  }
+
+  .home-photography-promo__showcase {
+    min-height: 420px;
+  }
+
+  .home-photography-promo__contact-sheet {
+    height: 420px;
+  }
+
+  .home-photography-promo__photo-card--0 {
+    left: 16%;
+    top: 12%;
+    width: min(70vw, 320px);
+  }
+
+  .home-photography-promo__photo-card--1 {
+    left: 0;
+    top: 2%;
+    width: min(38vw, 170px);
+  }
+
+  .home-photography-promo__photo-card--2 {
+    right: 0;
+    top: 6%;
+    width: min(42vw, 180px);
+  }
+
+  .home-photography-promo__photo-card--3 {
+    left: 4%;
+    bottom: 4%;
+    width: min(42vw, 185px);
+  }
+
+  .home-photography-promo__photo-card--4 {
+    right: 2%;
+    bottom: 5%;
+    width: min(40vw, 175px);
+  }
+
   .gallery {
     grid-template-columns: 1fr;
   }
@@ -377,4 +451,3 @@
   display: block;
   border-radius: 18px;
 }
-

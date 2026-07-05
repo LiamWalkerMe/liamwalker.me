@@ -6,6 +6,9 @@ const rootDir = process.cwd()
 const publicDir = path.join(rootDir, 'public')
 const generatedDir = path.join(publicDir, 'assets/generated')
 const manifestPath = path.join(rootDir, 'src/generated/responsiveImages.ts')
+const photographyConfigPath = path.join(rootDir, 'src/data/photography.collections.json')
+const homePhotographyOutputDir = path.join(publicDir, 'assets/generated/photography-home')
+const homePhotographyManifestPath = path.join(rootDir, 'src/generated/homePhotographyImages.ts')
 
 const imageConfigs = [
   {
@@ -77,6 +80,13 @@ function toPublicUrl(filePath) {
 
 function getOutputExtension(format) {
   return format === 'jpeg' ? 'jpg' : format
+}
+
+function slugify(value) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
 }
 
 async function generateFormatVariants(config, width) {
@@ -152,7 +162,67 @@ export const responsiveImages = ${JSON.stringify(manifestEntries, null, 2)} as c
   await fs.writeFile(manifestPath, manifestFileContents)
 }
 
-generateResponsiveImages().catch((error) => {
+async function generateHomePhotographyImages() {
+  const config = JSON.parse(await fs.readFile(photographyConfigPath, 'utf8'))
+  const collections = Array.isArray(config.collections) ? config.collections : []
+  const photos = collections
+    .filter((collection) => collection.enabled !== false)
+    .flatMap((collection) =>
+      (collection.images ?? []).map((src) => ({
+        src,
+        title: collection.title,
+      }))
+    )
+
+  await fs.rm(homePhotographyOutputDir, { recursive: true, force: true })
+  await fs.mkdir(homePhotographyOutputDir, { recursive: true })
+  await fs.mkdir(path.dirname(homePhotographyManifestPath), { recursive: true })
+
+  const manifestEntries = []
+
+  for (const [index, photo] of photos.entries()) {
+    const inputPath = path.join(publicDir, photo.src.replace(/^\//, ''))
+    const basename = path.basename(photo.src, path.extname(photo.src))
+    const outputPath = path.join(
+      homePhotographyOutputDir,
+      `${String(index + 1).padStart(2, '0')}-${slugify(photo.title)}-${slugify(basename)}.webp`
+    )
+
+    const outputInfo = await sharp(inputPath)
+      .rotate()
+      .resize({ width: 900, height: 900, fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 76, effort: 4 })
+      .toFile(outputPath)
+
+    manifestEntries.push({
+      originalSrc: photo.src,
+      thumbSrc: toPublicUrl(outputPath),
+      width: outputInfo.width,
+      height: outputInfo.height,
+      orientation: outputInfo.height > outputInfo.width ? 'portrait' : 'landscape',
+    })
+  }
+
+  const manifestFileContents = `export type HomePhotographyImageAsset = {
+  originalSrc: string
+  thumbSrc: string
+  width: number
+  height: number
+  orientation: 'portrait' | 'landscape'
+}
+
+export const homePhotographyImageAssets = ${JSON.stringify(manifestEntries, null, 2)} as const satisfies readonly HomePhotographyImageAsset[]
+`
+
+  await fs.writeFile(homePhotographyManifestPath, manifestFileContents)
+}
+
+async function generateImages() {
+  await generateResponsiveImages()
+  await generateHomePhotographyImages()
+}
+
+generateImages().catch((error) => {
   console.error(error)
   process.exitCode = 1
 })

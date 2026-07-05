@@ -157,15 +157,6 @@
   margin-top: 6px;
 }
 
-@keyframes homePhotographyRailScroll {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
 .home-photography-promo {
   position: relative;
   overflow: hidden;
@@ -257,97 +248,228 @@
   box-shadow: 0 16px 32px rgba(26, 6, 4, 0.24);
 }
 
-.home-photography-promo__rail-wrap {
+@keyframes homePhotographyCardIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--enter-x, 0), 10px, 0) rotate(calc(var(--rotate) - 1.5deg)) scale(0.985);
+    filter: blur(7px) saturate(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(var(--rotate)) scale(1);
+    filter: blur(0) saturate(1);
+  }
+}
+
+@keyframes homePhotographyGlowDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(18px, -12px, 0) scale(1.08);
+  }
+}
+
+.home-photography-promo__showcase {
   position: relative;
   min-width: 0;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.home-photography-promo__rail-stack {
-  width: min(100%, 660px);
+  min-height: clamp(390px, 42vw, 540px);
   display: grid;
-  gap: clamp(8px, 1vw, 12px);
+  place-items: center;
+  justify-self: stretch;
 }
 
-.home-photography-promo__rail-viewport {
+.home-photography-promo__showcase::before {
+  content: "";
+  position: absolute;
+  inset: 9% 3% 7% 8%;
+  border: 1px solid rgba(255, 229, 213, 0.16);
+  border-radius: 42px;
+  background:
+    linear-gradient(90deg, rgba(255, 239, 226, 0.06) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 239, 226, 0.05) 1px, transparent 1px),
+    rgba(255, 236, 222, 0.035);
+  background-size: 42px 42px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.home-photography-promo__orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(6px);
+  opacity: 0.72;
+  animation: homePhotographyGlowDrift 7s ease-in-out infinite;
+}
+
+.home-photography-promo__orb--one {
+  width: 210px;
+  height: 210px;
+  left: 11%;
+  top: 7%;
+  background: radial-gradient(circle, rgba(255, 165, 104, 0.28), transparent 68%);
+}
+
+.home-photography-promo__orb--two {
+  width: 260px;
+  height: 260px;
+  right: 7%;
+  bottom: 2%;
+  background: radial-gradient(circle, rgba(255, 220, 176, 0.2), transparent 70%);
+  animation-delay: -2.4s;
+}
+
+.home-photography-promo__contact-sheet {
   position: relative;
   width: 100%;
+  max-width: 700px;
+  height: clamp(390px, 42vw, 540px);
+}
+
+.home-photography-promo__photo-card {
+  --rotate: 0deg;
+  --enter-x: 0px;
+  --image-enter-x: 0px;
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  border: 2px solid rgba(255, 242, 232, 0.38);
+  border-radius: 16px;
+  background: transparent;
+  box-shadow:
+    0 24px 48px rgba(18, 5, 3, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  transform: rotate(var(--rotate));
+  transform-origin: center center;
+  animation: homePhotographyCardIn 0.92s cubic-bezier(0.16, 1, 0.3, 1) both;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(0, 0, 0, 0.14) 4%,
-    #000000 12%,
-    #000000 88%,
-    rgba(0, 0, 0, 0.14) 96%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(0, 0, 0, 0.14) 4%,
-    #000000 12%,
-    #000000 88%,
-    rgba(0, 0, 0, 0.14) 96%,
-    transparent 100%
-  );
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
 }
 
-.home-photography-promo__rail-track {
-  display: flex;
-  width: max-content;
-  animation: homePhotographyRailScroll 300s linear infinite;
-  will-change: transform;
+.home-photography-promo__photo-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(30, 8, 5, 0.16));
+  pointer-events: none;
 }
 
-.home-photography-promo__rail-viewport--reverse .home-photography-promo__rail-track {
-  animation-direction: reverse;
+.home-photography-promo__photo-card--0 {
+  --rotate: -2deg;
+  --enter-x: 18px;
+  --image-enter-x: 26px;
+  z-index: 5;
+  left: 28%;
+  top: 12%;
+  width: clamp(270px, 31vw, 440px);
+  aspect-ratio: 3 / 2;
 }
 
-.home-photography-promo__rail-group {
-  display: flex;
-  flex: 0 0 auto;
+.home-photography-promo__photo-card--1 {
+  --rotate: 7deg;
+  --enter-x: -24px;
+  --image-enter-x: -24px;
+  z-index: 3;
+  left: 2%;
+  top: 5%;
+  width: clamp(150px, 15vw, 230px);
+  aspect-ratio: 2 / 3;
+  animation-delay: 90ms;
 }
 
-.home-photography-promo__rail-card {
-  flex: 0 0 auto;
-  width: clamp(170px, 15vw, 230px);
-  aspect-ratio: 1.9 / 1;
-  margin-right: clamp(8px, 1vw, 12px);
-  overflow: hidden;
-  background: #270b05;
-  box-shadow: 0 24px 44px rgba(22, 5, 3, 0.26);
+.home-photography-promo__photo-card--2 {
+  --rotate: -8deg;
+  --enter-x: 24px;
+  --image-enter-x: 24px;
+  z-index: 4;
+  right: 0;
+  top: 2%;
+  width: clamp(170px, 17vw, 260px);
+  aspect-ratio: 3 / 2;
+  animation-delay: 160ms;
 }
 
-.home-photography-promo__rail-card img {
+.home-photography-promo__photo-card--3 {
+  --rotate: -10deg;
+  --enter-x: -20px;
+  --image-enter-x: -20px;
+  z-index: 2;
+  left: 8%;
+  bottom: 2%;
+  width: clamp(160px, 16vw, 250px);
+  aspect-ratio: 3 / 2;
+  animation-delay: 220ms;
+}
+
+.home-photography-promo__photo-card--4 {
+  --rotate: 8deg;
+  --enter-x: 20px;
+  --image-enter-x: 20px;
+  z-index: 2;
+  right: 9%;
+  bottom: 4%;
+  width: clamp(145px, 15vw, 225px);
+  aspect-ratio: 2 / 3;
+  animation-delay: 280ms;
+}
+
+.home-photography-promo__photo-glow {
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(255, 158, 96, 0.26), transparent 62%);
+  opacity: 0.78;
+}
+
+.home-photography-promo__photo-card img {
+  position: relative;
+  z-index: 1;
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
-  object-fit: cover;
-  filter: saturate(1.02) contrast(1.02);
+  border-radius: inherit;
+  background: #190807;
+  object-fit: contain;
+  opacity: 0;
+  transform: translate3d(var(--image-enter-x, 0), 0, 0) scale(1.015);
+  filter: blur(8px) saturate(0.92) contrast(1.02);
+  transition:
+    opacity 0.7s ease,
+    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.95s ease;
+}
+
+.home-photography-promo__photo-card.is-loaded img {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0) saturate(1.06) contrast(1.04);
+}
+
+.home-photography-promo__photo-card figcaption {
+  position: absolute;
+  left: clamp(14px, 1.4vw, 20px);
+  bottom: clamp(13px, 1.4vw, 18px);
+  z-index: 2;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(24, 8, 5, 0.56);
+  color: rgba(255, 246, 238, 0.92);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-photography-promo__rail-track {
+  .home-photography-promo__photo-card,
+  .home-photography-promo__orb {
     animation: none;
-  }
-
-  .home-photography-promo__rail-viewport {
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .home-photography-promo__rail-viewport::-webkit-scrollbar {
-    display: none;
-  }
-
-  .home-photography-promo__rail-group--duplicate {
-    display: none;
   }
 }
 
@@ -868,4 +990,3 @@
 .stove-page .section {
   padding: clamp(40px, 5vw, 56px) 0;
 }
-
