@@ -276,10 +276,13 @@
     grid-template-columns: 1fr;
     grid-template-areas:
       "content"
-      "panel-start"
-      "panel-end";
+      "panel-start";
     gap: 18px;
     padding: 44px 0;
+  }
+
+  .home-miracosta-promo__panel--end {
+    display: none;
   }
 
   .home-miracosta-promo__title {
